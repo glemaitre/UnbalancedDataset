@@ -29,17 +29,14 @@ class RandomOverSampler(SamplerMixin):
     verbose : bool, optional (default=True)
         Whether or not to print information about the processing.
 
+    random_state : int, RandomState instance or None, optional (default=None)
+        If int, random_state is the seed used by the random number generator;
+        If RandomState instance, random_state is the random number generator;
+        If None, the random number generator is the RandomState instance used
+        by np.random.
+
     Attributes
     ----------
-    ratio : str or float
-        If 'auto', the ratio will be defined automatically to balance
-        the dataset. Otherwise, the ratio is defined as the number
-        of samples in the minority class over the the number of samples
-        in the majority class.
-
-    random_state : int or None
-        Seed for random number generation.
-
     min_c_ : str or int
         The identifier of the minority class.
 
@@ -108,9 +105,9 @@ class RandomOverSampler(SamplerMixin):
                                   self.stats_c_[key])
 
             # Pick some elements at random
-            random_state = check_random_state(random_state)
-            indx = self.random_state.randint(low=0, high=self.stats_c_[key],
-                                             size=num_samples)
+            random_state = check_random_state(self.random_state)
+            indx = random_state.randint(low=0, high=self.stats_c_[key],
+                                        size=num_samples)
 
             # Concatenate to the majority class
             X_resampled = np.concatenate((X_resampled,
