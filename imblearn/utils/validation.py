@@ -16,7 +16,8 @@ from sklearn.utils.multiclass import type_of_target
 
 from ..exceptions import raise_isinstance_error
 
-SAMPLING_KIND = ('over-sampling', 'under-sampling', 'clean-sampling')
+SAMPLING_KIND = ('over-sampling', 'under-sampling', 'clean-sampling',
+                 'ensemble')
 TARGET_KIND = ('binary', 'multiclass')
 
 
@@ -295,6 +296,9 @@ def check_ratio(ratio, y, sampling_type):
     if np.unique(y).size <= 1:
         raise ValueError("The target 'y' needs to have more than 1 class."
                          " Got {} class instead".format(np.unique(y).size))
+
+    if sampling_type == 'ensemble':
+        return ratio
 
     if isinstance(ratio, six.string_types):
         if ratio not in RATIO_KIND.keys():

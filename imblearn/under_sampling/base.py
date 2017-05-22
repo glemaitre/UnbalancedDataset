@@ -28,6 +28,7 @@ class BaseCleaningSampler(BaseSampler):
     """
 
     def __init__(self, ratio='auto', random_state=None):
-        super(BaseCleaningSampler, self).__init__(ratio=ratio,
-                                                  random_state=random_state,
-                                                  sampling_type='clean-sampling')
+        super(BaseCleaningSampler, self).__init__(
+            ratio=ratio,
+            random_state=random_state,
+            sampling_type='clean-sampling')
