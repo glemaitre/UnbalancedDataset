@@ -200,7 +200,7 @@
 <h1>imblearn.ensemble.BalanceCascade<a class="headerlink" href="#imblearn-ensemble-balancecascade" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.ensemble.BalanceCascade">
-<em class="property">class </em><code class="descclassname">imblearn.ensemble.</code><code class="descname">BalanceCascade</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>bootstrap=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.ensemble.</code><code class="descname">BalanceCascade</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/ensemble/balance_cascade.py#L23"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an ensemble of balanced sets by iteratively under-sampling the
 imbalanced dataset using an estimator.</p>
 <p>This method iteratively select subset and make an ensemble of the
@@ -209,12 +209,24 @@ different sets. The selection is performed using a specific classifier.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ratio</strong> : str or float, optional (default=&#8217;auto&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ratio</strong> : str, dict, or callable, optional (default=&#8217;auto&#8217;)</p>
 <blockquote>
-<div><p>If &#8216;auto&#8217;, the ratio will be defined automatically to balance
-the dataset. Otherwise, the ratio is defined as the number
-of samples in the minority class over the the number of samples
-in the majority class.</p>
+<div><p>Ratio to use for resampling the data set.</p>
+<ul class="simple">
+<li>If <code class="docutils literal"><span class="pre">str</span></code>, has to be one of: (i) <code class="docutils literal"><span class="pre">'minority'</span></code>: resample the
+minority class; (ii) <code class="docutils literal"><span class="pre">'majority'</span></code>: resample the majority class,
+(iii) <code class="docutils literal"><span class="pre">'not</span> <span class="pre">minority'</span></code>: resample all classes apart of the minority
+class, (iv) <code class="docutils literal"><span class="pre">'all'</span></code>: resample all classes, and (v) <code class="docutils literal"><span class="pre">'auto'</span></code>:
+correspond to <code class="docutils literal"><span class="pre">'all'</span></code> with for over-sampling methods and <code class="docutils literal"><span class="pre">'not</span>
+<span class="pre">minority'</span></code> for under-sampling methods. The classes targeted will be
+over-sampled or under-sampled to achieve an equal number of sample
+with the majority or minority class.</li>
+<li>If <code class="docutils literal"><span class="pre">dict</span></code>, the keys correspond to the targeted classes. The values
+correspond to the desired number of samples.</li>
+<li>If callable, function taking <code class="docutils literal"><span class="pre">y</span></code> and returns a <code class="docutils literal"><span class="pre">dict</span></code>. The keys
+correspond to the targeted classes. The values correspond to the
+desired number of samples.</li>
+</ul>
 </div></blockquote>
 <p><strong>return_indices</strong> : bool, optional (default=True)</p>
 <blockquote>
@@ -223,10 +235,10 @@ selected from the majority class.</p>
 </div></blockquote>
 <p><strong>random_state</strong> : int, RandomState instance or None, optional (default=None)</p>
 <blockquote>
-<div><p>If int, random_state is the seed used by the random number generator;
-If RandomState instance, random_state is the random number generator;
-If None, the random number generator is the RandomState instance used
-by np.random.</p>
+<div><p>If int, <code class="docutils literal"><span class="pre">random_state</span></code> is the seed used by the random number
+generator; If <code class="docutils literal"><span class="pre">RandomState</span></code> instance, random_state is the random
+number generator; If <code class="docutils literal"><span class="pre">None</span></code>, the random number generator is the
+<code class="docutils literal"><span class="pre">RandomState</span></code> instance used by <code class="docutils literal"><span class="pre">np.random</span></code>.</p>
 </div></blockquote>
 <p><strong>n_max_subset</strong> : int or None, optional (default=None)</p>
 <blockquote>
@@ -237,16 +249,18 @@ subsets. We can probably deduce this number empirically.</p>
 <p><strong>classifier</strong> : str, optional (default=None)</p>
 <blockquote>
 <div><p>The classifier that will be selected to confront the prediction
-with the real labels. The choices are the following: &#8216;knn&#8217;,
-&#8216;decision-tree&#8217;, &#8216;random-forest&#8217;, &#8216;adaboost&#8217;, &#8216;gradient-boosting&#8217;
-and &#8216;linear-svm&#8217;.</p>
-<p>NOTE: <cite>classifier</cite> is deprecated from 0.2 and will be replaced in 0.4.
-Use <cite>estimator</cite> instead.</p>
+with the real labels. The choices are the following: <code class="docutils literal"><span class="pre">'knn'</span></code>,
+<code class="docutils literal"><span class="pre">'decision-tree'</span></code>, <code class="docutils literal"><span class="pre">'random-forest'</span></code>, <code class="docutils literal"><span class="pre">'adaboost'</span></code>,
+<code class="docutils literal"><span class="pre">'gradient-boosting'</span></code>, and <code class="docutils literal"><span class="pre">'linear-svm'</span></code>.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">classifier</span></code> is deprecated from 0.2 and will be replaced in 0.4.
+Use <code class="docutils literal"><span class="pre">estimator</span></code> instead.</p>
+</div>
 </div></blockquote>
 <p><strong>estimator</strong> : object, optional (default=KNeighborsClassifier())</p>
 <blockquote>
-<div><p>An estimator inherited from <cite>sklearn.base.ClassifierMixin</cite> and having
-an attribute <cite>predict_proba</cite>.</p>
+<div><p>An estimator inherited from <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code> and
+having an attribute <code class="xref py py-func docutils literal"><span class="pre">predict_proba</span></code>.</p>
 </div></blockquote>
 <p><strong>bootstrap</strong> : bool, optional (default=True)</p>
 <blockquote>
@@ -255,9 +269,11 @@ an attribute <cite>predict_proba</cite>.</p>
 <p><strong>**kwargs</strong> : keywords</p>
 <blockquote class="last">
 <div><p>The parameters associated with the classifier provided.</p>
-<p>NOTE: <cite>**kwargs</cite> has been deprecated from 0.2 and will be replaced in
-0.4. Use <cite>estimator</cite> object instead to pass parameters associated
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">**kwargs</span></code> has been deprecated from 0.2 and will be replaced in
+0.4. Use <code class="docutils literal"><span class="pre">estimator</span></code> object instead to pass parameters associated
 to an estimator.</p>
+</div>
 </div></blockquote>
 </td>
 </tr>
@@ -265,7 +281,7 @@ to an estimator.</p>
 </table>
 <p class="rubric">Notes</p>
 <p>The method is described in <a class="reference internal" href="#r25" id="id1">[R25]</a>.</p>
-<p>This class does not support multi-class.</p>
+<p>Supports mutli-class resampling.</p>
 <p class="rubric">References</p>
 <table class="docutils citation" frame="void" id="r25" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -279,7 +295,7 @@ April 2009.</td></tr>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_classification</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.ensemble</span> <span class="k">import</span>     <span class="n">BalanceCascade</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.ensemble</span> <span class="k">import</span> <span class="n">BalanceCascade</span> 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">class_sep</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -287,31 +303,10 @@ April 2009.</td></tr>
 <span class="go">Original dataset shape Counter({1: 900, 0: 100})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bc</span> <span class="o">=</span> <span class="n">BalanceCascade</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resampled dataset shape </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-<span class="go">Resampled dataset shape Counter({0: 100, 1: 100})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resampled dataset shape </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>     
+<span class="go">Resampled dataset shape Counter({...})</span>
 </pre></div>
 </div>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="8%" />
-<col width="92%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a href="#id3"><span class="problematic" id="id4">min_c_</span></a></td>
-<td>(str or int) The identifier of the minority class.</td>
-</tr>
-<tr class="row-even"><td><a href="#id5"><span class="problematic" id="id6">max_c_</span></a></td>
-<td>(str or int) The identifier of the majority class.</td>
-</tr>
-<tr class="row-odd"><td><a href="#id7"><span class="problematic" id="id8">stats_c_</span></a></td>
-<td>(dict of str/int) A dictionary in which the number of occurences of each class is reported.</td>
-</tr>
-<tr class="row-even"><td><a href="#id9"><span class="problematic" id="id10">X_shape_</span></a></td>
-<td>(tuple of int) Shape of the data <cite>X</cite> during fitting.</td>
-</tr>
-</tbody>
-</table>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -338,7 +333,7 @@ April 2009.</td></tr>
 </table>
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>bootstrap=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/ensemble/balance_cascade.py#L122"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
@@ -370,7 +365,7 @@ April 2009.</td></tr>
 </table>
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.fit"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/ensemble/balance_cascade.py#L138"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -398,7 +393,7 @@ April 2009.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -430,7 +425,7 @@ April 2009.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/../../virtualenvs/venv-system/local/lib/python2.7/site-packages/sklearn/base.py#L220"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -455,7 +450,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -487,7 +482,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/../../virtualenvs/venv-system/local/lib/python2.7/site-packages/sklearn/base.py#L257"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form

@@ -185,95 +185,93 @@
 <span class="c1">#          Christos Aridas</span>
 <span class="c1"># License: MIT</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">...base</span> <span class="k">import</span> <span class="n">BaseMulticlassSampler</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseUnderSampler</span>
 <span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
+<span class="kn">from</span> <span class="nn">...utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
 
 
-<div class="viewcode-block" id="NearMiss"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss">[docs]</a><span class="k">class</span> <span class="nc">NearMiss</span><span class="p">(</span><span class="n">BaseMulticlassSampler</span><span class="p">):</span>
+<div class="viewcode-block" id="NearMiss"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss">[docs]</a><span class="k">class</span> <span class="nc">NearMiss</span><span class="p">(</span><span class="n">BaseUnderSampler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to perform under-sampling based on NearMiss methods.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ratio : str or float, optional (default=&#39;auto&#39;)</span>
-<span class="sd">        If &#39;auto&#39;, the ratio will be defined automatically to balance</span>
-<span class="sd">        the dataset. Otherwise, the ratio is defined as the number</span>
-<span class="sd">        of samples in the minority class over the the number of samples</span>
-<span class="sd">        in the majority class.</span>
+<span class="sd">    ratio : str, dict, or callable, optional (default=&#39;auto&#39;)</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
 
 <span class="sd">    return_indices : bool, optional (default=False)</span>
 <span class="sd">        Whether or not to return the indices of the samples randomly</span>
 <span class="sd">        selected from the majority class.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by np.random.</span>
+<span class="sd">        If int, ``random_state`` is the seed used by the random number</span>
+<span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
+<span class="sd">        number generator; If ``None``, the random number generator is the</span>
+<span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
 <span class="sd">    version : int, optional (default=1)</span>
-<span class="sd">        Version of the NearMiss to use. Possible values</span>
-<span class="sd">        are 1, 2 or 3.</span>
+<span class="sd">        Version of the NearMiss to use. Possible values are 1, 2 or 3.</span>
 
 <span class="sd">    size_ngh : int, optional (default=None)</span>
 <span class="sd">        Size of the neighbourhood to consider to compute the average</span>
 <span class="sd">        distance to the minority point samples.</span>
 
-<span class="sd">        NOTE: size_ngh is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Use ``n_neighbors`` instead.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``size_ngh`` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Use ``n_neighbors`` instead.</span>
 
 <span class="sd">    n_neighbors : int or object, optional (default=3)</span>
-<span class="sd">        If int, size of the neighbourhood to consider to compute the average</span>
-<span class="sd">        distance to the minority point samples.</span>
-<span class="sd">        If object, an estimator that inherits from</span>
-<span class="sd">        `sklearn.neighbors.base.KNeighborsMixin` that will be used to find</span>
-<span class="sd">        the k_neighbors.</span>
+<span class="sd">        If ``int``, size of the neighbourhood to consider to compute the</span>
+<span class="sd">        average distance to the minority point samples.  If object, an</span>
+<span class="sd">        estimator that inherits from</span>
+<span class="sd">        :class:`sklearn.neighbors.base.KNeighborsMixin` that will be used to</span>
+<span class="sd">        find the k_neighbors.</span>
 
 <span class="sd">    ver3_samp_ngh : int, optional (default=3)</span>
 <span class="sd">        NearMiss-3 algorithm start by a phase of re-sampling. This</span>
 <span class="sd">        parameter correspond to the number of neighbours selected</span>
 <span class="sd">        create the sub_set in which the selection will be performed.</span>
 
-<span class="sd">        NOTE: `ver3_samp_ngh` is deprecated from 0.2 and will be replaced</span>
-<span class="sd">        in 0.4. Use ``n_neighbors_ver3`` instead.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``ver3_samp_ngh`` is deprecated from 0.2 and will be replaced</span>
+<span class="sd">           in 0.4. Use ``n_neighbors_ver3`` instead.</span>
 
 <span class="sd">    n_neighbors_ver3 : int or object, optional (default=3)</span>
-<span class="sd">        If int, NearMiss-3 algorithm start by a phase of re-sampling. This</span>
-<span class="sd">        parameter correspond to the number of neighbours selected</span>
-<span class="sd">        create the sub_set in which the selection will be performed.</span>
-<span class="sd">        If object, an estimator that inherits from</span>
-<span class="sd">        `sklearn.neighbors.base.KNeighborsMixin` that will be used to find</span>
-<span class="sd">        the k_neighbors.</span>
+<span class="sd">        If ``int``, NearMiss-3 algorithm start by a phase of re-sampling. This</span>
+<span class="sd">        parameter correspond to the number of neighbours selected create the</span>
+<span class="sd">        subset in which the selection will be performed.  If object, an</span>
+<span class="sd">        estimator that inherits from</span>
+<span class="sd">        :class:`sklearn.neighbors.base.KNeighborsMixin` that will be used to</span>
+<span class="sd">        find the k_neighbors.</span>
 
 <span class="sd">    n_jobs : int, optional (default=1)</span>
 <span class="sd">        The number of threads to open if possible.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_c_ : str or int</span>
-<span class="sd">        The identifier of the minority class.</span>
-
-<span class="sd">    max_c_ : str or int</span>
-<span class="sd">        The identifier of the majority class.</span>
-
-<span class="sd">    stats_c_ : dict of str/int : int</span>
-<span class="sd">        A dictionary in which the number of occurences of each class is</span>
-<span class="sd">        reported.</span>
-
-<span class="sd">    X_shape_ : tuple of int</span>
-<span class="sd">        Shape of the data `X` during fitting.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    The methods are based on [1]_.</span>
 
-<span class="sd">    The class support multi-classes.</span>
+<span class="sd">    Supports mutli-class resampling.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -281,7 +279,7 @@
 <span class="sd">    &gt;&gt;&gt; from collections import Counter</span>
 <span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_classification</span>
 <span class="sd">    &gt;&gt;&gt; from imblearn.under_sampling import \</span>
-<span class="sd">    NearMiss # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">NearMiss # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">    &gt;&gt;&gt; X, y = make_classification(n_classes=2, class_sep=2,</span>
 <span class="sd">    ... weights=[0.1, 0.9], n_informative=3, n_redundant=1, flip_y=0,</span>
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
@@ -364,11 +362,6 @@
         <span class="c1"># Compute the distance considering the farthest neighbour</span>
         <span class="n">dist_avg_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dist_vec</span><span class="p">[:,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;The size of the distance matrix is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
-                          <span class="n">dist_vec</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;The size of the samples that can be selected is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
-                          <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
         <span class="k">if</span> <span class="n">dist_vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;The samples to be selected do not correspond&#39;</span>
                                <span class="s1">&#39; to the distance matrix given. Ensure that&#39;</span>
@@ -397,53 +390,27 @@
                           <span class="s1">&#39; will be returned.&#39;</span><span class="p">)</span>
 
         <span class="c1"># Select the desired number of samples</span>
-        <span class="n">sel_idx</span> <span class="o">=</span> <span class="n">sorted_idx</span><span class="p">[:</span><span class="n">num_samples</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">][</span><span class="n">sel_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">][</span><span class="n">sel_idx</span><span class="p">],</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">)[</span><span class="n">sel_idx</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">sorted_idx</span><span class="p">[:</span><span class="n">num_samples</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Private function to create the NN estimator&quot;&quot;&quot;</span>
+        <span class="c1"># FIXME: Deprecated in 0.2. To be removed in 0.4.</span>
+        <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;size_ngh&#39;</span><span class="p">,</span> <span class="s1">&#39;n_neighbors&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="c1"># Announce deprecation if needed</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ver3_samp_ngh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;`ver3_samp_ngh` will be replaced in version&#39;</span>
-                              <span class="s1">&#39; 0.4. Use `n_neighbors_ver3` instead.&#39;</span><span class="p">,</span>
-                              <span class="ne">DeprecationWarning</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors_ver3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ver3_samp_ngh</span>
+            <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;ver3_samp_ngh&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;n_neighbors_ver3&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="NearMiss.fit"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Find the classes statistics before to perform sampling.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
-<span class="sd">            Matrix containing the data which have to be sampled.</span>
-
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
-<span class="sd">            Corresponding label for each sample in X.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        self : object,</span>
-<span class="sd">            Return self.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">NearMiss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
-        <span class="c1"># set the number of jobs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">})</span>
 
-        <span class="c1"># kept for deprecation purpose it will create the n_neighbors_ver3</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_ver3_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors_ver3&#39;</span><span class="p">,</span>
                                                    <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors_ver3</span><span class="p">)</span>
-            <span class="c1"># set the number of jobs</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_ver3_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">})</span>
 
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Parameter `version` must be 1, 2 or 3, got&#39;</span>
+                             <span class="s1">&#39; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resample the dataset.</span>
@@ -469,109 +436,67 @@
 <span class="sd">            containing the which samples have been selected.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
 
-        <span class="c1"># Assign the parameter of the element of this class</span>
-        <span class="c1"># Check that the version asked is implemented</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Parameter `version` must be 1, 2 or 3, got&#39;</span>
-                             <span class="s1">&#39; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
-
-        <span class="c1"># Start with the minority class</span>
-        <span class="n">X_min</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-        <span class="n">y_min</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-
-        <span class="c1"># All the minority class samples will be preserved</span>
-        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">X_min</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">y_min</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="c1"># Compute the number of cluster needed</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
-            <span class="n">num_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">num_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">)</span>
-
-        <span class="c1"># If we need to offer support for the indices</span>
+        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">)</span>
+            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-        <span class="c1"># Fit the minority class since that we want to know the distance</span>
-        <span class="c1"># to these point</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">])</span>
+        <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
 
-        <span class="c1"># Loop over the other classes under picking at random</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">])</span>
 
-            <span class="c1"># If the minority class is up, skip it</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">:</span>
-                <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">n_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="p">[</span><span class="n">target_class</span><span class="p">]</span>
+                <span class="n">X_class</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]</span>
+                <span class="n">y_class</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]</span>
 
-            <span class="c1"># Get the samples corresponding to the current class</span>
-            <span class="n">sub_samples_x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">]</span>
-            <span class="n">sub_samples_y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+                        <span class="n">X_class</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
+                    <span class="n">index_target_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_dist_based</span><span class="p">(</span>
+                        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dist_vec</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">target_class</span><span class="p">,</span>
+                        <span class="n">sel_strategy</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+                        <span class="n">X_class</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">target_stats</span><span class="p">[</span><span class="n">class_minority</span><span class="p">])</span>
+                    <span class="n">index_target_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_dist_based</span><span class="p">(</span>
+                        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dist_vec</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">target_class</span><span class="p">,</span>
+                        <span class="n">sel_strategy</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">nn_ver3_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_class</span><span class="p">)</span>
+                    <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_ver3_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+                        <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">])</span>
+                    <span class="n">idx_vec_farthest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx_vec</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+                    <span class="n">X_class_selected</span> <span class="o">=</span> <span class="n">X_class</span><span class="p">[</span><span class="n">idx_vec_farthest</span><span class="p">,</span> <span class="p">:]</span>
+                    <span class="n">y_class_selected</span> <span class="o">=</span> <span class="n">y_class</span><span class="p">[</span><span class="n">idx_vec_farthest</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="c1"># Find the NN</span>
-                <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
-                    <span class="n">sub_samples_x</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
-
-                <span class="c1"># Select the right samples</span>
-                <span class="n">sel_x</span><span class="p">,</span> <span class="n">sel_y</span><span class="p">,</span> <span class="n">idx_tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_dist_based</span><span class="p">(</span>
-                    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dist_vec</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">sel_strategy</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="c1"># Find the NN</span>
-                <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
-                    <span class="n">sub_samples_x</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">])</span>
-
-                <span class="c1"># Select the right samples</span>
-                <span class="n">sel_x</span><span class="p">,</span> <span class="n">sel_y</span><span class="p">,</span> <span class="n">idx_tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_dist_based</span><span class="p">(</span>
-                    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dist_vec</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">sel_strategy</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="c1"># We need a new NN object to fit the current class</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">nn_ver3_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sub_samples_x</span><span class="p">)</span>
-
-                <span class="c1"># Find the set of NN to the minority class</span>
-                <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_ver3_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X_min</span><span class="p">)</span>
-
-                <span class="c1"># Create the subset containing the samples found during the NN</span>
-                <span class="c1"># search. Linearize the indexes and remove the double values</span>
-                <span class="n">idx_vec_farthest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx_vec</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-
-                <span class="c1"># Create the subset</span>
-                <span class="n">sub_samples_x</span> <span class="o">=</span> <span class="n">sub_samples_x</span><span class="p">[</span><span class="n">idx_vec_farthest</span><span class="p">,</span> <span class="p">:]</span>
-                <span class="n">sub_samples_y</span> <span class="o">=</span> <span class="n">sub_samples_y</span><span class="p">[</span><span class="n">idx_vec_farthest</span><span class="p">]</span>
-
-                <span class="c1"># Compute the NN considering the current class</span>
-                <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
-                    <span class="n">sub_samples_x</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
-
-                <span class="n">sel_x</span><span class="p">,</span> <span class="n">sel_y</span><span class="p">,</span> <span class="n">idx_tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_dist_based</span><span class="p">(</span>
-                    <span class="n">sub_samples_x</span><span class="p">,</span>
-                    <span class="n">sub_samples_y</span><span class="p">,</span>
-                    <span class="n">dist_vec</span><span class="p">,</span>
-                    <span class="n">num_samples</span><span class="p">,</span>
-                    <span class="n">key</span><span class="p">,</span>
-                    <span class="n">sel_strategy</span><span class="o">=</span><span class="s1">&#39;farthest&#39;</span><span class="p">)</span>
-
-                <span class="c1"># idx_tmp is relative to the feature selected in the</span>
-                <span class="c1"># previous step and we need to find the indirection</span>
-                <span class="n">idx_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">)[</span><span class="n">idx_vec_farthest</span><span class="p">[</span><span class="n">idx_tmp</span><span class="p">]]</span>
+                    <span class="n">dist_vec</span><span class="p">,</span> <span class="n">idx_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+                        <span class="n">X_class_selected</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
+                    <span class="n">index_target_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_dist_based</span><span class="p">(</span>
+                        <span class="n">X_class_selected</span><span class="p">,</span> <span class="n">y_class_selected</span><span class="p">,</span> <span class="n">dist_vec</span><span class="p">,</span>
+                        <span class="n">n_samples</span><span class="p">,</span> <span class="n">target_class</span><span class="p">,</span> <span class="n">sel_strategy</span><span class="o">=</span><span class="s1">&#39;farthest&#39;</span><span class="p">)</span>
+                    <span class="c1"># idx_tmp is relative to the feature selected in the</span>
+                    <span class="c1"># previous step and we need to find the indirection</span>
+                    <span class="n">index_target_class</span> <span class="o">=</span> <span class="n">idx_vec_farthest</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+                <span class="n">index_target_class</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
-            <span class="c1"># If we need to offer support for the indices selected</span>
+            <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">][</span><span class="n">index_target_class</span><span class="p">]),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">][</span><span class="n">index_target_class</span><span class="p">]),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-                <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">idx_tmp</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)[</span>
+                        <span class="n">index_target_class</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-            <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">sel_x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">sel_y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Under-sampling performed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_resampled</span><span class="p">))</span>
-
-        <span class="c1"># Check if the indices of the samples selected should be returned too</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="c1"># Return the indices of interest</span>
             <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">idx_under</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span></div>

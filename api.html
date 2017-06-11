@@ -144,6 +144,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-imblearn.metrics">Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.classification_report_imbalanced.html">imblearn.metrics.classification_report_imbalanced</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.sensitivity_specificity_support.html">imblearn.metrics.sensitivity_specificity_support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.sensitivity_score.html">imblearn.metrics.sensitivity_score</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.specificity_score.html">imblearn.metrics.specificity_score</a></li>
@@ -158,6 +159,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-imblearn.utils">Utilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.estimator_checks.check_estimator.html">imblearn.utils.estimator_checks.check_estimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.check_neighbors_object.html">imblearn.utils.check_neighbors_object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.check_ratio.html">imblearn.utils.check_ratio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.hash_X_y.html">imblearn.utils.hash_X_y</a></li>
 </ul>
 </li>
 </ul>
@@ -281,7 +285,7 @@ methods that select samples in order to balance the dataset.</p>
 <tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.RepeatedEditedNearestNeighbours.html#imblearn.under_sampling.RepeatedEditedNearestNeighbours" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code></a>([...])</td>
 <td>Class to perform under-sampling based on the repeated edited nearest neighbour method.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.AllKNN</span></code></a>([return_indices,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.AllKNN</span></code></a>([ratio,&nbsp;...])</td>
 <td>Class to perform under-sampling based on the AllKNN method.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.InstanceHardnessThreshold.html#imblearn.under_sampling.InstanceHardnessThreshold" title="imblearn.under_sampling.InstanceHardnessThreshold"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.InstanceHardnessThreshold</span></code></a>([...])</td>
@@ -293,13 +297,13 @@ methods that select samples in order to balance the dataset.</p>
 <tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule" title="imblearn.under_sampling.NeighbourhoodCleaningRule"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code></a>([...])</td>
 <td>Class performing under-sampling based on the neighbourhood cleaning rule.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.OneSidedSelection.html#imblearn.under_sampling.OneSidedSelection" title="imblearn.under_sampling.OneSidedSelection"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.OneSidedSelection</span></code></a>([...])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.OneSidedSelection.html#imblearn.under_sampling.OneSidedSelection" title="imblearn.under_sampling.OneSidedSelection"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.OneSidedSelection</span></code></a>([ratio,&nbsp;...])</td>
 <td>Class to perform under-sampling based on one-sided selection method.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.RandomUnderSampler.html#imblearn.under_sampling.RandomUnderSampler" title="imblearn.under_sampling.RandomUnderSampler"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.RandomUnderSampler</span></code></a>([ratio,&nbsp;...])</td>
 <td>Class to perform random under-sampling.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks" title="imblearn.under_sampling.TomekLinks"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.TomekLinks</span></code></a>([return_indices,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks" title="imblearn.under_sampling.TomekLinks"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.TomekLinks</span></code></a>([ratio,&nbsp;...])</td>
 <td>Class to perform under-sampling by removing Tomek&#8217;s links.</td>
 </tr>
 </tbody>
@@ -395,19 +399,22 @@ metrics and pairwise metrics and distance computations.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.sensitivity_specificity_support.html#imblearn.metrics.sensitivity_specificity_support" title="imblearn.metrics.sensitivity_specificity_support"><code class="xref py py-obj docutils literal"><span class="pre">metrics.sensitivity_specificity_support</span></code></a>(...)</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.classification_report_imbalanced.html#imblearn.metrics.classification_report_imbalanced" title="imblearn.metrics.classification_report_imbalanced"><code class="xref py py-obj docutils literal"><span class="pre">metrics.classification_report_imbalanced</span></code></a>(...)</td>
+<td>Build a classification report based on metrics used with imbalanced</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.sensitivity_specificity_support.html#imblearn.metrics.sensitivity_specificity_support" title="imblearn.metrics.sensitivity_specificity_support"><code class="xref py py-obj docutils literal"><span class="pre">metrics.sensitivity_specificity_support</span></code></a>(...)</td>
 <td>Compute sensitivity, specificity, and support for each class</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.sensitivity_score.html#imblearn.metrics.sensitivity_score" title="imblearn.metrics.sensitivity_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.sensitivity_score</span></code></a>(y_true,&nbsp;y_pred[,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.sensitivity_score.html#imblearn.metrics.sensitivity_score" title="imblearn.metrics.sensitivity_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.sensitivity_score</span></code></a>(y_true,&nbsp;y_pred[,&nbsp;...])</td>
 <td>Compute the sensitivity</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.specificity_score.html#imblearn.metrics.specificity_score" title="imblearn.metrics.specificity_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.specificity_score</span></code></a>(y_true,&nbsp;y_pred[,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.specificity_score.html#imblearn.metrics.specificity_score" title="imblearn.metrics.specificity_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.specificity_score</span></code></a>(y_true,&nbsp;y_pred[,&nbsp;...])</td>
 <td>Compute the specificity</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.geometric_mean_score.html#imblearn.metrics.geometric_mean_score" title="imblearn.metrics.geometric_mean_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.geometric_mean_score</span></code></a>(y_true,&nbsp;y_pred)</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.geometric_mean_score.html#imblearn.metrics.geometric_mean_score" title="imblearn.metrics.geometric_mean_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.geometric_mean_score</span></code></a>(y_true,&nbsp;y_pred)</td>
 <td>Compute the geometric mean</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.make_index_balanced_accuracy.html#imblearn.metrics.make_index_balanced_accuracy" title="imblearn.metrics.make_index_balanced_accuracy"><code class="xref py py-obj docutils literal"><span class="pre">metrics.make_index_balanced_accuracy</span></code></a>([...])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.make_index_balanced_accuracy.html#imblearn.metrics.make_index_balanced_accuracy" title="imblearn.metrics.make_index_balanced_accuracy"><code class="xref py py-obj docutils literal"><span class="pre">metrics.make_index_balanced_accuracy</span></code></a>([...])</td>
 <td>Balance any scoring function using the index balanced accuracy</td>
 </tr>
 </tbody>
@@ -443,6 +450,15 @@ imbalanced data.</p>
 <tbody valign="top">
 <tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.utils.estimator_checks.check_estimator.html#imblearn.utils.estimator_checks.check_estimator" title="imblearn.utils.estimator_checks.check_estimator"><code class="xref py py-obj docutils literal"><span class="pre">utils.estimator_checks.check_estimator</span></code></a>(Estimator)</td>
 <td>Check if estimator adheres to scikit-learn conventions and</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.utils.check_neighbors_object.html#imblearn.utils.check_neighbors_object" title="imblearn.utils.check_neighbors_object"><code class="xref py py-obj docutils literal"><span class="pre">utils.check_neighbors_object</span></code></a>(nn_name,&nbsp;nn_object)</td>
+<td>Check the objects is consistent to be a NN.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio" title="imblearn.utils.check_ratio"><code class="xref py py-obj docutils literal"><span class="pre">utils.check_ratio</span></code></a>(ratio,&nbsp;y,&nbsp;sampling_type)</td>
+<td>Ratio validation for samplers.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.utils.hash_X_y.html#imblearn.utils.hash_X_y" title="imblearn.utils.hash_X_y"><code class="xref py py-obj docutils literal"><span class="pre">utils.hash_X_y</span></code></a>(X,&nbsp;y[,&nbsp;n_samples])</td>
+<td>Compute hash of the input arrays.</td>
 </tr>
 </tbody>
 </table>

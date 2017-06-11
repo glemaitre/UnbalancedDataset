@@ -188,52 +188,52 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">NearestNeighbors</span>
 
-<span class="kn">from</span> <span class="nn">...base</span> <span class="k">import</span> <span class="n">BaseBinarySampler</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
 
 
-<div class="viewcode-block" id="TomekLinks"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks">[docs]</a><span class="k">class</span> <span class="nc">TomekLinks</span><span class="p">(</span><span class="n">BaseBinarySampler</span><span class="p">):</span>
+<div class="viewcode-block" id="TomekLinks"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks">[docs]</a><span class="k">class</span> <span class="nc">TomekLinks</span><span class="p">(</span><span class="n">BaseCleaningSampler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to perform under-sampling by removing Tomek&#39;s links.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    ratio : str, dict, or callable, optional (default=&#39;auto&#39;)</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
+
 <span class="sd">    return_indices : bool, optional (default=False)</span>
 <span class="sd">        Whether or not to return the indices of the samples randomly</span>
 <span class="sd">        selected from the majority class.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by np.random.</span>
+<span class="sd">        If int, ``random_state`` is the seed used by the random number</span>
+<span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
+<span class="sd">        number generator; If ``None``, the random number generator is the</span>
+<span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
 <span class="sd">    n_jobs : int, optional (default=1)</span>
 <span class="sd">        The number of threads to open if possible.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_c_ : str or int</span>
-<span class="sd">        The identifier of the minority class.</span>
-
-<span class="sd">    max_c_ : str or int</span>
-<span class="sd">        The identifier of the majority class.</span>
-
-<span class="sd">    stats_c_ : dict of str/int : int</span>
-<span class="sd">        A dictionary in which the number of occurences of each class is</span>
-<span class="sd">        reported.</span>
-
-<span class="sd">    X_shape_ : tuple of int</span>
-<span class="sd">        Shape of the data `X` during fitting.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    This method is based on [1]_.</span>
 
-<span class="sd">    It does not support multi-class sampling.</span>
+<span class="sd">    Supports mutli-class resampling.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -241,7 +241,7 @@
 <span class="sd">    &gt;&gt;&gt; from collections import Counter</span>
 <span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_classification</span>
 <span class="sd">    &gt;&gt;&gt; from imblearn.under_sampling import \</span>
-<span class="sd">    TomekLinks # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">TomekLinks # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">    &gt;&gt;&gt; X, y = make_classification(n_classes=2, class_sep=2,</span>
 <span class="sd">    ... weights=[0.1, 0.9], n_informative=3, n_redundant=1, flip_y=0,</span>
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
@@ -259,8 +259,10 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TomekLinks.__init__"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TomekLinks</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+<div class="viewcode-block" id="TomekLinks.__init__"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TomekLinks</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span>
+                                         <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
 
@@ -289,25 +291,20 @@
 <span class="sd">            that are Tomek links.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Initialize the boolean result as false.</span>
         <span class="n">links</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
-        <span class="c1"># Loop through each sample and looks whether it belongs to the minority</span>
-        <span class="c1"># class. If it does, we don&#39;t consider it since we want to keep all</span>
-        <span class="c1"># minority samples. If, however, it belongs to the majority sample we</span>
-        <span class="c1"># look at its first neighbour. If its closest neighbour also has the</span>
-        <span class="c1"># current sample as its closest neighbour, the two form a Tomek link.</span>
-        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">ele</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="c1"># find which class to not consider</span>
+        <span class="n">class_excluded</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">class_type</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="n">ele</span> <span class="o">==</span> <span class="n">class_type</span><span class="p">:</span>
+        <span class="c1"># there is a Tomek link between two samples if they are both nearest</span>
+        <span class="c1"># neighbors of each others.</span>
+        <span class="k">for</span> <span class="n">index_sample</span><span class="p">,</span> <span class="n">target_sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">target_sample</span> <span class="ow">in</span> <span class="n">class_excluded</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">nn_index</span><span class="p">[</span><span class="n">ind</span><span class="p">]]</span> <span class="o">==</span> <span class="n">class_type</span><span class="p">:</span>
-
-                <span class="c1"># If they form a tomek link, put a True marker on this sample.</span>
-                <span class="k">if</span> <span class="n">nn_index</span><span class="p">[</span><span class="n">nn_index</span><span class="p">[</span><span class="n">ind</span><span class="p">]]</span> <span class="o">==</span> <span class="n">ind</span><span class="p">:</span>
-                    <span class="n">links</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">nn_index</span><span class="p">[</span><span class="n">index_sample</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">target_sample</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">nn_index</span><span class="p">[</span><span class="n">nn_index</span><span class="p">[</span><span class="n">index_sample</span><span class="p">]]</span> <span class="o">==</span> <span class="n">index_sample</span><span class="p">:</span>
+                    <span class="n">links</span><span class="p">[</span><span class="n">index_sample</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="n">links</span></div>
 
@@ -341,20 +338,12 @@
         <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
         <span class="n">nns</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
 
-        <span class="c1"># Send the information to is_tomek function to get boolean vector back</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Looking for majority Tomek links ...&#39;</span><span class="p">)</span>
-        <span class="n">links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tomek</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">nns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">)</span>
+        <span class="n">links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tomek</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">nns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Under-sampling performed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
-                         <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">links</span><span class="p">)]))</span>
-
-        <span class="c1"># Check if the indices of the samples selected should be returned too</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="c1"># Return the indices of interest</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">links</span><span class="p">)],</span> <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">links</span><span class="p">)],</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">links</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Return data set without majority Tomek links.</span>
             <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">links</span><span class="p">)],</span> <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">links</span><span class="p">)]</span></div>
 </pre></div>
 

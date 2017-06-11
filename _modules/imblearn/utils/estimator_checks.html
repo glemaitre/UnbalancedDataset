@@ -189,35 +189,34 @@
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_classification</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.estimator_checks</span> <span class="k">import</span> <span class="n">_yield_all_checks</span> \
     <span class="k">as</span> <span class="n">sklearn_yield_all_checks</span><span class="p">,</span> <span class="n">check_estimator</span> \
     <span class="k">as</span> <span class="n">sklearn_check_estimator</span><span class="p">,</span> <span class="n">check_parameters_default_constructible</span>
 <span class="kn">from</span> <span class="nn">sklearn.exceptions</span> <span class="k">import</span> <span class="n">NotFittedError</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.testing</span> <span class="k">import</span> <span class="p">(</span><span class="n">assert_warns</span><span class="p">,</span> <span class="n">assert_raises_regex</span><span class="p">,</span>
-                                   <span class="n">assert_equal</span><span class="p">,</span> <span class="n">assert_true</span><span class="p">,</span>
-                                   <span class="n">set_random_state</span><span class="p">)</span>
+                                   <span class="n">assert_true</span><span class="p">,</span> <span class="n">set_random_state</span><span class="p">,</span>
+                                   <span class="n">assert_equal</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">imblearn.base</span> <span class="k">import</span> <span class="n">SamplerMixin</span>
-<span class="kn">from</span> <span class="nn">imblearn.utils.testing</span> <span class="k">import</span> <span class="n">binary_estimators</span><span class="p">,</span> <span class="n">multiclass_estimators</span>
+<span class="kn">from</span> <span class="nn">imblearn.over_sampling.base</span> <span class="k">import</span> <span class="n">BaseOverSampler</span>
+<span class="kn">from</span> <span class="nn">imblearn.under_sampling.base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span><span class="p">,</span> <span class="n">BaseUnderSampler</span>
+<span class="kn">from</span> <span class="nn">imblearn.ensemble.base</span> <span class="k">import</span> <span class="n">BaseEnsembleSampler</span>
 
 
 <span class="k">def</span> <span class="nf">_yield_sampler_checks</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Estimator</span><span class="p">):</span>
-    <span class="c1"># Get only the name of binary and multiclass samplers</span>
-    <span class="n">binary_samplers</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">binary_estimators</span><span class="p">()])</span>
-    <span class="n">multiclass_samplers</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">multiclass_estimators</span><span class="p">()])</span>
-    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">binary_samplers</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">check_continuous_warning</span>
-        <span class="k">yield</span> <span class="n">check_multiclass_warning</span>
-    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">multiclass_samplers</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">check_continuous_warning</span>
-    <span class="k">if</span> <span class="s1">&#39;ratio&#39;</span> <span class="ow">in</span> <span class="n">Estimator</span><span class="p">()</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">yield</span> <span class="n">check_samplers_ratio_error</span>
+    <span class="k">yield</span> <span class="n">check_target_type</span>
     <span class="k">yield</span> <span class="n">check_samplers_one_label</span>
     <span class="k">yield</span> <span class="n">check_samplers_no_fit_error</span>
     <span class="k">yield</span> <span class="n">check_samplers_X_consistancy_sample</span>
     <span class="k">yield</span> <span class="n">check_samplers_fit</span>
+    <span class="k">yield</span> <span class="n">check_samplers_fit_sample</span>
+    <span class="k">yield</span> <span class="n">check_samplers_ratio_fit_sample</span>
 
 
 <span class="k">def</span> <span class="nf">_yield_all_checks</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Estimator</span><span class="p">):</span>
@@ -253,7 +252,7 @@
         <span class="n">check</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Estimator</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">check_continuous_warning</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Estimator</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">check_target_type</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Estimator</span><span class="p">):</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
     <span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">()</span>
@@ -358,53 +357,83 @@
                         <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">check_samplers_ratio_error</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">):</span>
-    <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
-
-    <span class="n">ratio</span> <span class="o">=</span> <span class="mi">1000</span>
-    <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;ratio&#39;</span><span class="p">:</span> <span class="n">ratio</span><span class="p">})</span>
-    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="s2">&quot;Ratio cannot be greater than one.&quot;</span><span class="p">,</span>
-                        <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
-    <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;ratio&#39;</span><span class="p">:</span> <span class="n">ratio</span><span class="p">})</span>
-    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="s2">&quot;Ratio cannot be negative.&quot;</span><span class="p">,</span>
-                        <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="s1">&#39;rnd&#39;</span>
-    <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;ratio&#39;</span><span class="p">:</span> <span class="n">ratio</span><span class="p">})</span>
-    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="s2">&quot;Unknown string for the parameter ratio.&quot;</span><span class="p">,</span>
-                        <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">]</span>
-    <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;ratio&#39;</span><span class="p">:</span> <span class="n">ratio</span><span class="p">})</span>
-    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="s2">&quot;Unknown parameter type for ratio.&quot;</span><span class="p">,</span>
-                        <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">1000</span>
-    <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;ratio&#39;</span><span class="p">:</span> <span class="n">ratio</span><span class="p">})</span>
-    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="s2">&quot;The ratio requested at initialisation&quot;</span><span class="p">,</span>
-                        <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-
 <span class="k">def</span> <span class="nf">check_samplers_X_consistancy_sample</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">):</span>
     <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
     <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">X_different</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">y_different</span> <span class="o">=</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
-    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="s2">&quot;to be the one earlier fitted&quot;</span><span class="p">,</span>
+    <span class="n">X_different</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">40</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">y_different</span> <span class="o">=</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">assert_raises_regex</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="s2">&quot;X and y need to be same array earlier&quot;</span><span class="p">,</span>
                         <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span> <span class="n">X_different</span><span class="p">,</span> <span class="n">y_different</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">check_samplers_fit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">):</span>
     <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
     <span class="n">sampler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">assert_equal</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">min_c_</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">assert_equal</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">maj_c_</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">assert_equal</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
-    <span class="n">assert_equal</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">assert_true</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="s1">&#39;ratio_&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">check_samplers_fit_sample</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">):</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                               <span class="n">n_informative</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+                               <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseOverSampler</span><span class="p">):</span>
+        <span class="n">target_stats_res</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="n">n_samples</span>
+                        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseUnderSampler</span><span class="p">):</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">n_samples</span>
+                        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseCleaningSampler</span><span class="p">):</span>
+        <span class="n">target_stats_res</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">assert_true</span><span class="p">(</span>
+            <span class="nb">all</span><span class="p">(</span><span class="n">target_stats</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target_stats_res</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">class_sample</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">class_sample</span> <span class="o">!=</span> <span class="n">class_minority</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseEnsembleSampler</span><span class="p">):</span>
+        <span class="n">y_ensemble</span> <span class="o">=</span> <span class="n">y_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">n_samples</span>
+                        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_ensemble</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+
+<span class="k">def</span> <span class="nf">check_samplers_ratio_fit_sample</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">):</span>
+    <span class="c1"># in this test we will force all samplers to not change the class 1</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                               <span class="n">n_informative</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+                               <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseOverSampler</span><span class="p">):</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">498</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">498</span><span class="p">}</span>
+        <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">target_stats</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseUnderSampler</span><span class="p">):</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">201</span><span class="p">}</span>
+        <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">target_stats</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseCleaningSampler</span><span class="p">):</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">201</span><span class="p">}</span>
+        <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">target_stats</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">BaseEnsembleSampler</span><span class="p">):</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">201</span><span class="p">}</span>
+        <span class="n">sampler</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">y_ensemble</span> <span class="o">=</span> <span class="n">y_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">target_stats</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_ensemble</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
            </div>

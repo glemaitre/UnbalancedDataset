@@ -189,15 +189,13 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
 
-<span class="kn">from</span> <span class="nn">...base</span> <span class="k">import</span> <span class="n">BaseMulticlassSampler</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseUnderSampler</span>
 
 
-<div class="viewcode-block" id="ClusterCentroids"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.ClusterCentroids.html#imblearn.under_sampling.ClusterCentroids">[docs]</a><span class="k">class</span> <span class="nc">ClusterCentroids</span><span class="p">(</span><span class="n">BaseMulticlassSampler</span><span class="p">):</span>
+<div class="viewcode-block" id="ClusterCentroids"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.ClusterCentroids.html#imblearn.under_sampling.ClusterCentroids">[docs]</a><span class="k">class</span> <span class="nc">ClusterCentroids</span><span class="p">(</span><span class="n">BaseUnderSampler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Perform under-sampling by generating centroids based on</span>
 <span class="sd">    clustering methods.</span>
 
@@ -210,42 +208,38 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ratio : str or float, optional (default=&#39;auto&#39;)</span>
-<span class="sd">        If &#39;auto&#39;, the ratio will be defined automatically to balance</span>
-<span class="sd">        the dataset. Otherwise, the ratio is defined as the number</span>
-<span class="sd">        of samples in the minority class over the the number of samples</span>
-<span class="sd">        in the majority class.</span>
+<span class="sd">    ratio : str, dict, or callable, optional (default=&#39;auto&#39;)</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by np.random.</span>
+<span class="sd">        If int, ``random_state`` is the seed used by the random number</span>
+<span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
+<span class="sd">        number generator; If ``None``, the random number generator is the</span>
+<span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
 <span class="sd">    estimator : object, optional(default=KMeans())</span>
-<span class="sd">        Pass a `sklearn.cluster.KMeans` estimator.</span>
+<span class="sd">        Pass a :class:`sklearn.cluster.KMeans` estimator.</span>
 
 <span class="sd">    n_jobs : int, optional (default=1)</span>
 <span class="sd">        The number of threads to open if possible.</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_c_ : str or int</span>
-<span class="sd">        The identifier of the minority class.</span>
-
-<span class="sd">    max_c_ : str or int</span>
-<span class="sd">        The identifier of the majority class.</span>
-
-<span class="sd">    stats_c_ : dict of str/int : int</span>
-<span class="sd">        A dictionary in which the number of occurences of each class is</span>
-<span class="sd">        reported.</span>
-
-<span class="sd">    X_shape_ : tuple of int</span>
-<span class="sd">        Shape of the data `X` during fitting.</span>
-
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    This class support multi-class.</span>
+<span class="sd">    Supports mutli-class resampling.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -253,7 +247,7 @@
 <span class="sd">    &gt;&gt;&gt; from collections import Counter</span>
 <span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_classification</span>
 <span class="sd">    &gt;&gt;&gt; from imblearn.under_sampling import \</span>
-<span class="sd">    ClusterCentroids # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">ClusterCentroids # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">    &gt;&gt;&gt; X, y = make_classification(n_classes=2, class_sep=2,</span>
 <span class="sd">    ... weights=[0.1, 0.9], n_informative=3, n_redundant=1, flip_y=0,</span>
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
@@ -277,8 +271,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Private function to create the NN estimator&quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Private function to create the KMeans estimator&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span>
                 <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
@@ -287,30 +280,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`estimator` has to be a KMeans clustering.&#39;</span>
                              <span class="s1">&#39; Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="p">)))</span>
-
-<div class="viewcode-block" id="ClusterCentroids.fit"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.ClusterCentroids.html#imblearn.under_sampling.ClusterCentroids.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Find the classes statistics before to perform sampling.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
-<span class="sd">            Matrix containing the data which have to be sampled.</span>
-
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
-<span class="sd">            Corresponding label for each sample in X.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        self : object,</span>
-<span class="sd">            Return self.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">ClusterCentroids</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="bp">self</span></div>
 
     <span class="k">def</span> <span class="nf">_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resample the dataset.</span>
@@ -332,41 +301,28 @@
 <span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
 
-        <span class="c1"># Compute the number of cluster needed</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
-            <span class="n">num_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">num_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-        <span class="c1"># Set the number of sample for the estimator</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_clusters&#39;</span><span class="p">:</span> <span class="n">num_samples</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">n_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="p">[</span><span class="n">target_class</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_clusters&#39;</span><span class="p">:</span> <span class="n">n_samples</span><span class="p">})</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">])</span>
+                <span class="n">centroids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">cluster_centers_</span>
 
-        <span class="c1"># Start with the minority class</span>
-        <span class="n">X_min</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-        <span class="n">y_min</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
+                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">centroids</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">target_class</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span><span class="p">)),</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
 
-        <span class="c1"># All the minority class samples will be preserved</span>
-        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">X_min</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">y_min</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="c1"># Loop over the other classes under picking at random</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-
-            <span class="c1"># If the minority class is up, skip it.</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Find the centroids via k-means</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">])</span>
-            <span class="n">centroids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">cluster_centers_</span>
-
-            <span class="c1"># Concatenate to the minority class</span>
-            <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">centroids</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">key</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_samples</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Under-sampling performed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_resampled</span><span class="p">))</span>
+                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span></div>
 </pre></div>

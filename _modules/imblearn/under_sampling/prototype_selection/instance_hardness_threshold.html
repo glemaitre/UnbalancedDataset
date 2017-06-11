@@ -187,7 +187,7 @@
 <span class="c1">#          Christos Aridas</span>
 <span class="c1"># License: MIT</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
@@ -198,7 +198,7 @@
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.externals.six</span> <span class="k">import</span> <span class="n">string_types</span>
 
-<span class="kn">from</span> <span class="nn">...base</span> <span class="k">import</span> <span class="n">BaseBinarySampler</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
 
 
 <span class="k">def</span> <span class="nf">_get_cv_splits</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">random_state</span><span class="p">):</span>
@@ -214,39 +214,52 @@
     <span class="k">return</span> <span class="n">cv_iterator</span>
 
 
-<div class="viewcode-block" id="InstanceHardnessThreshold"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.InstanceHardnessThreshold.html#imblearn.under_sampling.InstanceHardnessThreshold">[docs]</a><span class="k">class</span> <span class="nc">InstanceHardnessThreshold</span><span class="p">(</span><span class="n">BaseBinarySampler</span><span class="p">):</span>
+<div class="viewcode-block" id="InstanceHardnessThreshold"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.InstanceHardnessThreshold.html#imblearn.under_sampling.InstanceHardnessThreshold">[docs]</a><span class="k">class</span> <span class="nc">InstanceHardnessThreshold</span><span class="p">(</span><span class="n">BaseCleaningSampler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to perform under-sampling based on the instance hardness</span>
 <span class="sd">    threshold.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    estimator : object, optional (default=RandomForestClassifier())</span>
-<span class="sd">        Classifier to be used to estimate instance hardness of the samples.</span>
-<span class="sd">        By default a RandomForestClassifer will be used.</span>
-<span class="sd">        If str, the choices using a string are the following: &#39;knn&#39;,</span>
-<span class="sd">        &#39;decision-tree&#39;, &#39;random-forest&#39;, &#39;adaboost&#39;, &#39;gradient-boosting&#39;</span>
-<span class="sd">        and &#39;linear-svm&#39;.</span>
-<span class="sd">        If object, an estimator inherited from `sklearn.base.ClassifierMixin`</span>
-<span class="sd">        and having an attribute `predict_proba`.</span>
+<span class="sd">        Classifier to be used to estimate instance hardness of the samples.  By</span>
+<span class="sd">        default a :class:`sklearn.ensemble.RandomForestClassifer` will be used.</span>
+<span class="sd">        If ``str``, the choices using a string are the following: ``&#39;knn&#39;``,</span>
+<span class="sd">        ``&#39;decision-tree&#39;``, ``&#39;random-forest&#39;``, ``&#39;adaboost&#39;``,</span>
+<span class="sd">        ``&#39;gradient-boosting&#39;`` and ``&#39;linear-svm&#39;``.  If object, an estimator</span>
+<span class="sd">        inherited from :class:`sklearn.base.ClassifierMixin` and having an</span>
+<span class="sd">        attribute :func:`predict_proba`.</span>
 
-<span class="sd">        NOTE: `estimator` as a string object is deprecated from 0.2 and will be</span>
-<span class="sd">        replaced in 0.4. Use `ClassifierMixin` object instead.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``estimator`` as a string object is deprecated from 0.2 and will be</span>
+<span class="sd">           replaced in 0.4. Use :class:`sklearn.base.ClassifierMixin` object</span>
+<span class="sd">           instead.</span>
 
-<span class="sd">    ratio : str or float, optional (default=&#39;auto&#39;)</span>
-<span class="sd">        If &#39;auto&#39;, the ratio will be defined automatically to balance</span>
-<span class="sd">        the dataset. Otherwise, the ratio is defined as the number</span>
-<span class="sd">        of samples in the minority class over the the number of samples</span>
-<span class="sd">        in the majority class.</span>
+<span class="sd">    ratio : str, dict, or callable, optional (default=&#39;auto&#39;)</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
 
 <span class="sd">    return_indices : bool, optional (default=False)</span>
 <span class="sd">        Whether or not to return the indices of the samples randomly</span>
 <span class="sd">        selected from the majority class.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by np.random.</span>
+<span class="sd">        If int, ``random_state`` is the seed used by the random number</span>
+<span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
+<span class="sd">        number generator; If ``None``, the random number generator is the</span>
+<span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
 <span class="sd">    cv : int, optional (default=5)</span>
 <span class="sd">        Number of folds to be used when estimating samples&#39; instance hardness.</span>
@@ -257,33 +270,16 @@
 <span class="sd">    **kwargs:</span>
 <span class="sd">        Option for the different classifier.</span>
 
-<span class="sd">        NOTE: `**kwargs` has been deprecated from 0.2 and will be replaced in</span>
-<span class="sd">        0.4. Use `ClassifierMixin` object instead to pass parameter associated</span>
-<span class="sd">        to an estimator.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_c_ : str or int</span>
-<span class="sd">        The identifier of the minority class.</span>
-
-<span class="sd">    max_c_ : str or int</span>
-<span class="sd">        The identifier of the majority class.</span>
-
-<span class="sd">    stats_c_ : dict of str/int : int</span>
-<span class="sd">        A dictionary in which the number of occurences of each class is</span>
-<span class="sd">        reported.</span>
-
-<span class="sd">    cv : int, optional (default=5)</span>
-<span class="sd">        Number of folds used when estimating samples&#39; instance hardness.</span>
-
-<span class="sd">    X_shape_ : tuple of int</span>
-<span class="sd">        Shape of the data `X` during fitting.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``**kwargs`` has been deprecated from 0.2 and will be replaced in</span>
+<span class="sd">           0.4. Use :class:`sklearn.base.ClassifierMixin` object instead to</span>
+<span class="sd">           pass parameter associated to an estimator.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    The method is based on [1]_.</span>
 
-<span class="sd">    This class does not support multi-class.</span>
+<span class="sd">    Supports mutli-class resampling.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -372,30 +368,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid parameter `estimator`. Got </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="p">)))</span>
 
-<div class="viewcode-block" id="InstanceHardnessThreshold.fit"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.InstanceHardnessThreshold.html#imblearn.under_sampling.InstanceHardnessThreshold.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Find the classes statistics before to perform sampling.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
-<span class="sd">            Matrix containing the data which have to be sampled.</span>
-
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
-<span class="sd">            Corresponding label for each sample in X.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        self : object,</span>
-<span class="sd">            Return self.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">InstanceHardnessThreshold</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="bp">self</span></div>
-
     <span class="k">def</span> <span class="nf">_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resample the dataset.</span>
 
@@ -420,10 +392,10 @@
 <span class="sd">            containing the which samples have been selected.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
 
-        <span class="c1"># Create the different folds</span>
+        <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
         <span class="n">skf</span> <span class="o">=</span> <span class="n">_get_cv_splits</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
-
         <span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">skf</span><span class="p">:</span>
@@ -439,28 +411,34 @@
                 <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
             <span class="p">]</span>
 
-        <span class="c1"># Compute the number of cluster needed</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
-            <span class="n">num_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">num_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">)</span>
-
-        <span class="c1"># Find the percentile corresponding to the top num_samples</span>
-        <span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span>
-            <span class="n">probabilities</span><span class="p">[</span><span class="n">y</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">],</span>
-            <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="p">(</span><span class="n">num_samples</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">maj_c_</span><span class="p">]))</span> <span class="o">*</span> <span class="mf">100.</span><span class="p">)</span>
-
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">probabilities</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">)</span>
-
-        <span class="c1"># Sample the data</span>
-        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Under-sampling performed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_resampled</span><span class="p">))</span>
-
-        <span class="c1"># If we need to offer support for the indices</span>
+        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">n_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="p">[</span><span class="n">target_class</span><span class="p">]</span>
+                <span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span>
+                    <span class="n">probabilities</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">],</span>
+                    <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="p">(</span><span class="n">n_samples</span> <span class="o">/</span> <span class="n">target_stats</span><span class="p">[</span><span class="n">target_class</span><span class="p">]))</span> <span class="o">*</span> <span class="mf">100.</span><span class="p">)</span>
+                <span class="n">index_target_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span>
+                    <span class="n">probabilities</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">index_target_class</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">][</span><span class="n">index_target_class</span><span class="p">]),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">][</span><span class="n">index_target_class</span><span class="p">]),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
+                <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)[</span>
+                        <span class="n">index_target_class</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">idx_under</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span></div>

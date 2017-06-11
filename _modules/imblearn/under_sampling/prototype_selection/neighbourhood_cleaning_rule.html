@@ -190,62 +190,69 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">mode</span>
 
-<span class="kn">from</span> <span class="nn">...base</span> <span class="k">import</span> <span class="n">BaseMulticlassSampler</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
+<span class="kn">from</span> <span class="nn">.edited_nearest_neighbours</span> <span class="k">import</span> <span class="n">EditedNearestNeighbours</span>
 <span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
 
+<span class="n">SEL_KIND</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="NeighbourhoodCleaningRule"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule">[docs]</a><span class="k">class</span> <span class="nc">NeighbourhoodCleaningRule</span><span class="p">(</span><span class="n">BaseMulticlassSampler</span><span class="p">):</span>
+
+<div class="viewcode-block" id="NeighbourhoodCleaningRule"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule">[docs]</a><span class="k">class</span> <span class="nc">NeighbourhoodCleaningRule</span><span class="p">(</span><span class="n">BaseCleaningSampler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class performing under-sampling based on the neighbourhood cleaning</span>
 <span class="sd">    rule.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    ratio : str, dict, or callable, optional (default=&#39;auto&#39;)</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
+
 <span class="sd">    return_indices : bool, optional (default=False)</span>
 <span class="sd">        Whether or not to return the indices of the samples randomly</span>
 <span class="sd">        selected from the majority class.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by np.random.</span>
+<span class="sd">        If int, ``random_state`` is the seed used by the random number</span>
+<span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
+<span class="sd">        number generator; If ``None``, the random number generator is the</span>
+<span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
 <span class="sd">    size_ngh : int, optional (default=None)</span>
 <span class="sd">        Size of the neighbourhood to consider to compute the average</span>
 <span class="sd">        distance to the minority point samples.</span>
 
-<span class="sd">        NOTE: size_ngh is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Use ``n_neighbors`` instead.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``size_ngh`` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Use ``n_neighbors`` instead.</span>
 
 <span class="sd">    n_neighbors : int or object, optional (default=3)</span>
-<span class="sd">        If int, size of the neighbourhood to consider in order to make</span>
+<span class="sd">        If ``int``, size of the neighbourhood to consider in order to make</span>
 <span class="sd">        the comparison between each samples and their NN.</span>
 <span class="sd">        If object, an estimator that inherits from</span>
-<span class="sd">        `sklearn.neighbors.base.KNeighborsMixin` that will be used to find</span>
-<span class="sd">        the k_neighbors.</span>
+<span class="sd">        :class:`sklearn.neighbors.base.KNeighborsMixin` that will be used to</span>
+<span class="sd">        find the k_neighbors.</span>
 
 <span class="sd">    n_jobs : int, optional (default=1)</span>
 <span class="sd">        The number of threads to open if possible.</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_c_ : str or int</span>
-<span class="sd">        The identifier of the minority class.</span>
-
-<span class="sd">    max_c_ : str or int</span>
-<span class="sd">        The identifier of the majority class.</span>
-
-<span class="sd">    stats_c_ : dict of str/int : int</span>
-<span class="sd">        A dictionary in which the number of occurences of each class is</span>
-<span class="sd">        reported.</span>
-
-<span class="sd">    X_shape_ : tuple of int</span>
-<span class="sd">        Shape of the data `X` during fitting.</span>
-
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    This class support multi-class.</span>
+<span class="sd">    Supports mutli-class resampling.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -253,7 +260,7 @@
 <span class="sd">    &gt;&gt;&gt; from collections import Counter</span>
 <span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_classification</span>
 <span class="sd">    &gt;&gt;&gt; from imblearn.under_sampling import \</span>
-<span class="sd">    NeighbourhoodCleaningRule # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">NeighbourhoodCleaningRule # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">    &gt;&gt;&gt; X, y = make_classification(n_classes=2, class_sep=2,</span>
 <span class="sd">    ... weights=[0.1, 0.9], n_informative=3, n_redundant=1, flip_y=0,</span>
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
@@ -262,7 +269,7 @@
 <span class="sd">    &gt;&gt;&gt; ncr = NeighbourhoodCleaningRule(random_state=42)</span>
 <span class="sd">    &gt;&gt;&gt; X_res, y_res = ncr.fit_sample(X, y)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Resampled dataset shape {}&#39;.format(Counter(y_res)))</span>
-<span class="sd">    Resampled dataset shape Counter({1: 889, 0: 100})</span>
+<span class="sd">    Resampled dataset shape Counter({1: 877, 0: 100})</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
@@ -272,42 +279,37 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="NeighbourhoodCleaningRule.__init__"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                  <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">size_ngh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="n">kind_sel</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+                 <span class="n">threshold_cleaning</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NeighbourhoodCleaningRule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+            <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span> <span class="o">=</span> <span class="n">size_ngh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">=</span> <span class="n">kind_sel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold_cleaning</span> <span class="o">=</span> <span class="n">threshold_cleaning</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
 
-<div class="viewcode-block" id="NeighbourhoodCleaningRule.fit"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Find the classes statistics before to perform sampling.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
-<span class="sd">            Matrix containing the data which have to be sampled.</span>
-
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
-<span class="sd">            Corresponding label for each sample in X.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        self : object,</span>
-<span class="sd">            Return self.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">NeighbourhoodCleaningRule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
-        <span class="c1"># set the number of jobs</span>
+    <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create the objects required by NCR.&quot;&quot;&quot;</span>
+        <span class="c1"># FIXME: Deprecated from 0.2. To be removed in 0.4.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+                                          <span class="n">additional_neighbor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">})</span>
 
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SEL_KIND</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold_cleaning</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold_cleaning</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;threshold_cleaning&#39; is a value between 0 and 1.&quot;</span>
+                             <span class="s2">&quot; Got </span><span class="si">{}</span><span class="s2"> instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">threshold_cleaning</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resample the dataset.</span>
@@ -333,82 +335,54 @@
 <span class="sd">            containing the which samples have been selected.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
 
-        <span class="c1"># Start with the minority class</span>
-        <span class="n">X_min</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
-        <span class="n">y_min</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span>
+        <span class="n">enn</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                      <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
+                                      <span class="n">size_ngh</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span><span class="p">,</span>
+                                      <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+                                      <span class="n">kind_sel</span><span class="o">=</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span>
+                                      <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">index_not_a1</span> <span class="o">=</span> <span class="n">enn</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">index_a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">index_a1</span><span class="p">[</span><span class="n">index_not_a1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">index_a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">index_a1</span><span class="p">)</span>
 
-        <span class="c1"># All the minority class samples will be preserved</span>
-        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">X_min</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">y_min</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="c1"># If we need to offer support for the indices</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">)</span>
-
-        <span class="c1"># Fit the whole dataset</span>
+        <span class="c1"># clean the neighborhood</span>
+        <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="c1"># compute which classes to consider for cleaning for the A2 group</span>
+        <span class="n">classes_under_sample</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span>
+                                    <span class="p">(</span><span class="n">n_samples</span> <span class="o">&gt;</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">threshold_cleaning</span><span class="p">))]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">X_class</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">]</span>
+        <span class="n">y_class</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">]</span>
+        <span class="n">nnhood_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+            <span class="n">X_class</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">nnhood_label</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">nnhood_idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">==</span> <span class="s1">&#39;mode&#39;</span><span class="p">:</span>
+            <span class="n">nnhood_label_majority</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">nnhood_label</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">nnhood_bool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">nnhood_label_majority</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_class</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+            <span class="n">nnhood_label_majority</span> <span class="o">=</span> <span class="n">nnhood_label</span> <span class="o">==</span> <span class="n">class_minority</span>
+            <span class="n">nnhood_bool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">nnhood_label</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># compute a2 group</span>
+        <span class="n">index_a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">nnhood_idx</span><span class="p">[</span><span class="o">~</span><span class="n">nnhood_bool</span><span class="p">])</span>
+        <span class="n">index_a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">([</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">index_a2</span>
+                              <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">in</span> <span class="n">classes_under_sample</span><span class="p">])</span>
 
-        <span class="n">idx_to_exclude</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># Loop over the other classes under picking at random</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_c_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">union_a1_a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">union1d</span><span class="p">(</span><span class="n">index_a1</span><span class="p">,</span> <span class="n">index_a2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">selected_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">selected_samples</span><span class="p">[</span><span class="n">union_a1_a2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">index_target_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">selected_samples</span><span class="p">)</span>
 
-            <span class="c1"># Get the sample of the current class</span>
-            <span class="n">sub_samples_x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">]</span>
-
-            <span class="c1"># Get the samples associated</span>
-            <span class="n">idx_sub_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span>
-
-            <span class="c1"># Find the NN for the current class</span>
-            <span class="n">nnhood_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
-                <span class="n">sub_samples_x</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-            <span class="c1"># Get the label of the corresponding to the index</span>
-            <span class="n">nnhood_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">nnhood_idx</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span>
-
-            <span class="c1"># Check which one are the same label than the current class</span>
-            <span class="c1"># Make an AND operation through the three neighbours</span>
-            <span class="n">nnhood_bool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">nnhood_label</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-
-            <span class="c1"># If the minority class remove the majority samples</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">:</span>
-                <span class="c1"># Get the index to exclude</span>
-                <span class="n">idx_to_exclude</span> <span class="o">+=</span> <span class="n">nnhood_idx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span>
-                    <span class="n">nnhood_label</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">nnhood_bool</span><span class="p">)]))]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Get the index to exclude</span>
-                <span class="n">idx_to_exclude</span> <span class="o">+=</span> <span class="n">idx_sub_sample</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span>
-                    <span class="n">nnhood_bool</span><span class="p">)]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-        <span class="n">idx_to_exclude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx_to_exclude</span><span class="p">)</span>
-
-        <span class="c1"># Create a vector with the sample to select</span>
-        <span class="n">sel_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="n">sel_idx</span><span class="p">[</span><span class="n">idx_to_exclude</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c1"># Exclude as well the minority sample since that they will be</span>
-        <span class="c1"># concatenated later</span>
-        <span class="n">sel_idx</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_c_</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="c1"># Get the samples from the majority classes</span>
-        <span class="n">sel_x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">sel_idx</span><span class="p">),</span> <span class="p">:]</span>
-        <span class="n">sel_y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">sel_idx</span><span class="p">)]</span>
-
-        <span class="c1"># If we need to offer support for the indices selected</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="n">idx_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">sel_idx</span><span class="p">)</span>
-            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">idx_tmp</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">sel_x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">sel_y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Under-sampling performed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y_resampled</span><span class="p">))</span>
-
-        <span class="c1"># Check if the indices of the samples selected should be returned too</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="c1"># Return the indices of interest</span>
-            <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">idx_under</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">],</span>
+                    <span class="n">index_target_class</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span></div>
+            <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

@@ -210,39 +210,60 @@
 <h1>imblearn.under_sampling.NeighbourhoodCleaningRule<a class="headerlink" href="#imblearn-under-sampling-neighbourhoodcleaningrule" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule">
-<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">NeighbourhoodCleaningRule</code><span class="sig-paren">(</span><em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.html#NeighbourhoodCleaningRule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">NeighbourhoodCleaningRule</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>threshold_cleaning=0.5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.html#NeighbourhoodCleaningRule"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.py#L21"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class performing under-sampling based on the neighbourhood cleaning
 rule.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>return_indices</strong> : bool, optional (default=False)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ratio</strong> : str, dict, or callable, optional (default=&#8217;auto&#8217;)</p>
+<blockquote>
+<div><p>Ratio to use for resampling the data set.</p>
+<ul class="simple">
+<li>If <code class="docutils literal"><span class="pre">str</span></code>, has to be one of: (i) <code class="docutils literal"><span class="pre">'minority'</span></code>: resample the
+minority class; (ii) <code class="docutils literal"><span class="pre">'majority'</span></code>: resample the majority class,
+(iii) <code class="docutils literal"><span class="pre">'not</span> <span class="pre">minority'</span></code>: resample all classes apart of the minority
+class, (iv) <code class="docutils literal"><span class="pre">'all'</span></code>: resample all classes, and (v) <code class="docutils literal"><span class="pre">'auto'</span></code>:
+correspond to <code class="docutils literal"><span class="pre">'all'</span></code> with for over-sampling methods and <code class="docutils literal"><span class="pre">'not</span>
+<span class="pre">minority'</span></code> for under-sampling methods. The classes targeted will be
+over-sampled or under-sampled to achieve an equal number of sample
+with the majority or minority class.</li>
+<li>If <code class="docutils literal"><span class="pre">dict</span></code>, the keys correspond to the targeted classes. The values
+correspond to the desired number of samples.</li>
+<li>If callable, function taking <code class="docutils literal"><span class="pre">y</span></code> and returns a <code class="docutils literal"><span class="pre">dict</span></code>. The keys
+correspond to the targeted classes. The values correspond to the
+desired number of samples.</li>
+</ul>
+</div></blockquote>
+<p><strong>return_indices</strong> : bool, optional (default=False)</p>
 <blockquote>
 <div><p>Whether or not to return the indices of the samples randomly
 selected from the majority class.</p>
 </div></blockquote>
 <p><strong>random_state</strong> : int, RandomState instance or None, optional (default=None)</p>
 <blockquote>
-<div><p>If int, random_state is the seed used by the random number generator;
-If RandomState instance, random_state is the random number generator;
-If None, the random number generator is the RandomState instance used
-by np.random.</p>
+<div><p>If int, <code class="docutils literal"><span class="pre">random_state</span></code> is the seed used by the random number
+generator; If <code class="docutils literal"><span class="pre">RandomState</span></code> instance, random_state is the random
+number generator; If <code class="docutils literal"><span class="pre">None</span></code>, the random number generator is the
+<code class="docutils literal"><span class="pre">RandomState</span></code> instance used by <code class="docutils literal"><span class="pre">np.random</span></code>.</p>
 </div></blockquote>
 <p><strong>size_ngh</strong> : int, optional (default=None)</p>
 <blockquote>
 <div><p>Size of the neighbourhood to consider to compute the average
 distance to the minority point samples.</p>
-<p>NOTE: size_ngh is deprecated from 0.2 and will be replaced in 0.4
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">size_ngh</span></code> is deprecated from 0.2 and will be replaced in 0.4
 Use <code class="docutils literal"><span class="pre">n_neighbors</span></code> instead.</p>
+</div>
 </div></blockquote>
 <p><strong>n_neighbors</strong> : int or object, optional (default=3)</p>
 <blockquote>
-<div><p>If int, size of the neighbourhood to consider in order to make
+<div><p>If <code class="docutils literal"><span class="pre">int</span></code>, size of the neighbourhood to consider in order to make
 the comparison between each samples and their NN.
 If object, an estimator that inherits from
-<cite>sklearn.neighbors.base.KNeighborsMixin</cite> that will be used to find
-the k_neighbors.</p>
+<code class="xref py py-class docutils literal"><span class="pre">sklearn.neighbors.base.KNeighborsMixin</span></code> that will be used to
+find the k_neighbors.</p>
 </div></blockquote>
 <p><strong>n_jobs</strong> : int, optional (default=1)</p>
 <blockquote class="last">
@@ -253,7 +274,7 @@ the k_neighbors.</p>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>This class support multi-class.</p>
+<p>Supports mutli-class resampling.</p>
 <p class="rubric">References</p>
 <table class="docutils citation" frame="void" id="r39" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -265,7 +286,7 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_classification</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="k">import</span>     <span class="n">NeighbourhoodCleaningRule</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="k">import</span> <span class="n">NeighbourhoodCleaningRule</span> 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">class_sep</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -274,30 +295,9 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ncr</span> <span class="o">=</span> <span class="n">NeighbourhoodCleaningRule</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">ncr</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resampled dataset shape </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)))</span>
-<span class="go">Resampled dataset shape Counter({1: 889, 0: 100})</span>
+<span class="go">Resampled dataset shape Counter({1: 877, 0: 100})</span>
 </pre></div>
 </div>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="8%" />
-<col width="92%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a href="#id2"><span class="problematic" id="id3">min_c_</span></a></td>
-<td>(str or int) The identifier of the minority class.</td>
-</tr>
-<tr class="row-even"><td><a href="#id4"><span class="problematic" id="id5">max_c_</span></a></td>
-<td>(str or int) The identifier of the majority class.</td>
-</tr>
-<tr class="row-odd"><td><a href="#id6"><span class="problematic" id="id7">stats_c_</span></a></td>
-<td>(dict of str/int) A dictionary in which the number of occurences of each class is reported.</td>
-</tr>
-<tr class="row-even"><td><a href="#id8"><span class="problematic" id="id9">X_shape_</span></a></td>
-<td>(tuple of int) Shape of the data <cite>X</cite> during fitting.</td>
-</tr>
-</tbody>
-</table>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -324,7 +324,7 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 </table>
 <dl class="method">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.html#NeighbourhoodCleaningRule.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>threshold_cleaning=0.5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.html#NeighbourhoodCleaningRule.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.py#L100"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
@@ -334,7 +334,7 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.__init__" title="imblearn.under_sampling.NeighbourhoodCleaningRule.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>([return_indices,&nbsp;random_state,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.__init__" title="imblearn.under_sampling.NeighbourhoodCleaningRule.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>([ratio,&nbsp;return_indices,&nbsp;...])</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.fit" title="imblearn.under_sampling.NeighbourhoodCleaningRule.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(X,&nbsp;y)</td>
@@ -356,7 +356,7 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 </table>
 <dl class="method">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/neighbourhood_cleaning_rule.html#NeighbourhoodCleaningRule.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L136"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -384,7 +384,7 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 
 <dl class="method">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -416,7 +416,7 @@ by balancing class distribution,&#8221; Springer Berlin Heidelberg, 2001.</td></
 
 <dl class="method">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/../../virtualenvs/venv-system/local/lib/python2.7/site-packages/sklearn/base.py#L220"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -441,7 +441,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -473,7 +473,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.NeighbourhoodCleaningRule.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/../../virtualenvs/venv-system/local/lib/python2.7/site-packages/sklearn/base.py#L257"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.NeighbourhoodCleaningRule.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form

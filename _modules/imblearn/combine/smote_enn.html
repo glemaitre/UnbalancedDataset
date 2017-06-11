@@ -185,120 +185,135 @@
 <span class="c1">#          Christos Aridas</span>
 <span class="c1"># License: MIT</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseBinarySampler</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_X_y</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">SamplerMixin</span>
 <span class="kn">from</span> <span class="nn">..over_sampling</span> <span class="k">import</span> <span class="n">SMOTE</span>
 <span class="kn">from</span> <span class="nn">..under_sampling</span> <span class="k">import</span> <span class="n">EditedNearestNeighbours</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">check_target_type</span><span class="p">,</span> <span class="n">hash_X_y</span>
 
 
-<div class="viewcode-block" id="SMOTEENN"><a class="viewcode-back" href="../../../generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN">[docs]</a><span class="k">class</span> <span class="nc">SMOTEENN</span><span class="p">(</span><span class="n">BaseBinarySampler</span><span class="p">):</span>
+<div class="viewcode-block" id="SMOTEENN"><a class="viewcode-back" href="../../../generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN">[docs]</a><span class="k">class</span> <span class="nc">SMOTEENN</span><span class="p">(</span><span class="n">SamplerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to perform over-sampling using SMOTE and cleaning using ENN.</span>
 
 <span class="sd">    Combine over- and under-sampling using SMOTE and Edited Nearest Neighbours.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ratio : str or float, optional (default=None)</span>
-<span class="sd">        If &#39;auto&#39;, the ratio will be defined automatically to balance</span>
-<span class="sd">        the dataset. Otherwise, the ratio is defined as the</span>
-<span class="sd">        number of samples in the minority class over the the number of</span>
-<span class="sd">        samples in the majority class.</span>
+<span class="sd">    ratio : str, dict, or callable, optional (default=&#39;auto&#39;)</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by np.random.</span>
+<span class="sd">        If int, ``random_state`` is the seed used by the random number</span>
+<span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
+<span class="sd">        number generator; If ``None``, the random number generator is the</span>
+<span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
 <span class="sd">    smote : object, optional (default=SMOTE())</span>
-<span class="sd">        The SMOTE object to use. If not given, a SMOTE object with default</span>
-<span class="sd">        parameters will be given.</span>
+<span class="sd">        The :class:`imblearn.over_sampling.SMOTE` object to use. If not given,</span>
+<span class="sd">        a :class:`imblearn.over_sampling.SMOTE` object with default parameters</span>
+<span class="sd">        will be given.</span>
 
 <span class="sd">    enn : object, optional (default=EditedNearestNeighbours())</span>
-<span class="sd">        The ENN object to use. If not given, an EditedNearestNeighbours object</span>
-<span class="sd">        with default parameters will be given.</span>
+<span class="sd">        The :class:`imblearn.under_sampling.EditedNearestNeighbours` object to</span>
+<span class="sd">        use. If not given, an</span>
+<span class="sd">        :class:`imblearn.under_sampling.EditedNearestNeighbours` object with</span>
+<span class="sd">        default parameters will be given.</span>
 
 <span class="sd">    k : int, optional (default=None)</span>
 <span class="sd">        Number of nearest neighbours to used to construct synthetic</span>
 <span class="sd">        samples.</span>
 
-<span class="sd">        NOTE: `k` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a SMOTE object.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           `k` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
 
 <span class="sd">    m : int, optional (default=None)</span>
 <span class="sd">        Number of nearest neighbours to use to determine if a minority</span>
 <span class="sd">        sample is in danger.</span>
 
-<span class="sd">        NOTE: `m` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a SMOTE object.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           `m` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
 
 <span class="sd">    out_step : float, optional (default=None)</span>
 <span class="sd">        Step size when extrapolating.</span>
 
-<span class="sd">        NOTE: `out_step` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a SMOTE object.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``out_step`` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
 
 <span class="sd">    kind_smote : str, optional (default=None)</span>
 <span class="sd">        The type of SMOTE algorithm to use one of the following</span>
-<span class="sd">        options: &#39;regular&#39;, &#39;borderline1&#39;, &#39;borderline2&#39;, &#39;svm&#39;.</span>
+<span class="sd">        options: ``&#39;regular&#39;``, ``&#39;borderline1&#39;``, ``&#39;borderline2&#39;``,</span>
+<span class="sd">        ``&#39;svm&#39;``.</span>
 
-<span class="sd">    NOTE: `kind_smote` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a SMOTE object.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           `kind_smote` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
 
 <span class="sd">    size_ngh : int, optional (default=None)</span>
 <span class="sd">        Size of the neighbourhood to consider to compute the average</span>
 <span class="sd">        distance to the minority point samples.</span>
 
-<span class="sd">        NOTE: size_ngh is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Use ``n_neighbors`` instead.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           size_ngh is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Use ``n_neighbors`` instead.</span>
 
 <span class="sd">    n_neighbors : int, optional (default=None)</span>
 <span class="sd">        Size of the neighbourhood to consider to compute the average</span>
 <span class="sd">        distance to the minority point samples.</span>
 
-<span class="sd">        NOTE: `n_neighbors` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a EditedNearestNeighbours object.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           `n_neighbors` is deprecated from 0.2 and will be replaced in 0.4</span>
+<span class="sd">           Give directly a</span>
+<span class="sd">           :class:`imblearn.under_sampling.EditedNearestNeighbours` object.</span>
 
 <span class="sd">    kind_sel : str, optional (default=None)</span>
 <span class="sd">        Strategy to use in order to exclude samples.</span>
 
-<span class="sd">        - If &#39;all&#39;, all neighbours will have to agree with the samples of</span>
-<span class="sd">        interest to not be excluded.</span>
-<span class="sd">        - If &#39;mode&#39;, the majority vote of the neighbours will be used in</span>
-<span class="sd">        order to exclude a sample.</span>
+<span class="sd">        - If ``&#39;all&#39;``, all neighbours will have to agree with the samples of</span>
+<span class="sd">          interest to not be excluded.</span>
+<span class="sd">        - If ``&#39;mode&#39;``, the majority vote of the neighbours will be used in</span>
+<span class="sd">          order to exclude a sample.</span>
 
-<span class="sd">        NOTE: `kind_sel` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a EditedNearestNeighbours object.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           ``kind_sel`` is deprecated from 0.2 and will be replaced in 0.4 Give</span>
+<span class="sd">           directly a :class:`imblearn.under_sampling.EditedNearestNeighbours`</span>
+<span class="sd">           object.</span>
 
 <span class="sd">    n_jobs : int, optional (default=None)</span>
 <span class="sd">        The number of threads to open if possible.</span>
 
-<span class="sd">        NOTE: `n_jobs` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">        Give directly a SMOTE and EditedNearestNeighbours object.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    min_c_ : str or int</span>
-<span class="sd">        The identifier of the minority class.</span>
-
-<span class="sd">    max_c_ : str or int</span>
-<span class="sd">        The identifier of the majority class.</span>
-
-<span class="sd">    stats_c_ : dict of str/int : int</span>
-<span class="sd">        A dictionary in which the number of occurences of each class is</span>
-<span class="sd">        reported.</span>
-
-<span class="sd">    X_shape_ : tuple of int</span>
-<span class="sd">        Shape of the data `X` during fitting.</span>
+<span class="sd">        .. deprecated:: 0.2</span>
+<span class="sd">           `n_jobs` is deprecated from 0.2 and will be replaced in 0.4 Give</span>
+<span class="sd">           directly a :class:`imblearn.over_sampling.SMOTE` and</span>
+<span class="sd">           :class:`imblearn.under_sampling.EditedNearestNeighbours` object.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    The method is presented in [1]_.</span>
 
-<span class="sd">    This class does not support mutli-class.</span>
+<span class="sd">    Supports mutli-class resampling.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -337,8 +352,9 @@
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">kind_enn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">SMOTEENN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SMOTEENN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">smote</span> <span class="o">=</span> <span class="n">smote</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enn</span> <span class="o">=</span> <span class="n">enn</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
@@ -348,7 +364,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span> <span class="o">=</span> <span class="n">size_ngh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kind_enn</span> <span class="o">=</span> <span class="n">kind_enn</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Private function to validate SMOTE and ENN objects&quot;</span>
@@ -411,6 +428,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span>
+                <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
                 <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
                 <span class="n">size_ngh</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span><span class="p">,</span>
                 <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
@@ -425,7 +443,8 @@
                                  <span class="s1">&#39; Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enn</span><span class="p">)))</span>
         <span class="c1"># Otherwise create a default EditedNearestNeighbours</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+                                                <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SMOTEENN.fit"><a class="viewcode-back" href="../../../generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Find the classes statistics before to perform sampling.</span>
@@ -444,13 +463,10 @@
 <span class="sd">            Return self.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">SMOTEENN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
-
-        <span class="c1"># Fit using SMOTE</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">smote_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">check_target_type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_hash_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_hash_</span> <span class="o">=</span> <span class="n">hash_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
@@ -474,12 +490,10 @@
 <span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
 
-        <span class="c1"># Transform using SMOTE</span>
-        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">smote_</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-        <span class="c1"># Fit and transform using ENN</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+        <span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">smote_</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

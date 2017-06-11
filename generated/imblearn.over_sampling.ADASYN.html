@@ -201,7 +201,7 @@
 <h1>imblearn.over_sampling.ADASYN<a class="headerlink" href="#imblearn-over-sampling-adasyn" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.over_sampling.ADASYN">
-<em class="property">class </em><code class="descclassname">imblearn.over_sampling.</code><code class="descname">ADASYN</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k=None</em>, <em>n_neighbors=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/adasyn.html#ADASYN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.over_sampling.</code><code class="descname">ADASYN</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k=None</em>, <em>n_neighbors=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/adasyn.html#ADASYN"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/over_sampling/adasyn.py#L17"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform over-sampling using ADASYN.</p>
 <p>Perform over-sampling using Adaptive Synthetic Sampling Approach for
 Imbalanced Learning.</p>
@@ -209,33 +209,46 @@ Imbalanced Learning.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ratio</strong> : str or float, optional (default=&#8217;auto&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ratio</strong> : str, dict, or callable, optional (default=&#8217;auto&#8217;)</p>
 <blockquote>
-<div><p>If &#8216;auto&#8217;, the ratio will be defined automatically to balance
-the dataset. Otherwise, the ratio is defined as the number
-of samples in the minority class over the the number of samples
-in the majority class.</p>
+<div><p>Ratio to use for resampling the data set.</p>
+<ul class="simple">
+<li>If <code class="docutils literal"><span class="pre">str</span></code>, has to be one of: (i) <code class="docutils literal"><span class="pre">'minority'</span></code>: resample the
+minority class; (ii) <code class="docutils literal"><span class="pre">'majority'</span></code>: resample the majority class,
+(iii) <code class="docutils literal"><span class="pre">'not</span> <span class="pre">minority'</span></code>: resample all classes apart of the minority
+class, (iv) <code class="docutils literal"><span class="pre">'all'</span></code>: resample all classes, and (v) <code class="docutils literal"><span class="pre">'auto'</span></code>:
+correspond to <code class="docutils literal"><span class="pre">'all'</span></code> with for over-sampling methods and <code class="docutils literal"><span class="pre">'not</span>
+<span class="pre">minority'</span></code> for under-sampling methods. The classes targeted will be
+over-sampled or under-sampled to achieve an equal number of sample
+with the majority or minority class.</li>
+<li>If <code class="docutils literal"><span class="pre">dict</span></code>, the keys correspond to the targeted classes. The values
+correspond to the desired number of samples.</li>
+<li>If callable, function taking <code class="docutils literal"><span class="pre">y</span></code> and returns a <code class="docutils literal"><span class="pre">dict</span></code>. The keys
+correspond to the targeted classes. The values correspond to the
+desired number of samples.</li>
+</ul>
 </div></blockquote>
 <p><strong>random_state</strong> : int, RandomState instance or None, optional (default=None)</p>
 <blockquote>
-<div><p>If int, random_state is the seed used by the random number generator;
-If RandomState instance, random_state is the random number generator;
-If None, the random number generator is the RandomState instance used
-by np.random.</p>
+<div><p>If int, <code class="docutils literal"><span class="pre">random_state</span></code> is the seed used by the random number
+generator; If <code class="docutils literal"><span class="pre">RandomState</span></code> instance, random_state is the random
+number generator; If <code class="docutils literal"><span class="pre">None</span></code>, the random number generator is the
+<code class="docutils literal"><span class="pre">RandomState</span></code> instance used by <code class="docutils literal"><span class="pre">np.random</span></code>.</p>
 </div></blockquote>
 <p><strong>k</strong> : int, optional (default=None)</p>
 <blockquote>
 <div><p>Number of nearest neighbours to used to construct synthetic samples.</p>
-<p>NOTE: <cite>k</cite> is deprecated from 0.2 and will be replaced in 0.4
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">k</span></code> is deprecated from 0.2 and will be replaced in 0.4
 Use <code class="docutils literal"><span class="pre">n_neighbors</span></code> instead.</p>
+</div>
 </div></blockquote>
 <p><strong>n_neighbors</strong> : int int or object, optional (default=5)</p>
 <blockquote>
-<div><p>If int, number of nearest neighbours to used to construct
-synthetic samples.
-If object, an estimator that inherits from
-<cite>sklearn.neighbors.base.KNeighborsMixin</cite> that will be used to find
-the k_neighbors.</p>
+<div><p>If <code class="docutils literal"><span class="pre">int</span></code>, number of nearest neighbours to used to construct synthetic
+samples.  If object, an estimator that inherits from
+<code class="xref py py-class docutils literal"><span class="pre">sklearn.neighbors.base.KNeighborsMixin</span></code> that will be used to
+find the k_neighbors.</p>
 </div></blockquote>
 <p><strong>n_jobs</strong> : int, optional (default=1)</p>
 <blockquote class="last">
@@ -246,7 +259,7 @@ the k_neighbors.</p>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>Does not support multi-class.</p>
+<p>Supports mutli-class resampling.</p>
 <p>The implementation is based on <a class="reference internal" href="#r30" id="id1">[R30]</a>.</p>
 <p class="rubric">References</p>
 <table class="docutils citation" frame="void" id="r30" rules="none">
@@ -261,7 +274,7 @@ on Computational Intelligence), pp. 1322-1328, 2008.</td></tr>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_classification</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="k">import</span>     <span class="n">ADASYN</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="k">import</span> <span class="n">ADASYN</span> 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">class_sep</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
@@ -274,27 +287,6 @@ on Computational Intelligence), pp. 1322-1328, 2008.</td></tr>
 <span class="go">Resampled dataset shape Counter({0: 904, 1: 900})</span>
 </pre></div>
 </div>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="8%" />
-<col width="92%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a href="#id3"><span class="problematic" id="id4">min_c_</span></a></td>
-<td>(str or int) The identifier of the minority class.</td>
-</tr>
-<tr class="row-even"><td><a href="#id5"><span class="problematic" id="id6">max_c_</span></a></td>
-<td>(str or int) The identifier of the majority class.</td>
-</tr>
-<tr class="row-odd"><td><a href="#id7"><span class="problematic" id="id8">stats_c_</span></a></td>
-<td>(dict of str/int) A dictionary in which the number of occurences of each class is reported.</td>
-</tr>
-<tr class="row-even"><td><a href="#id9"><span class="problematic" id="id10">X_shape_</span></a></td>
-<td>(tuple of int) Shape of the data <cite>X</cite> during fitting.</td>
-</tr>
-</tbody>
-</table>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -321,7 +313,7 @@ on Computational Intelligence), pp. 1322-1328, 2008.</td></tr>
 </table>
 <dl class="method">
 <dt id="imblearn.over_sampling.ADASYN.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k=None</em>, <em>n_neighbors=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/adasyn.html#ADASYN.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k=None</em>, <em>n_neighbors=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/adasyn.html#ADASYN.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/over_sampling/adasyn.py#L97"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
@@ -353,7 +345,7 @@ on Computational Intelligence), pp. 1322-1328, 2008.</td></tr>
 </table>
 <dl class="method">
 <dt id="imblearn.over_sampling.ADASYN.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/adasyn.html#ADASYN.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L136"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -381,7 +373,7 @@ on Computational Intelligence), pp. 1322-1328, 2008.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.ADASYN.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.over_sampling.ADASYN.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -413,7 +405,7 @@ on Computational Intelligence), pp. 1322-1328, 2008.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.ADASYN.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.over_sampling.ADASYN.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/../../virtualenvs/venv-system/local/lib/python2.7/site-packages/sklearn/base.py#L220"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -438,7 +430,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.ADASYN.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.over_sampling.ADASYN.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -470,7 +462,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.ADASYN.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="headerlink" href="#imblearn.over_sampling.ADASYN.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/306332f/imblearn/../../virtualenvs/venv-system/local/lib/python2.7/site-packages/sklearn/base.py#L257"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.ADASYN.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
