@@ -31,6 +31,7 @@ source activate testenv
 
 # Install scikit-learn
 conda install --yes scikit-learn=$SKLEARN_VERSION
+conda install --yes -c conda-forge gdcm
 
 # Install nose-timer via pip
 pip install nose-timer coverage codecov
