@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. Dataset loading utilities &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../about.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../index.html"/>
+        <link rel="up" title="User Guide" href="../user_guide.html"/>
+        <link rel="next" title="imbalanced-learn API" href="../api.html"/>
+        <link rel="prev" title="5. Ensemble of samplers" href="../ensemble.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../problem_statement.html">1. Problem statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../over_sampling.html">2. Over-sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../under_sampling.html">3. Under-sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../combine.html">4. Combination of over- and under-sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ensemble.html">5. Ensemble of samplers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Dataset loading utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbalanced-datasets-for-benchmark">6.1. Imbalanced datasets for benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbalanced-generator">6.2. Imbalanced generator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html"><cite>imbalanced-learn</cite> API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../user_guide.html">User Guide</a> &raquo;</li>
+        
+      <li>6. Dataset loading utilities</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/datasets/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dataset-loading-utilities">
+<span id="datasets"></span><h1>6. Dataset loading utilities<a class="headerlink" href="#dataset-loading-utilities" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">imblearn.datasets</span></code> package is complementing the <code class="docutils literal"><span class="pre">sklearn.datasets</span></code>
+package. The package provides both: (i) a set of imbalanced datasets to perform
+systematic benchmark and (ii) a utility to create an imbalanced dataset from an
+original balanced dataset.</p>
+<div class="section" id="imbalanced-datasets-for-benchmark">
+<span id="zenodo"></span><h2>6.1. Imbalanced datasets for benchmark<a class="headerlink" href="#imbalanced-datasets-for-benchmark" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets" title="imblearn.datasets.fetch_datasets"><code class="xref py py-func docutils literal"><span class="pre">fetch_datasets</span></code></a> allows to fetch 27 datasets which are imbalanced and
+binarized. The following data sets are available:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="21%" />
+<col width="46%" />
+<col width="10%" />
+<col width="13%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">Name</th>
+<th class="head">Repository &amp; Target</th>
+<th class="head">Ratio</th>
+<th class="head">#S</th>
+<th class="head">#F</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>ecoli</td>
+<td>UCI, target: imU</td>
+<td>8.6:1</td>
+<td>336</td>
+<td>7</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>optical_digits</td>
+<td>UCI, target: 8</td>
+<td>9.1:1</td>
+<td>5,620</td>
+<td>64</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>satimage</td>
+<td>UCI, target: 4</td>
+<td>9.3:1</td>
+<td>6,435</td>
+<td>36</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>pen_digits</td>
+<td>UCI, target: 5</td>
+<td>9.4:1</td>
+<td>10,992</td>
+<td>16</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>abalone</td>
+<td>UCI, target: 7</td>
+<td>9.7:1</td>
+<td>4,177</td>
+<td>10</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>sick_euthyroid</td>
+<td>UCI, target: sick euthyroid</td>
+<td>9.8:1</td>
+<td>3,163</td>
+<td>42</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>spectrometer</td>
+<td>UCI, target: &gt;=44</td>
+<td>11:1</td>
+<td>531</td>
+<td>93</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>car_eval_34</td>
+<td>UCI, target: good, v good</td>
+<td>12:1</td>
+<td>1,728</td>
+<td>21</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>isolet</td>
+<td>UCI, target: A, B</td>
+<td>12:1</td>
+<td>7,797</td>
+<td>617</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>us_crime</td>
+<td>UCI, target: &gt;0.65</td>
+<td>12:1</td>
+<td>1,994</td>
+<td>100</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>yeast_ml8</td>
+<td>LIBSVM, target: 8</td>
+<td>13:1</td>
+<td>2,417</td>
+<td>103</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>scene</td>
+<td>LIBSVM, target: &gt;one label</td>
+<td>13:1</td>
+<td>2,407</td>
+<td>294</td>
+</tr>
+<tr class="row-even"><td>13</td>
+<td>libras_move</td>
+<td>UCI, target: 1</td>
+<td>14:1</td>
+<td>360</td>
+<td>90</td>
+</tr>
+<tr class="row-odd"><td>14</td>
+<td>thyroid_sick</td>
+<td>UCI, target: sick</td>
+<td>15:1</td>
+<td>3,772</td>
+<td>52</td>
+</tr>
+<tr class="row-even"><td>15</td>
+<td>coil_2000</td>
+<td>KDD, CoIL, target: minority</td>
+<td>16:1</td>
+<td>9,822</td>
+<td>85</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>arrhythmia</td>
+<td>UCI, target: 06</td>
+<td>17:1</td>
+<td>452</td>
+<td>278</td>
+</tr>
+<tr class="row-even"><td>17</td>
+<td>solar_flare_m0</td>
+<td>UCI, target: M-&gt;0</td>
+<td>19:1</td>
+<td>1,389</td>
+<td>32</td>
+</tr>
+<tr class="row-odd"><td>18</td>
+<td>oil</td>
+<td>UCI, target: minority</td>
+<td>22:1</td>
+<td>937</td>
+<td>49</td>
+</tr>
+<tr class="row-even"><td>19</td>
+<td>car_eval_4</td>
+<td>UCI, target: vgood</td>
+<td>26:1</td>
+<td>1,728</td>
+<td>21</td>
+</tr>
+<tr class="row-odd"><td>20</td>
+<td>wine_quality</td>
+<td>UCI, wine, target: &lt;=4</td>
+<td>26:1</td>
+<td>4,898</td>
+<td>11</td>
+</tr>
+<tr class="row-even"><td>21</td>
+<td>letter_img</td>
+<td>UCI, target: Z</td>
+<td>26:1</td>
+<td>20,000</td>
+<td>16</td>
+</tr>
+<tr class="row-odd"><td>22</td>
+<td>yeast_me2</td>
+<td>UCI, target: ME2</td>
+<td>28:1</td>
+<td>1,484</td>
+<td>8</td>
+</tr>
+<tr class="row-even"><td>23</td>
+<td>webpage</td>
+<td>LIBSVM, w7a, target: minority</td>
+<td>33:1</td>
+<td>34,780</td>
+<td>300</td>
+</tr>
+<tr class="row-odd"><td>24</td>
+<td>ozone_level</td>
+<td>UCI, ozone, data</td>
+<td>34:1</td>
+<td>2,536</td>
+<td>72</td>
+</tr>
+<tr class="row-even"><td>25</td>
+<td>mammography</td>
+<td>UCI, target: minority</td>
+<td>42:1</td>
+<td>11,183</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>26</td>
+<td>protein_homo</td>
+<td>KDD CUP 2004, minority</td>
+<td>11:1</td>
+<td>145,751</td>
+<td>74</td>
+</tr>
+<tr class="row-even"><td>27</td>
+<td>abalone_19</td>
+<td>UCI, target: 19</td>
+<td>130:1</td>
+<td>4,177</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>A specific data set can be selected as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.datasets</span> <span class="k">import</span> <span class="n">fetch_datasets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ecoli</span> <span class="o">=</span> <span class="n">fetch_datasets</span><span class="p">()[</span><span class="s1">&#39;ecoli&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ecoli</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(336, 7)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">((</span><span class="n">ecoli</span><span class="o">.</span><span class="n">target</span><span class="p">)))</span>
+<span class="go">Counter({-1: 301, 1: 35})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imbalanced-generator">
+<span id="make-imbalanced"></span><h2>6.2. Imbalanced generator<a class="headerlink" href="#imbalanced-generator" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-func docutils literal"><span class="pre">make_imbalance</span></code></a> turns an original dataset into an imbalanced
+dataset. This behaviour is driven by the parameter <code class="docutils literal"><span class="pre">ratio</span></code> which behave
+similarly to other resampling algorithm. <code class="docutils literal"><span class="pre">ratio</span></code> can be given as a dictionary
+where the key corresponds to the class and the value is the the number of
+samples in the class:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_iris</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.datasets</span> <span class="k">import</span> <span class="n">make_imbalance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_imb</span><span class="p">,</span> <span class="n">y_imb</span> <span class="o">=</span> <span class="n">make_imbalance</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span>
+<span class="go">Counter({2: 40, 1: 30, 0: 20})</span>
+</pre></div>
+</div>
+<p>Note that all samples of a class are passed-through if the class is not mentioned
+in the dictionary:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_imb</span><span class="p">,</span> <span class="n">y_imb</span> <span class="o">=</span> <span class="n">make_imbalance</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span>
+<span class="go">Counter({1: 50, 2: 50, 0: 10})</span>
+</pre></div>
+</div>
+<p>Instead of a dictionary, a function can be defined and directly pass to
+<code class="docutils literal"><span class="pre">ratio</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ratio_multiplier</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">multiplier</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="n">target_stats</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="n">multiplier</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">target_stats</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_imb</span><span class="p">,</span> <span class="n">y_imb</span> <span class="o">=</span> <span class="n">make_imbalance</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+<span class="gp">... </span>                              <span class="n">ratio</span><span class="o">=</span><span class="n">ratio_multiplier</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span>
+<span class="go">Counter({2: 47, 1: 35, 0: 25})</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../auto_examples/datasets/plot_make_imbalance.html#sphx-glr-auto-examples-datasets-plot-make-imbalance-py"><span class="std std-ref">make_imbalance function</span></a> and
+<a class="reference internal" href="../auto_examples/plot_ratio_usage.html#sphx-glr-auto-examples-plot-ratio-usage-py"><span class="std std-ref">Usage of the ratio parameter for the different algorithm</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api.html" class="btn btn-neutral float-right" title="imbalanced-learn API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../ensemble.html" class="btn btn-neutral" title="5. Ensemble of samplers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.3.0.dev0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

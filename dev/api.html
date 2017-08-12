@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imbalanced-learn API &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="about.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="index.html"/>
+        <link rel="next" title="imblearn.under_sampling.ClusterCentroids" href="generated/imblearn.under_sampling.ClusterCentroids.html"/>
+        <link rel="prev" title="6. Dataset loading utilities" href="datasets/index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><cite>imbalanced-learn</cite> API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.under_sampling"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>: Under-sampling methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-imblearn.under_sampling.prototype_generation">Prototype generation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.ClusterCentroids.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.ClusterCentroids</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-imblearn.under_sampling.prototype_selection">Prototype selection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.CondensedNearestNeighbour.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.CondensedNearestNeighbour</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.EditedNearestNeighbours.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.EditedNearestNeighbours</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.RepeatedEditedNearestNeighbours.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.RepeatedEditedNearestNeighbours</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.AllKNN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.InstanceHardnessThreshold.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.InstanceHardnessThreshold</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.NearMiss.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.NearMiss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.NeighbourhoodCleaningRule</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.OneSidedSelection.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.OneSidedSelection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.RandomUnderSampler.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.RandomUnderSampler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/imblearn.under_sampling.TomekLinks.html"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>.TomekLinks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.over_sampling"><code class="docutils literal"><span class="pre">imblearn.over_sampling</span></code>: Over-sampling methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html"><code class="docutils literal"><span class="pre">imblearn.over_sampling</span></code>.ADASYN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.over_sampling.RandomOverSampler.html"><code class="docutils literal"><span class="pre">imblearn.over_sampling</span></code>.RandomOverSampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html"><code class="docutils literal"><span class="pre">imblearn.over_sampling</span></code>.SMOTE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.combine"><code class="docutils literal"><span class="pre">imblearn.combine</span></code>: Combination of over- and under-sampling methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.combine.SMOTEENN.html"><code class="docutils literal"><span class="pre">imblearn.combine</span></code>.SMOTEENN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.combine.SMOTETomek.html"><code class="docutils literal"><span class="pre">imblearn.combine</span></code>.SMOTETomek</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.ensemble"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>: Ensemble methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.ensemble.BalanceCascade.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.BalanceCascade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.ensemble.EasyEnsemble.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.EasyEnsemble</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.pipeline"><code class="docutils literal"><span class="pre">imblearn.pipeline</span></code>: Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html"><code class="docutils literal"><span class="pre">imblearn.pipeline</span></code>.Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.pipeline.make_pipeline.html"><code class="docutils literal"><span class="pre">imblearn.pipeline</span></code>.make_pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.metrics"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>: Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.classification_report_imbalanced.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.classification_report_imbalanced</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.sensitivity_specificity_support.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.sensitivity_specificity_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.sensitivity_score.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.sensitivity_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.specificity_score.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.specificity_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.geometric_mean_score.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.geometric_mean_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.metrics.make_index_balanced_accuracy.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.make_index_balanced_accuracy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.datasets"><code class="docutils literal"><span class="pre">imblearn.datasets</span></code>: Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.datasets.make_imbalance.html"><code class="docutils literal"><span class="pre">imblearn.datasets</span></code>.make_imbalance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.datasets.fetch_datasets.html"><code class="docutils literal"><span class="pre">imblearn.datasets</span></code>.fetch_datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-imblearn.utils"><code class="docutils literal"><span class="pre">imblearn.utils</span></code>: Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.check_neighbors_object.html"><code class="docutils literal"><span class="pre">imblearn.utils</span></code>.check_neighbors_object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.check_ratio.html"><code class="docutils literal"><span class="pre">imblearn.utils</span></code>.check_ratio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.utils.hash_X_y.html"><code class="docutils literal"><span class="pre">imblearn.utils</span></code>.hash_X_y</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li><cite>imbalanced-learn</cite> API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="imbalanced-learn-api">
+<h1><cite>imbalanced-learn</cite> API<a class="headerlink" href="#imbalanced-learn-api" title="Permalink to this headline">¶</a></h1>
+<p>This is the full API documentation of the <cite>imbalanced-learn</cite> toolbox.</p>
+<div class="section" id="module-imblearn.under_sampling">
+<span id="imblearn-under-sampling-under-sampling-methods"></span><span id="under-sampling-ref"></span><h2><a class="reference internal" href="#module-imblearn.under_sampling" title="imblearn.under_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling</span></code></a>: Under-sampling methods<a class="headerlink" href="#module-imblearn.under_sampling" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.under_sampling" title="imblearn.under_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling</span></code></a> provides methods to under-sample
+a dataset.</p>
+<div class="section" id="module-imblearn.under_sampling.prototype_generation">
+<span id="prototype-generation"></span><h3>Prototype generation<a class="headerlink" href="#module-imblearn.under_sampling.prototype_generation" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-imblearn.under_sampling.prototype_generation" title="imblearn.under_sampling.prototype_generation"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling.prototype_generation</span></code></a> submodule contains
+methods that generate new samples in order to balance the dataset.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.ClusterCentroids.html#imblearn.under_sampling.ClusterCentroids" title="imblearn.under_sampling.ClusterCentroids"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.ClusterCentroids</span></code></a>([ratio,&nbsp;…])</td>
+<td>Perform under-sampling by generating centroids based on clustering methods.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.under_sampling.prototype_selection">
+<span id="prototype-selection"></span><h3>Prototype selection<a class="headerlink" href="#module-imblearn.under_sampling.prototype_selection" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-imblearn.under_sampling.prototype_selection" title="imblearn.under_sampling.prototype_selection"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling.prototype_selection</span></code></a> submodule contains
+methods that select samples in order to balance the dataset.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.CondensedNearestNeighbour.html#imblearn.under_sampling.CondensedNearestNeighbour" title="imblearn.under_sampling.CondensedNearestNeighbour"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.CondensedNearestNeighbour</span></code></a>([…])</td>
+<td>Class to perform under-sampling based on the condensed nearest neighbour method.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.EditedNearestNeighbours.html#imblearn.under_sampling.EditedNearestNeighbours" title="imblearn.under_sampling.EditedNearestNeighbours"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.EditedNearestNeighbours</span></code></a>([…])</td>
+<td>Class to perform under-sampling based on the edited nearest neighbour method.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.RepeatedEditedNearestNeighbours.html#imblearn.under_sampling.RepeatedEditedNearestNeighbours" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code></a>([…])</td>
+<td>Class to perform under-sampling based on the repeated edited nearest neighbour method.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.AllKNN</span></code></a>([ratio,&nbsp;…])</td>
+<td>Class to perform under-sampling based on the AllKNN method.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.InstanceHardnessThreshold.html#imblearn.under_sampling.InstanceHardnessThreshold" title="imblearn.under_sampling.InstanceHardnessThreshold"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.InstanceHardnessThreshold</span></code></a>([…])</td>
+<td>Class to perform under-sampling based on the instance hardness threshold.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss" title="imblearn.under_sampling.NearMiss"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.NearMiss</span></code></a>([ratio,&nbsp;…])</td>
+<td>Class to perform under-sampling based on NearMiss methods.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule" title="imblearn.under_sampling.NeighbourhoodCleaningRule"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code></a>([…])</td>
+<td>Class performing under-sampling based on the neighbourhood cleaning rule.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.OneSidedSelection.html#imblearn.under_sampling.OneSidedSelection" title="imblearn.under_sampling.OneSidedSelection"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.OneSidedSelection</span></code></a>([ratio,&nbsp;…])</td>
+<td>Class to perform under-sampling based on one-sided selection method.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.under_sampling.RandomUnderSampler.html#imblearn.under_sampling.RandomUnderSampler" title="imblearn.under_sampling.RandomUnderSampler"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.RandomUnderSampler</span></code></a>([ratio,&nbsp;…])</td>
+<td>Class to perform random under-sampling.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.under_sampling.TomekLinks.html#imblearn.under_sampling.TomekLinks" title="imblearn.under_sampling.TomekLinks"><code class="xref py py-obj docutils literal"><span class="pre">under_sampling.TomekLinks</span></code></a>([ratio,&nbsp;…])</td>
+<td>Class to perform under-sampling by removing Tomek’s links.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-imblearn.over_sampling">
+<span id="imblearn-over-sampling-over-sampling-methods"></span><span id="over-sampling-ref"></span><h2><a class="reference internal" href="#module-imblearn.over_sampling" title="imblearn.over_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.over_sampling</span></code></a>: Over-sampling methods<a class="headerlink" href="#module-imblearn.over_sampling" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.over_sampling" title="imblearn.over_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.over_sampling</span></code></a> provides a set of method to
+perform over-sampling.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-obj docutils literal"><span class="pre">over_sampling.ADASYN</span></code></a>([ratio,&nbsp;random_state,&nbsp;…])</td>
+<td>Perform over-sampling using ADASYN.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.over_sampling.RandomOverSampler.html#imblearn.over_sampling.RandomOverSampler" title="imblearn.over_sampling.RandomOverSampler"><code class="xref py py-obj docutils literal"><span class="pre">over_sampling.RandomOverSampler</span></code></a>([ratio,&nbsp;…])</td>
+<td>Class to perform random over-sampling.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-obj docutils literal"><span class="pre">over_sampling.SMOTE</span></code></a>([ratio,&nbsp;random_state,&nbsp;…])</td>
+<td>Class to perform over-sampling using SMOTE.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.combine">
+<span id="imblearn-combine-combination-of-over-and-under-sampling-methods"></span><span id="combine-ref"></span><h2><a class="reference internal" href="#module-imblearn.combine" title="imblearn.combine"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.combine</span></code></a>: Combination of over- and under-sampling methods<a class="headerlink" href="#module-imblearn.combine" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.combine" title="imblearn.combine"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.combine</span></code></a> provides methods which combine
+over-sampling and under-sampling.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN" title="imblearn.combine.SMOTEENN"><code class="xref py py-obj docutils literal"><span class="pre">combine.SMOTEENN</span></code></a>([ratio,&nbsp;random_state,&nbsp;…])</td>
+<td>Class to perform over-sampling using SMOTE and cleaning using ENN.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.combine.SMOTETomek.html#imblearn.combine.SMOTETomek" title="imblearn.combine.SMOTETomek"><code class="xref py py-obj docutils literal"><span class="pre">combine.SMOTETomek</span></code></a>([ratio,&nbsp;random_state,&nbsp;…])</td>
+<td>Class to perform over-sampling using SMOTE and cleaning using Tomek links.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.ensemble">
+<span id="imblearn-ensemble-ensemble-methods"></span><span id="ensemble-ref"></span><h2><a class="reference internal" href="#module-imblearn.ensemble" title="imblearn.ensemble"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.ensemble</span></code></a>: Ensemble methods<a class="headerlink" href="#module-imblearn.ensemble" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.ensemble" title="imblearn.ensemble"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.ensemble</span></code></a> module include methods generating
+under-sampled subsets combined inside an ensemble.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.ensemble.BalanceCascade.html#imblearn.ensemble.BalanceCascade" title="imblearn.ensemble.BalanceCascade"><code class="xref py py-obj docutils literal"><span class="pre">ensemble.BalanceCascade</span></code></a>([ratio,&nbsp;…])</td>
+<td>Create an ensemble of balanced sets by iteratively under-sampling the imbalanced dataset using an estimator.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.ensemble.EasyEnsemble.html#imblearn.ensemble.EasyEnsemble" title="imblearn.ensemble.EasyEnsemble"><code class="xref py py-obj docutils literal"><span class="pre">ensemble.EasyEnsemble</span></code></a>([ratio,&nbsp;…])</td>
+<td>Create an ensemble sets by iteratively applying random under-sampling.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.pipeline">
+<span id="imblearn-pipeline-pipeline"></span><span id="pipeline-ref"></span><h2><a class="reference internal" href="#module-imblearn.pipeline" title="imblearn.pipeline"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.pipeline</span></code></a>: Pipeline<a class="headerlink" href="#module-imblearn.pipeline" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.pipeline" title="imblearn.pipeline"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.pipeline</span></code></a> module implements utilities to build a
+composite estimator, as a chain of transforms, samples and estimators.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html#imblearn.pipeline.Pipeline" title="imblearn.pipeline.Pipeline"><code class="xref py py-obj docutils literal"><span class="pre">pipeline.Pipeline</span></code></a>(steps[,&nbsp;memory])</td>
+<td>Pipeline of transforms and resamples with a final estimator.</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.pipeline.make_pipeline.html#imblearn.pipeline.make_pipeline" title="imblearn.pipeline.make_pipeline"><code class="xref py py-obj docutils literal"><span class="pre">pipeline.make_pipeline</span></code></a>(*steps)</td>
+<td>Construct a Pipeline from the given estimators.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.metrics">
+<span id="imblearn-metrics-metrics"></span><span id="metrics-ref"></span><h2><a class="reference internal" href="#module-imblearn.metrics" title="imblearn.metrics"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.metrics</span></code></a>: Metrics<a class="headerlink" href="#module-imblearn.metrics" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.metrics" title="imblearn.metrics"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.metrics</span></code></a> module includes score functions, performance
+metrics and pairwise metrics and distance computations.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.classification_report_imbalanced.html#imblearn.metrics.classification_report_imbalanced" title="imblearn.metrics.classification_report_imbalanced"><code class="xref py py-obj docutils literal"><span class="pre">metrics.classification_report_imbalanced</span></code></a>(…)</td>
+<td>Build a classification report based on metrics used with imbalanced</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.sensitivity_specificity_support.html#imblearn.metrics.sensitivity_specificity_support" title="imblearn.metrics.sensitivity_specificity_support"><code class="xref py py-obj docutils literal"><span class="pre">metrics.sensitivity_specificity_support</span></code></a>(…)</td>
+<td>Compute sensitivity, specificity, and support for each class</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.sensitivity_score.html#imblearn.metrics.sensitivity_score" title="imblearn.metrics.sensitivity_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.sensitivity_score</span></code></a>(y_true,&nbsp;y_pred[,&nbsp;…])</td>
+<td>Compute the sensitivity</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.specificity_score.html#imblearn.metrics.specificity_score" title="imblearn.metrics.specificity_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.specificity_score</span></code></a>(y_true,&nbsp;y_pred[,&nbsp;…])</td>
+<td>Compute the specificity</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.metrics.geometric_mean_score.html#imblearn.metrics.geometric_mean_score" title="imblearn.metrics.geometric_mean_score"><code class="xref py py-obj docutils literal"><span class="pre">metrics.geometric_mean_score</span></code></a>(y_true,&nbsp;y_pred)</td>
+<td>Compute the geometric mean</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.metrics.make_index_balanced_accuracy.html#imblearn.metrics.make_index_balanced_accuracy" title="imblearn.metrics.make_index_balanced_accuracy"><code class="xref py py-obj docutils literal"><span class="pre">metrics.make_index_balanced_accuracy</span></code></a>([…])</td>
+<td>Balance any scoring function using the index balanced accuracy</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.datasets">
+<span id="imblearn-datasets-datasets"></span><span id="datasets-ref"></span><h2><a class="reference internal" href="#module-imblearn.datasets" title="imblearn.datasets"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.datasets</span></code></a>: Datasets<a class="headerlink" href="#module-imblearn.datasets" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.datasets" title="imblearn.datasets"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.datasets</span></code></a> provides methods to generate
+imbalanced data.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-obj docutils literal"><span class="pre">datasets.make_imbalance</span></code></a>(X,&nbsp;y,&nbsp;ratio[,&nbsp;…])</td>
+<td>Turns a dataset into an imbalanced dataset at specific ratio.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets" title="imblearn.datasets.fetch_datasets"><code class="xref py py-obj docutils literal"><span class="pre">datasets.fetch_datasets</span></code></a>([data_home,&nbsp;…])</td>
+<td>Load the benchmark datasets from Zenodo, downloading it if necessary.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-imblearn.utils">
+<span id="imblearn-utils-utilities"></span><h2><a class="reference internal" href="#module-imblearn.utils" title="imblearn.utils"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.utils</span></code></a>: Utilities<a class="headerlink" href="#module-imblearn.utils" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-imblearn.utils" title="imblearn.utils"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.utils</span></code></a> module includes various utilities.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">utils.estimator_checks.check_estimator</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.utils.check_neighbors_object.html#imblearn.utils.check_neighbors_object" title="imblearn.utils.check_neighbors_object"><code class="xref py py-obj docutils literal"><span class="pre">utils.check_neighbors_object</span></code></a>(nn_name,&nbsp;nn_object)</td>
+<td>Check the objects is consistent to be a NN.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio" title="imblearn.utils.check_ratio"><code class="xref py py-obj docutils literal"><span class="pre">utils.check_ratio</span></code></a>(ratio,&nbsp;y,&nbsp;sampling_type,&nbsp;…)</td>
+<td>Ratio validation for samplers.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.utils.hash_X_y.html#imblearn.utils.hash_X_y" title="imblearn.utils.hash_X_y"><code class="xref py py-obj docutils literal"><span class="pre">utils.hash_X_y</span></code></a>(X,&nbsp;y[,&nbsp;n_samples])</td>
+<td>Compute hash of the input arrays.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/imblearn.under_sampling.ClusterCentroids.html" class="btn btn-neutral float-right" title="imblearn.under_sampling.ClusterCentroids" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datasets/index.html" class="btn btn-neutral" title="6. Dataset loading utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.0.dev0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

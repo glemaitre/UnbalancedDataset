@@ -1,0 +1,586 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imblearn.utils.validation &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../../../about.html"/>
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html"><cite>imbalanced-learn</cite> API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>imblearn.utils.validation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imblearn.utils.validation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utilities for input validation&quot;&quot;&quot;</span>
+
+<span class="c1"># Authors: Guillaume Lemaitre &lt;g.lemaitre58@gmail.com&gt;</span>
+<span class="c1"># License: MIT</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Real</span><span class="p">,</span> <span class="n">Integral</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.neighbors.base</span> <span class="k">import</span> <span class="n">KNeighborsMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="k">import</span> <span class="n">six</span><span class="p">,</span> <span class="n">joblib</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">deprecated</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.multiclass</span> <span class="k">import</span> <span class="n">type_of_target</span>
+
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">raise_isinstance_error</span>
+
+<span class="n">SAMPLING_KIND</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;over-sampling&#39;</span><span class="p">,</span> <span class="s1">&#39;under-sampling&#39;</span><span class="p">,</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;ensemble&#39;</span><span class="p">)</span>
+<span class="n">TARGET_KIND</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="s1">&#39;multiclass&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="check_neighbors_object"><a class="viewcode-back" href="../../../generated/imblearn.utils.check_neighbors_object.html#imblearn.utils.check_neighbors_object">[docs]</a><span class="k">def</span> <span class="nf">check_neighbors_object</span><span class="p">(</span><span class="n">nn_name</span><span class="p">,</span> <span class="n">nn_object</span><span class="p">,</span> <span class="n">additional_neighbor</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check the objects is consistent to be a NN.</span>
+
+<span class="sd">    Several methods in imblearn relies on NN. Until version 0.4, these</span>
+<span class="sd">    objects can be passed at initialisation as an integer or a</span>
+<span class="sd">    KNeighborsMixin. After only KNeighborsMixin will be accepted. This</span>
+<span class="sd">    utility allows for type checking and raise if the type is wrong.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nn_name : str,</span>
+<span class="sd">        The name associated to the object to raise an error if needed.</span>
+
+<span class="sd">    nn_object : int or KNeighborsMixin,</span>
+<span class="sd">        The object to be checked</span>
+
+<span class="sd">    additional_neighbor : int, optional (default=0)</span>
+<span class="sd">        Sometimes, some algorithm need an additional neighbors.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nn_object : KNeighborsMixin</span>
+<span class="sd">        The k-NN object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nn_object</span><span class="p">,</span> <span class="n">Integral</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">nn_object</span> <span class="o">+</span> <span class="n">additional_neighbor</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nn_object</span><span class="p">,</span> <span class="n">KNeighborsMixin</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nn_object</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">raise_isinstance_error</span><span class="p">(</span><span class="n">nn_name</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">KNeighborsMixin</span><span class="p">],</span> <span class="n">nn_object</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">check_target_type</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check the target types to be conform to the current samplers.</span>
+
+<span class="sd">    The current samplers should be compatible with ``&#39;binary&#39;`` and</span>
+<span class="sd">    ``&#39;multiclass&#39;`` targets only.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : ndarray,</span>
+<span class="sd">        The array containing the target</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    y : ndarray,</span>
+<span class="sd">        The returned target.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">type_of_target</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">TARGET_KIND</span><span class="p">:</span>
+        <span class="c1"># FIXME: perfectly we should raise an error but the sklearn API does</span>
+        <span class="c1"># not allow for it</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&#39;y&#39; should be of types </span><span class="si">{}</span><span class="s2"> only. Got </span><span class="si">{}</span><span class="s2"> instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">TARGET_KIND</span><span class="p">,</span> <span class="n">type_of_target</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+
+<div class="viewcode-block" id="hash_X_y"><a class="viewcode-back" href="../../../generated/imblearn.utils.hash_X_y.html#imblearn.utils.hash_X_y">[docs]</a><span class="k">def</span> <span class="nf">hash_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute hash of the input arrays.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        The ``X`` array.</span>
+
+<span class="sd">    y : ndarray, shape (n_samples)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    X_hash: str</span>
+<span class="sd">        Hash identifier of the ``X`` matrix.</span>
+
+<span class="sd">    y_hash: str</span>
+<span class="sd">        Hash identifier of the ``y`` matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">raw_idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
+    <span class="n">col_idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">joblib</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">raw_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]),</span> <span class="n">joblib</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">raw_idx</span><span class="p">])</span></div>
+
+
+<span class="k">def</span> <span class="nf">_ratio_all</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns ratio by targeting all classes.&quot;&quot;&quot;</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="n">n_sample_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">n_sample_majority</span> <span class="o">-</span> <span class="n">value</span>
+                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
+          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
+        <span class="n">n_sample_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">n_sample_minority</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+    <span class="k">return</span> <span class="n">ratio</span>
+
+
+<span class="k">def</span> <span class="nf">_ratio_majority</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns ratio by targeting the majority class only.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;ratio&#39;=&#39;majority&#39; cannot be used with&quot;</span>
+                         <span class="s2">&quot; over-sampler.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
+          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
+        <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">class_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">n_sample_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">n_sample_minority</span>
+                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">class_majority</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">ratio</span>
+
+
+<span class="k">def</span> <span class="nf">_ratio_not_minority</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns ratio by targeting all classes but not the minority.&quot;&quot;&quot;</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="n">n_sample_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">n_sample_majority</span> <span class="o">-</span> <span class="n">value</span>
+                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">class_minority</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
+          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
+        <span class="n">n_sample_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">n_sample_minority</span>
+                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">class_minority</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">ratio</span>
+
+
+<span class="k">def</span> <span class="nf">_ratio_minority</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns ratio by targeting the minority class only.&quot;&quot;&quot;</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="n">n_sample_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">n_sample_majority</span> <span class="o">-</span> <span class="n">value</span>
+                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
+          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;ratio&#39;=&#39;minority&#39; cannot be used with&quot;</span>
+                         <span class="s2">&quot; under-sampler and clean-sampler.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ratio</span>
+
+
+<span class="k">def</span> <span class="nf">_ratio_auto</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns ratio auto for over-sampling and not-minority for</span>
+<span class="sd">    under-sampling.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_ratio_all</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
+          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_ratio_not_minority</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_ratio_dict</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns ratio by converting the dictionary depending of the sampling.&quot;&quot;&quot;</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="c1"># check that all keys in ratio are also in y</span>
+    <span class="n">set_diff_ratio_target</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">set_diff_ratio_target</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> target class is/are not present in the&quot;</span>
+                         <span class="s2">&quot; data.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_diff_ratio_target</span><span class="p">))</span>
+    <span class="c1"># check that there is no negative number</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">ratio</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of samples in a class cannot be negative.&quot;</span>
+                         <span class="s2">&quot;&#39;ratio&#39; contains some negative value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="n">ratio</span><span class="p">))</span>
+    <span class="n">ratio_</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="n">n_samples_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">class_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">ratio</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&lt;</span> <span class="n">target_stats</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;With over-sampling methods, the number&quot;</span>
+                                 <span class="s2">&quot; of samples in a class should be greater&quot;</span>
+                                 <span class="s2">&quot; or equal to the original number of samples.&quot;</span>
+                                 <span class="s2">&quot; Originally, there is </span><span class="si">{}</span><span class="s2"> samples and </span><span class="si">{}</span><span class="s2">&quot;</span>
+                                 <span class="s2">&quot; samples are asked.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                     <span class="n">target_stats</span><span class="p">[</span><span class="n">class_sample</span><span class="p">],</span> <span class="n">n_samples</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&gt;</span> <span class="n">n_samples_majority</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;After over-sampling, the number of samples (</span><span class="si">{}</span><span class="s2">)&quot;</span>
+                              <span class="s2">&quot; in class </span><span class="si">{}</span><span class="s2"> will be larger than the number of&quot;</span>
+                              <span class="s2">&quot; samples in the majority class (class #</span><span class="si">{}</span><span class="s2"> -&gt;&quot;</span>
+                              <span class="s2">&quot; </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">class_sample</span><span class="p">,</span>
+                                            <span class="n">class_majority</span><span class="p">,</span>
+                                            <span class="n">n_samples_majority</span><span class="p">))</span>
+            <span class="n">ratio_</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">target_stats</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">ratio</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&gt;</span> <span class="n">target_stats</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;With under-sampling methods, the number of&quot;</span>
+                                 <span class="s2">&quot; samples in a class should be less or equal&quot;</span>
+                                 <span class="s2">&quot; to the original number of samples.&quot;</span>
+                                 <span class="s2">&quot; Originally, there is </span><span class="si">{}</span><span class="s2"> samples and </span><span class="si">{}</span><span class="s2">&quot;</span>
+                                 <span class="s2">&quot; samples are asked.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                     <span class="n">target_stats</span><span class="p">[</span><span class="n">class_sample</span><span class="p">],</span> <span class="n">n_samples</span><span class="p">))</span>
+            <span class="n">ratio_</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_samples</span>
+    <span class="k">elif</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">:</span>
+        <span class="c1"># clean-sampling can be more permissive since those samplers do not</span>
+        <span class="c1"># use samples</span>
+        <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">ratio</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ratio_</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_samples</span>
+
+    <span class="k">return</span> <span class="n">ratio_</span>
+
+
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Use a float for &#39;ratio&#39; is deprecated from version 0.2.&quot;</span>
+            <span class="s2">&quot; The support will be removed in 0.4. Use a dict, str,&quot;</span>
+            <span class="s2">&quot; or a callable instead.&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_ratio_float</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;TODO: Deprecated in 0.2. Remove in 0.4.&quot;&quot;&quot;</span>
+    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
+        <span class="n">n_sample_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">class_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_sample_majority</span> <span class="o">*</span> <span class="n">ratio</span> <span class="o">-</span> <span class="n">value</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">class_majority</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
+          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
+        <span class="n">n_sample_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_sample_minority</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">class_minority</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">ratio</span>
+
+
+<div class="viewcode-block" id="check_ratio"><a class="viewcode-back" href="../../../generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio">[docs]</a><span class="k">def</span> <span class="nf">check_ratio</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ratio validation for samplers.</span>
+
+<span class="sd">    Checks ratio for consistent type and return a dictionary</span>
+<span class="sd">    containing each targeted class with its corresponding number of</span>
+<span class="sd">    pixel.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ratio : str, dict or callable,</span>
+<span class="sd">        Ratio to use for resampling the data set.</span>
+
+<span class="sd">        - If ``str``, has to be one of: (i) ``&#39;minority&#39;``: resample the</span>
+<span class="sd">          minority class; (ii) ``&#39;majority&#39;``: resample the majority class,</span>
+<span class="sd">          (iii) ``&#39;not minority&#39;``: resample all classes apart of the minority</span>
+<span class="sd">          class, (iv) ``&#39;all&#39;``: resample all classes, and (v) ``&#39;auto&#39;``:</span>
+<span class="sd">          correspond to ``&#39;all&#39;`` with for over-sampling methods and ``&#39;not</span>
+<span class="sd">          minority&#39;`` for under-sampling methods. The classes targeted will be</span>
+<span class="sd">          over-sampled or under-sampled to achieve an equal number of sample</span>
+<span class="sd">          with the majority or minority class.</span>
+<span class="sd">        - If ``dict``, the keys correspond to the targeted classes. The values</span>
+<span class="sd">          correspond to the desired number of samples.</span>
+<span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
+<span class="sd">          correspond to the targeted classes. The values correspond to the</span>
+<span class="sd">          desired number of samples.</span>
+
+<span class="sd">    y : ndarray, shape (n_samples,)</span>
+<span class="sd">        The target array.</span>
+
+<span class="sd">    sampling_type : str,</span>
+<span class="sd">        The type of sampling. Can be either ``&#39;over-sampling&#39;`` or</span>
+<span class="sd">        ``&#39;under-sampling&#39;``.</span>
+
+<span class="sd">    kwargs : dict, optional</span>
+<span class="sd">        Dictionary of additional keyword arguments to pass to ``ratio``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ratio_converted : dict,</span>
+<span class="sd">        The converted and validated ratio. Returns a dictionary with</span>
+<span class="sd">        the key being the class target and the value being the desired</span>
+<span class="sd">        number of samples.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SAMPLING_KIND</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;sampling_type&#39; should be one of </span><span class="si">{}</span><span class="s2">. Got &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span>
+                         <span class="s2">&quot; instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">SAMPLING_KIND</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The target &#39;y&#39; needs to have more than 1 class.&quot;</span>
+                         <span class="s2">&quot; Got </span><span class="si">{}</span><span class="s2"> class instead&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;ensemble&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ratio</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">RATIO_KIND</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;When &#39;ratio&#39; is a string, it needs to be one of&quot;</span>
+                             <span class="s2">&quot; </span><span class="si">{}</span><span class="s2">. Got &#39;</span><span class="si">{}</span><span class="s2">&#39; instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">RATIO_KIND</span><span class="p">,</span>
+                                                             <span class="n">ratio</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">RATIO_KIND</span><span class="p">[</span><span class="n">ratio</span><span class="p">](</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_ratio_dict</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;When &#39;ratio&#39; is a float, it should in the range&quot;</span>
+                             <span class="s2">&quot; (0, 1]. Got </span><span class="si">{}</span><span class="s2"> instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ratio</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">_ratio_float</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">ratio</span><span class="p">):</span>
+        <span class="n">ratio_</span> <span class="o">=</span> <span class="n">ratio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_ratio_dict</span><span class="p">(</span><span class="n">ratio_</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span></div>
+
+
+<span class="n">RATIO_KIND</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;minority&#39;</span><span class="p">:</span> <span class="n">_ratio_minority</span><span class="p">,</span>
+              <span class="s1">&#39;majority&#39;</span><span class="p">:</span> <span class="n">_ratio_majority</span><span class="p">,</span>
+              <span class="s1">&#39;not minority&#39;</span><span class="p">:</span> <span class="n">_ratio_not_minority</span><span class="p">,</span>
+              <span class="s1">&#39;all&#39;</span><span class="p">:</span> <span class="n">_ratio_all</span><span class="p">,</span>
+              <span class="s1">&#39;auto&#39;</span><span class="p">:</span> <span class="n">_ratio_auto</span><span class="p">}</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.3.0.dev0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
