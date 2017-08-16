@@ -75,7 +75,7 @@ learning problem.
     # Show the classification report
     print(classification_report_imbalanced(y_test, y_pred_bal))
 
-**Total running time of the script:** ( 0 minutes  0.603 seconds)
+**Total running time of the script:** ( 0 minutes  0.574 seconds)
 
 
 

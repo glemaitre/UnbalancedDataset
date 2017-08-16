@@ -164,7 +164,7 @@ and ``SMOTEENN``. In general, ``SMOTEENN`` cleans more noisy data than
 
 
 
-**Total running time of the script:** ( 0 minutes  1.453 seconds)
+**Total running time of the script:** ( 0 minutes  1.466 seconds)
 
 
 

@@ -97,13 +97,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">User Guide</span></p>
+<p class="caption"><span class="caption-text">Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User Guide</a></li>
-</ul>
-<p class="caption"><span class="caption-text">API Documentation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../api.html"><cite>imbalanced-learn</cite> API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">imbalanced-learn API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
 <ul>
@@ -381,6 +378,8 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
             <span class="n">nnhood_label_majority</span> <span class="o">=</span> <span class="n">nnhood_label</span> <span class="o">==</span> <span class="n">class_minority</span>
             <span class="n">nnhood_bool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">nnhood_label</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
         <span class="c1"># compute a2 group</span>
         <span class="n">index_a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">nnhood_idx</span><span class="p">[</span><span class="o">~</span><span class="n">nnhood_bool</span><span class="p">])</span>
         <span class="n">index_a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">([</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">index_a2</span>
