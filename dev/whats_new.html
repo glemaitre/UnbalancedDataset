@@ -96,7 +96,7 @@
             
               <p class="caption"><span class="caption-text">Getting Started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install and contribution</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Documentation</span></p>
 <ul>
@@ -115,9 +115,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release history</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#version-0-3">Version 0.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#changelog">Changelog</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changelog">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bug-fixes">Bug fixes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#new-features">New features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enhancement">Enhancement</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#api-changes-summary">API changes summary</a></li>
@@ -217,15 +218,20 @@
 <span id="changes-0-3"></span><h2>Version 0.3<a class="headerlink" href="#version-0-3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="changelog">
 <h3>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="testing">
+<h4>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Pytest is used instead of nosetests. By <a class="reference external" href="https://github.com/massich">Joan Massich</a>.</li>
+</ul>
 </div>
 <div class="section" id="documentation">
-<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Added a User Guide and extended some examples. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 </ul>
 </div>
 <div class="section" id="bug-fixes">
-<h3>Bug fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
+<h4>Bug fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Fixed a bug in <a class="reference internal" href="generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio" title="imblearn.utils.check_ratio"><code class="xref py py-func docutils literal"><span class="pre">utils.check_ratio</span></code></a> such that an error is raised when
 the number of samples required is negative. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
@@ -236,6 +242,7 @@ and <code class="xref py py-class docutils literal"><span class="pre">SMOTETomek
 <li>Fixed bug for <cite>check_ratio</cite> to be able to pass arguments when <cite>ratio</cite> is a
 callable. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.`</li>
 </ul>
+</div>
 <div class="section" id="new-features">
 <h4>New features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">

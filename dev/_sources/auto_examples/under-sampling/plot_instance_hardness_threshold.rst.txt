@@ -94,7 +94,7 @@ An illustration of the instance hardness threshold method.
     plt.tight_layout(pad=3)
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.548 seconds)
+**Total running time of the script:** ( 0 minutes  0.522 seconds)
 
 
 
