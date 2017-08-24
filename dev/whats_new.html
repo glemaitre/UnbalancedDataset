@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release history &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>Release history &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="index.html"/>
         <link rel="next" title="About us" href="about.html"/>
         <link rel="prev" title="Comparison of the different under-sampling algorithms" href="auto_examples/under-sampling/plot_comparison_under_sampling.html"/> 
 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -221,26 +221,26 @@
 <div class="section" id="testing">
 <h4>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Pytest is used instead of nosetests. By <a class="reference external" href="https://github.com/massich">Joan Massich</a>.</li>
+<li>Pytest is used instead of nosetests. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/321">#321</a> by <a class="reference external" href="https://github.com/massich">Joan Massich</a>.</li>
 </ul>
 </div>
 <div class="section" id="documentation">
 <h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Added a User Guide and extended some examples. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+<li>Added a User Guide and extended some examples. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/295">#295</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 </ul>
 </div>
 <div class="section" id="bug-fixes">
 <h4>Bug fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Fixed a bug in <a class="reference internal" href="generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio" title="imblearn.utils.check_ratio"><code class="xref py py-func docutils literal"><span class="pre">utils.check_ratio</span></code></a> such that an error is raised when
-the number of samples required is negative. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+the number of samples required is negative. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/312">#312</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>Fixed a bug in <a class="reference internal" href="generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss" title="imblearn.under_sampling.NearMiss"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.NearMiss</span></code></a> version 3. The
-indices returned were wrong. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+indices returned were wrong. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/312">#312</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>Fixed bug for <a class="reference internal" href="generated/imblearn.ensemble.BalanceCascade.html#imblearn.ensemble.BalanceCascade" title="imblearn.ensemble.BalanceCascade"><code class="xref py py-class docutils literal"><span class="pre">ensemble.BalanceCascade</span></code></a> and <a class="reference internal" href="generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN" title="imblearn.combine.SMOTEENN"><code class="xref py py-class docutils literal"><span class="pre">combine.SMOTEENN</span></code></a>
-and <code class="xref py py-class docutils literal"><span class="pre">SMOTETomek</span></code>. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.`</li>
+and <code class="xref py py-class docutils literal"><span class="pre">SMOTETomek</span></code>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/295">#295</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.`</li>
 <li>Fixed bug for <cite>check_ratio</cite> to be able to pass arguments when <cite>ratio</cite> is a
-callable. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.`</li>
+callable. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/307">#307</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.`</li>
 </ul>
 </div>
 <div class="section" id="new-features">
@@ -249,48 +249,50 @@ callable. By <a class="reference external" href="https://github.com/glemaitre">G
 <li>Turn off steps in <a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html#imblearn.pipeline.Pipeline" title="imblearn.pipeline.Pipeline"><code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code></a> using the <cite>None</cite>
 object. By <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a>.</li>
 <li>Add a fetching function <a class="reference internal" href="generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets" title="imblearn.datasets.fetch_datasets"><code class="xref py py-func docutils literal"><span class="pre">datasets.fetch_datasets</span></code></a> in order to get some
-imbalanced datasets useful for benchmarking. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+imbalanced datasets useful for benchmarking. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/249">#249</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 </ul>
 </div>
 <div class="section" id="enhancement">
 <h4>Enhancement<a class="headerlink" href="#enhancement" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
+<li>All samplers accepts sparse matrices with defaulting on CSR type. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/316">#316</a> by
+<a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li><a class="reference internal" href="generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-func docutils literal"><span class="pre">datasets.make_imbalance</span></code></a> take a ratio similarly to other samplers. It
-supports multiclass. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+supports multiclass. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/312">#312</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>All the unit tests have been factorized and a <code class="xref py py-func docutils literal"><span class="pre">utils.check_estimators</span></code>
 has been derived from scikit-learn. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
-<li>Script for automatic build of conda packages and uploading. By
+<li>Script for automatic build of conda packages and uploading. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/242">#242</a> by
 <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a></li>
-<li>Remove seaborn dependence and improve the examples. By <a class="reference external" href="https://github.com/glemaitre">Guillaume
+<li>Remove seaborn dependence and improve the examples. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/264">#264</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume
 Lemaitre</a>.</li>
-<li>adapt all classes to multi-class resampling. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a></li>
+<li>adapt all classes to multi-class resampling. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/290">#290</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a></li>
 </ul>
 </div>
 <div class="section" id="api-changes-summary">
 <h4>API changes summary<a class="headerlink" href="#api-changes-summary" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><cite>__init__</cite> has been removed from the <code class="xref py py-class docutils literal"><span class="pre">base.SamplerMixin</span></code> to
-create a real mixin class. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+create a real mixin class. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/242">#242</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>creation of a module <a class="reference external" href="https://docs.python.org/2/library/exceptions.html#module-exceptions" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">exceptions</span></code></a> to handle consistant raising of
-errors. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+errors. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/242">#242</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>creation of a module <code class="docutils literal"><span class="pre">utils.validation</span></code> to make checking of
-recurrent patterns. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+recurrent patterns. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/242">#242</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>move the under-sampling methods in <code class="docutils literal"><span class="pre">prototype_selection</span></code> and
-<code class="docutils literal"><span class="pre">prototype_generation</span></code> submodule to make a clearer dinstinction. By
+<code class="docutils literal"><span class="pre">prototype_generation</span></code> submodule to make a clearer dinstinction. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/277">#277</a> by
 <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
-<li>change <code class="docutils literal"><span class="pre">ratio</span></code> such that it can adapt to multiple class problems. By
+<li>change <code class="docutils literal"><span class="pre">ratio</span></code> such that it can adapt to multiple class problems. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/290">#290</a> by
 <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 </ul>
 </div>
 <div class="section" id="deprecation">
 <h4>Deprecation<a class="headerlink" href="#deprecation" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Deprecation of the use of <code class="docutils literal"><span class="pre">min_c_</span></code> in <a class="reference internal" href="generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-func docutils literal"><span class="pre">datasets.make_imbalance</span></code></a>. By
+<li>Deprecation of the use of <code class="docutils literal"><span class="pre">min_c_</span></code> in <a class="reference internal" href="generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-func docutils literal"><span class="pre">datasets.make_imbalance</span></code></a>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/312">#312</a> by
 <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a></li>
 <li>Deprecation of the use of float in <a class="reference internal" href="generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-func docutils literal"><span class="pre">datasets.make_imbalance</span></code></a> for the
-ratio parameter. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+ratio parameter. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/290">#290</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>deprecate the use of float as ratio in favor of dictionary, string, or
-callable. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+callable. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/290">#290</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 </ul>
 </div>
 </div>
@@ -308,18 +310,18 @@ callable. By <a class="reference external" href="https://github.com/glemaitre">G
 <li>Fixed a bug in <a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.AllKNN</span></code></a>, add stopping criteria to avoid that the minority class become a majority class or that a class disappear. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, correction of the list of indices returned. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>Fixed a bug in <a class="reference internal" href="generated/imblearn.ensemble.BalanceCascade.html#imblearn.ensemble.BalanceCascade" title="imblearn.ensemble.BalanceCascade"><code class="xref py py-class docutils literal"><span class="pre">ensemble.BalanceCascade</span></code></a>, solve the issue to obtain a single array if desired. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
-<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html#imblearn.pipeline.Pipeline" title="imblearn.pipeline.Pipeline"><code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code></a>, solve to embed <cite>Pipeline</cite> in other <cite>Pipeline</cite>. By <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a> .</li>
-<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html#imblearn.pipeline.Pipeline" title="imblearn.pipeline.Pipeline"><code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code></a>, solve the issue to put to sampler in the same <cite>Pipeline</cite>. By <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a> .</li>
+<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html#imblearn.pipeline.Pipeline" title="imblearn.pipeline.Pipeline"><code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code></a>, solve to embed <cite>Pipeline</cite> in other <cite>Pipeline</cite>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/231">#231</a> by <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a> .</li>
+<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.pipeline.Pipeline.html#imblearn.pipeline.Pipeline" title="imblearn.pipeline.Pipeline"><code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code></a>, solve the issue to put to sampler in the same <cite>Pipeline</cite>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/188">#188</a> by <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a> .</li>
 <li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, correction of the shape of <cite>sel_x</cite> when only one sample is selected. By <a class="reference external" href="https://github.com/honeyext">Aliaksei Halachkin</a>.</li>
-<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule" title="imblearn.under_sampling.NeighbourhoodCleaningRule"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code></a>, selecting neighbours instead of minority class misclassified samples. By <a class="reference external" href="https://github.com/loskutyan">Aleksandr Loskutov</a>.</li>
-<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">over_sampling.ADASYN</span></code></a>, correction of the creation of a new sample so that the new sample lies between the minority sample and the nearest neighbour. By <a class="reference external" href="https://github.com/Eichhof">Rafael Wampfler</a>.</li>
+<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule" title="imblearn.under_sampling.NeighbourhoodCleaningRule"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code></a>, selecting neighbours instead of minority class misclassified samples. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/230">#230</a> by <a class="reference external" href="https://github.com/loskutyan">Aleksandr Loskutov</a>.</li>
+<li>Fixed a bug in <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">over_sampling.ADASYN</span></code></a>, correction of the creation of a new sample so that the new sample lies between the minority sample and the nearest neighbour. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/235">#235</a> by <a class="reference external" href="https://github.com/Eichhof">Rafael Wampfler</a>.</li>
 </ul>
 </div>
 <div class="section" id="id3">
 <h4>New features<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Added AllKNN under sampling technique. By <a class="reference external" href="https://github.com/dvro">Dayvid Oliveira</a>.</li>
-<li>Added a module <cite>metrics</cite> implementing some specific scoring function for the problem of balancing. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a> and <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a>.</li>
+<li>Added a module <cite>metrics</cite> implementing some specific scoring function for the problem of balancing. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/204">#204</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a> and <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a>.</li>
 </ul>
 </div>
 <div class="section" id="id4">
@@ -344,9 +346,9 @@ callable. By <a class="reference external" href="https://github.com/glemaitre">G
 <li>Two base classes <code class="xref py py-class docutils literal"><span class="pre">BaseBinaryclassSampler</span></code> and <code class="xref py py-class docutils literal"><span class="pre">BaseMulticlassSampler</span></code> have been created to handle the target type and raise warning in case of abnormality. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a> and <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a>.</li>
 <li>Move <cite>random_state</cite> to be assigned in the <code class="xref py py-class docutils literal"><span class="pre">SamplerMixin</span></code> initialization. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 <li>Provide estimators instead of parameters in <a class="reference internal" href="generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN" title="imblearn.combine.SMOTEENN"><code class="xref py py-class docutils literal"><span class="pre">combine.SMOTEENN</span></code></a> and <a class="reference internal" href="generated/imblearn.combine.SMOTETomek.html#imblearn.combine.SMOTETomek" title="imblearn.combine.SMOTETomek"><code class="xref py py-class docutils literal"><span class="pre">combine.SMOTETomek</span></code></a>. Therefore, the list of parameters have been deprecated. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a> and <a class="reference external" href="https://github.com/chkoar">Christos Aridas</a>.</li>
-<li><cite>k</cite> has been deprecated in <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">over_sampling.ADASYN</span></code></a>. Use <cite>n_neighbors</cite> instead. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
-<li><cite>k</cite> and <cite>m</cite> have been deprecated in <a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">over_sampling.SMOTE</span></code></a>. Use <cite>k_neighbors</cite> and <cite>m_neighbors</cite> instead. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
-<li><cite>n_neighbors</cite> accept <cite>KNeighborsMixin</cite> based object for <code class="xref py py-class docutils literal"><span class="pre">under_sampling.EditedNearestNeighbors</span></code>, <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, <a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule" title="imblearn.under_sampling.NeighbourhoodCleaningRule"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code></a>, <a class="reference internal" href="generated/imblearn.under_sampling.RepeatedEditedNearestNeighbours.html#imblearn.under_sampling.RepeatedEditedNearestNeighbours" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code></a>, and <a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.AllKNN</span></code></a>. By <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+<li><cite>k</cite> has been deprecated in <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">over_sampling.ADASYN</span></code></a>. Use <cite>n_neighbors</cite> instead. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/183">#183</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+<li><cite>k</cite> and <cite>m</cite> have been deprecated in <a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">over_sampling.SMOTE</span></code></a>. Use <cite>k_neighbors</cite> and <cite>m_neighbors</cite> instead. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/182">#182</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
+<li><cite>n_neighbors</cite> accept <cite>KNeighborsMixin</cite> based object for <code class="xref py py-class docutils literal"><span class="pre">under_sampling.EditedNearestNeighbors</span></code>, <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, <a class="reference internal" href="generated/imblearn.under_sampling.NeighbourhoodCleaningRule.html#imblearn.under_sampling.NeighbourhoodCleaningRule" title="imblearn.under_sampling.NeighbourhoodCleaningRule"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code></a>, <a class="reference internal" href="generated/imblearn.under_sampling.RepeatedEditedNearestNeighbours.html#imblearn.under_sampling.RepeatedEditedNearestNeighbours" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code></a>, and <a class="reference internal" href="generated/imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-class docutils literal"><span class="pre">under_sampling.AllKNN</span></code></a>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/109">#109</a> by <a class="reference external" href="https://github.com/glemaitre">Guillaume Lemaitre</a>.</li>
 </ul>
 </div>
 <div class="section" id="documentation-changes">
@@ -468,7 +470,7 @@ callable. By <a class="reference external" href="https://github.com/glemaitre">G
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

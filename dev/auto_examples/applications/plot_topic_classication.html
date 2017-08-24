@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Example of topic classification in text documents &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>Example of topic classification in text documents &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../index.html"/>
         <link rel="up" title="General examples" href="../index.html"/>
         <link rel="next" title="Benchmark over-sampling methods in a face recognition task" href="plot_over_sampling_benchmark_lfw.html"/>
         <link rel="prev" title="Multiclass classification with under-sampling" href="plot_multi_class_under_sampling.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -203,7 +203,6 @@ that for some data sets, the imbalanced ratio is more significant.</p>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_20newsgroups.html#sklearn.datasets.fetch_20newsgroups" title="View documentation for sklearn.datasets.fetch_20newsgroups"><span class="n">fetch_20newsgroups</span></a>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" title="View documentation for sklearn.preprocessing.FunctionTransformer"><span class="n">FunctionTransformer</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer" title="View documentation for sklearn.feature_extraction.text.TfidfVectorizer"><span class="n">TfidfVectorizer</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html#sklearn.naive_bayes.MultinomialNB" title="View documentation for sklearn.naive_bayes.MultinomialNB"><span class="n">MultinomialNB</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="View documentation for sklearn.pipeline.make_pipeline"><span class="n">make_pipeline</span></a>
@@ -276,19 +275,9 @@ imbalanced.</p>
 a balancing before to train the naive bayes classifier. Therefore, we will
 use a <code class="docutils literal"><span class="pre">RandomUnderSampler</span></code> to equalize the number of samples in all the
 classes before the training.</p>
-<p>Currently, imbalanced-learn does not handle sparse matrices — we are
-currently working on bringing this feature — and an additional transformer
-to convert the sparse to dense matrices is required in the pipeline.</p>
 <p>It is also important to note that we are using the <code class="docutils literal"><span class="pre">make_pipeline</span></code> function
 implemented in imbalanced-learn to properly handle the samplers.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">densify</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Function to densify an array.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-
-
-<span class="n">pipe</span> <span class="o">=</span> <a href="../../generated/imblearn.pipeline.make_pipeline.html#imblearn.pipeline.make_pipeline" title="View documentation for imblearn.pipeline.make_pipeline"><span class="n">make_pipeline_imb</span></a><span class="p">(</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer" title="View documentation for sklearn.feature_extraction.text.TfidfVectorizer"><span class="n">TfidfVectorizer</span></a><span class="p">(),</span>
-                         <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" title="View documentation for sklearn.preprocessing.FunctionTransformer"><span class="n">FunctionTransformer</span></a><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">densify</span><span class="p">,</span>
-                                             <span class="n">accept_sparse</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <a href="../../generated/imblearn.pipeline.make_pipeline.html#imblearn.pipeline.make_pipeline" title="View documentation for imblearn.pipeline.make_pipeline"><span class="n">make_pipeline_imb</span></a><span class="p">(</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer" title="View documentation for sklearn.feature_extraction.text.TfidfVectorizer"><span class="n">TfidfVectorizer</span></a><span class="p">(),</span>
                          <a href="../../generated/imblearn.under_sampling.RandomUnderSampler.html#imblearn.under_sampling.RandomUnderSampler" title="View documentation for imblearn.under_sampling.RandomUnderSampler"><span class="n">RandomUnderSampler</span></a><span class="p">(),</span>
                          <a href="http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html#sklearn.naive_bayes.MultinomialNB" title="View documentation for sklearn.naive_bayes.MultinomialNB"><span class="n">MultinomialNB</span></a><span class="p">())</span>
 
@@ -306,15 +295,15 @@ slightly better.</p>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">pre</span>       <span class="n">rec</span>       <span class="n">spe</span>        <span class="n">f1</span>       <span class="n">geo</span>       <span class="n">iba</span>       <span class="n">sup</span>
 
-          <span class="mi">0</span>       <span class="mf">0.71</span>      <span class="mf">0.91</span>      <span class="mf">0.88</span>      <span class="mf">0.80</span>      <span class="mf">0.83</span>      <span class="mf">0.67</span>       <span class="mi">319</span>
-          <span class="mi">1</span>       <span class="mf">0.98</span>      <span class="mf">0.87</span>      <span class="mf">0.99</span>      <span class="mf">0.92</span>      <span class="mf">0.96</span>      <span class="mf">0.93</span>       <span class="mi">389</span>
-          <span class="mi">2</span>       <span class="mf">0.96</span>      <span class="mf">0.90</span>      <span class="mf">0.99</span>      <span class="mf">0.93</span>      <span class="mf">0.96</span>      <span class="mf">0.92</span>       <span class="mi">394</span>
-          <span class="mi">3</span>       <span class="mf">0.81</span>      <span class="mf">0.73</span>      <span class="mf">0.96</span>      <span class="mf">0.77</span>      <span class="mf">0.87</span>      <span class="mf">0.75</span>       <span class="mi">251</span>
+          <span class="mi">0</span>       <span class="mf">0.72</span>      <span class="mf">0.90</span>      <span class="mf">0.89</span>      <span class="mf">0.80</span>      <span class="mf">0.83</span>      <span class="mf">0.68</span>       <span class="mi">319</span>
+          <span class="mi">1</span>       <span class="mf">0.97</span>      <span class="mf">0.85</span>      <span class="mf">0.99</span>      <span class="mf">0.91</span>      <span class="mf">0.96</span>      <span class="mf">0.92</span>       <span class="mi">389</span>
+          <span class="mi">2</span>       <span class="mf">0.94</span>      <span class="mf">0.91</span>      <span class="mf">0.98</span>      <span class="mf">0.93</span>      <span class="mf">0.95</span>      <span class="mf">0.91</span>       <span class="mi">394</span>
+          <span class="mi">3</span>       <span class="mf">0.80</span>      <span class="mf">0.74</span>      <span class="mf">0.96</span>      <span class="mf">0.77</span>      <span class="mf">0.87</span>      <span class="mf">0.74</span>       <span class="mi">251</span>
 
-<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.88</span>      <span class="mf">0.86</span>      <span class="mf">0.96</span>      <span class="mf">0.87</span>      <span class="mf">0.91</span>      <span class="mf">0.83</span>      <span class="mi">1353</span>
+<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.87</span>      <span class="mf">0.86</span>      <span class="mf">0.96</span>      <span class="mf">0.86</span>      <span class="mf">0.91</span>      <span class="mf">0.83</span>      <span class="mi">1353</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  17.203 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  16.814 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_topic_classication.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_topic_classication.py</span></code></a></div>
@@ -369,7 +358,7 @@ slightly better.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

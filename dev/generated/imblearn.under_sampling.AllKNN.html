@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.under_sampling.AllKNN &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>imblearn.under_sampling.AllKNN &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
         <link rel="up" title="imbalanced-learn API" href="../api.html"/>
         <link rel="next" title="imblearn.under_sampling.InstanceHardnessThreshold" href="imblearn.under_sampling.InstanceHardnessThreshold.html"/>
         <link rel="prev" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours" href="imblearn.under_sampling.RepeatedEditedNearestNeighbours.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -211,7 +211,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.under_sampling" title="imblearn.under_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling</span></code></a>.AllKNN<a class="headerlink" href="#imblearn-under-sampling-allknn" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.under_sampling.AllKNN">
-<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">AllKNN</code><span class="sig-paren">(</span><em>ratio=’auto’</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>kind_sel=’all’</em>, <em>allow_minority=False</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#AllKNN"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L449"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">AllKNN</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>allow_minority=False</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#AllKNN"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L445"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to perform under-sampling based on the AllKNN method.</p>
 <p>Read more in the <a class="reference internal" href="../under_sampling.html#edited-nearest-neighbors"><span class="std std-ref">User Guide</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -301,15 +301,15 @@ class without early stopping.</p>
 <p class="last"><a class="reference internal" href="imblearn.under_sampling.CondensedNearestNeighbour.html#imblearn.under_sampling.CondensedNearestNeighbour" title="imblearn.under_sampling.CondensedNearestNeighbour"><code class="xref py py-obj docutils literal"><span class="pre">CondensedNearestNeighbour</span></code></a>, <a class="reference internal" href="imblearn.under_sampling.EditedNearestNeighbours.html#imblearn.under_sampling.EditedNearestNeighbours" title="imblearn.under_sampling.EditedNearestNeighbours"><code class="xref py py-obj docutils literal"><span class="pre">EditedNearestNeighbours</span></code></a>, <a class="reference internal" href="imblearn.under_sampling.RepeatedEditedNearestNeighbours.html#imblearn.under_sampling.RepeatedEditedNearestNeighbours" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours"><code class="xref py py-obj docutils literal"><span class="pre">RepeatedEditedNearestNeighbours</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
-<p>The method is based on <a class="reference internal" href="#r34" id="id1">[R34]</a>.</p>
+<p>The method is based on <a class="reference internal" href="#r8383" id="id1">[R8383]</a>.</p>
 <p>Supports mutli-class resampling. A one-vs.-rest scheme is used when
-sampling a class as proposed in <a class="reference internal" href="#r34" id="id2">[R34]</a>.</p>
+sampling a class as proposed in <a class="reference internal" href="#r8383" id="id2">[R8383]</a>.</p>
 <p>See <a class="reference internal" href="../auto_examples/under-sampling/plot_enn_renn_allknn.html#sphx-glr-auto-examples-under-sampling-plot-enn-renn-allknn-py"><span class="std std-ref">ENN, RENN, All-KNN</span></a>.</p>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r34" rules="none">
+<table class="docutils citation" frame="void" id="r8383" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[R34]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> I. Tomek, “An Experiment with the Edited Nearest-Neighbor
+<tr><td class="label">[R8383]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> I. Tomek, “An Experiment with the Edited Nearest-Neighbor
 Rule,” IEEE Transactions on Systems, Man, and Cybernetics, vol. 6(6),
 pp. 448-452, June 1976.</td></tr>
 </tbody>
@@ -331,22 +331,22 @@ pp. 448-452, June 1976.</td></tr>
 </div>
 <dl class="method">
 <dt id="imblearn.under_sampling.AllKNN.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio=’auto’</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>kind_sel=’all’</em>, <em>allow_minority=False</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#AllKNN.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L557"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>allow_minority=False</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#AllKNN.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L553"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.AllKNN.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/base.py#L136"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape (n_samples, n_features)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Matrix containing the data which have to be sampled.</p>
 </div></blockquote>
-<p><strong>y</strong> : ndarray, shape (n_samples, )</p>
+<p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Corresponding label for each sample in X.</p>
 </div></blockquote>
@@ -364,27 +364,27 @@ pp. 448-452, June 1976.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.AllKNN.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/base.py#L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape (n_samples, n_features)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Matrix containing the data which have to be sampled.</p>
 </div></blockquote>
-<p><strong>y</strong> : ndarray, shape (n_samples, )</p>
+<p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Corresponding label for each sample in X.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : ndarray, shape (n_samples_new, n_features)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : {array-like, sparse matrix}, shape (n_samples_new, n_features)</p>
 <blockquote>
 <div><p>The array containing the resampled data.</p>
 </div></blockquote>
-<p><strong>y_resampled</strong> : ndarray, shape (n_samples_new)</p>
+<p><strong>y_resampled</strong> : array-like, shape (n_samples_new,)</p>
 <blockquote class="last">
 <div><p>The corresponding label of <cite>X_resampled</cite></p>
 </div></blockquote>
@@ -396,7 +396,7 @@ pp. 448-452, June 1976.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.AllKNN.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -421,23 +421,23 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.AllKNN.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape (n_samples, n_features)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Matrix containing the data which have to be sampled.</p>
 </div></blockquote>
-<p><strong>y</strong> : ndarray, shape (n_samples, )</p>
+<p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Corresponding label for each sample in X.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : ndarray, shape (n_samples_new, n_features)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : {ndarray, sparse matrix}, shape (n_samples_new, n_features)</p>
 <blockquote>
 <div><p>The array containing the resampled data.</p>
 </div></blockquote>
@@ -453,7 +453,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.AllKNN.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.AllKNN.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -528,7 +528,7 @@ component of a nested object.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 0.2 &mdash; imbalanced-learn 0.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../about.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install and contribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">imbalanced-learn API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Version 0.2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/whats_new/v0.0.2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-0-2">
+<span id="changes-0-2"></span><h1>Version 0.2<a class="headerlink" href="#version-0-2" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bug-fixes">
+<h3>Bug fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.NearMiss</span></code> which was not picking the right samples during under sampling for the method 3. By <a href="#id1"><span class="problematic" id="id2">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">ensemble.EasyEnsemble</span></code>, correction of the <cite>random_state</cite> generation. By <a href="#id3"><span class="problematic" id="id4">`Guillaume Lemaitre`_</span></a> and <a href="#id5"><span class="problematic" id="id6">`Christos Aridas`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code>, add additional stopping criterion to avoid that the minority class become a majority class or that a class disappear. By <a href="#id7"><span class="problematic" id="id8">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.AllKNN</span></code>, add stopping criteria to avoid that the minority class become a majority class or that a class disappear. By <a href="#id9"><span class="problematic" id="id10">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, correction of the list of indices returned. By <a href="#id11"><span class="problematic" id="id12">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">ensemble.BalanceCascade</span></code>, solve the issue to obtain a single array if desired. By <a href="#id13"><span class="problematic" id="id14">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code>, solve to embed <cite>Pipeline</cite> in other <cite>Pipeline</cite>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/231">#231</a> by <a href="#id15"><span class="problematic" id="id16">`Christos Aridas`_</span></a> .</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">pipeline.Pipeline</span></code>, solve the issue to put to sampler in the same <cite>Pipeline</cite>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/188">#188</a> by <a href="#id17"><span class="problematic" id="id18">`Christos Aridas`_</span></a> .</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, correction of the shape of <cite>sel_x</cite> when only one sample is selected. By <a href="#id19"><span class="problematic" id="id20">`Aliaksei Halachkin`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code>, selecting neighbours instead of minority class misclassified samples. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/230">#230</a> by <a href="#id21"><span class="problematic" id="id22">`Aleksandr Loskutov`_</span></a>.</li>
+<li>Fixed a bug in <code class="xref py py-class docutils literal"><span class="pre">over_sampling.ADASYN</span></code>, correction of the creation of a new sample so that the new sample lies between the minority sample and the nearest neighbour. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/235">#235</a> by <a href="#id23"><span class="problematic" id="id24">`Rafael Wampfler`_</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="new-features">
+<h3>New features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added AllKNN under sampling technique. By <a href="#id25"><span class="problematic" id="id26">`Dayvid Oliveira`_</span></a>.</li>
+<li>Added a module <cite>metrics</cite> implementing some specific scoring function for the problem of balancing. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/204">#204</a> by <a href="#id27"><span class="problematic" id="id28">`Guillaume Lemaitre`_</span></a> and <a href="#id29"><span class="problematic" id="id30">`Christos Aridas`_</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="enhancement">
+<h3>Enhancement<a class="headerlink" href="#enhancement" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added support for bumpversion. By <a href="#id31"><span class="problematic" id="id32">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Validate the type of target in binary samplers. A warning is raised for the moment. By <a href="#id33"><span class="problematic" id="id34">`Guillaume Lemaitre`_</span></a> and <a href="#id35"><span class="problematic" id="id36">`Christos Aridas`_</span></a>.</li>
+<li>Change from <cite>cross_validation</cite> module to <cite>model_selection</cite> module for
+<cite>sklearn</cite> deprecation cycle. By <a href="#id37"><span class="problematic" id="id38">`Dayvid Oliveira`_</span></a> and <a href="#id39"><span class="problematic" id="id40">`Christos Aridas`_</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="api-changes-summary">
+<h3>API changes summary<a class="headerlink" href="#api-changes-summary" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">combine.SMOTEENN</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id41"><span class="problematic" id="id42">`Guillaume Lemaitre`_</span></a>, <a href="#id43"><span class="problematic" id="id44">`Christos Aridas`_</span></a>, and <cite>Dayvid Oliveira</cite> .</li>
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.EditedNearestNeighbors</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id45"><span class="problematic" id="id46">`Guillaume Lemaitre`_</span></a>, <a href="#id47"><span class="problematic" id="id48">`Christos Aridas`_</span></a>, and <a href="#id49"><span class="problematic" id="id50">`Dayvid Oliveira`_</span></a>.</li>
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id51"><span class="problematic" id="id52">`Guillaume Lemaitre`_</span></a>, <a href="#id53"><span class="problematic" id="id54">`Christos Aridas`_</span></a>, and <a href="#id55"><span class="problematic" id="id56">`Dayvid Oliveira`_</span></a>.</li>
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.OneSidedSelection</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id57"><span class="problematic" id="id58">`Guillaume Lemaitre`_</span></a>, <a href="#id59"><span class="problematic" id="id60">`Christos Aridas`_</span></a>, and <a href="#id61"><span class="problematic" id="id62">`Dayvid Oliveira`_</span></a>.</li>
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id63"><span class="problematic" id="id64">`Guillaume Lemaitre`_</span></a>, <a href="#id65"><span class="problematic" id="id66">`Christos Aridas`_</span></a>, and <a href="#id67"><span class="problematic" id="id68">`Dayvid Oliveira`_</span></a>.</li>
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id69"><span class="problematic" id="id70">`Guillaume Lemaitre`_</span></a>, <a href="#id71"><span class="problematic" id="id72">`Christos Aridas`_</span></a>, and <a href="#id73"><span class="problematic" id="id74">`Dayvid Oliveira`_</span></a>.</li>
+<li><cite>size_ngh</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">under_sampling.AllKNN</span></code>. Use <cite>n_neighbors</cite> instead. By <a href="#id75"><span class="problematic" id="id76">`Guillaume Lemaitre`_</span></a>, <a href="#id77"><span class="problematic" id="id78">`Christos Aridas`_</span></a>, and <a href="#id79"><span class="problematic" id="id80">`Dayvid Oliveira`_</span></a>.</li>
+<li>Two base classes <code class="xref py py-class docutils literal"><span class="pre">BaseBinaryclassSampler</span></code> and <code class="xref py py-class docutils literal"><span class="pre">BaseMulticlassSampler</span></code> have been created to handle the target type and raise warning in case of abnormality. By <a href="#id81"><span class="problematic" id="id82">`Guillaume Lemaitre`_</span></a> and <a href="#id83"><span class="problematic" id="id84">`Christos Aridas`_</span></a>.</li>
+<li>Move <cite>random_state</cite> to be assigned in the <code class="xref py py-class docutils literal"><span class="pre">SamplerMixin</span></code> initialization. By <a href="#id85"><span class="problematic" id="id86">`Guillaume Lemaitre`_</span></a>.</li>
+<li>Provide estimators instead of parameters in <code class="xref py py-class docutils literal"><span class="pre">combine.SMOTEENN</span></code> and <code class="xref py py-class docutils literal"><span class="pre">combine.SMOTETomek</span></code>. Therefore, the list of parameters have been deprecated. By <a href="#id87"><span class="problematic" id="id88">`Guillaume Lemaitre`_</span></a> and <a href="#id89"><span class="problematic" id="id90">`Christos Aridas`_</span></a>.</li>
+<li><cite>k</cite> has been deprecated in <code class="xref py py-class docutils literal"><span class="pre">over_sampling.ADASYN</span></code>. Use <cite>n_neighbors</cite> instead. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/183">#183</a> by <a href="#id91"><span class="problematic" id="id92">`Guillaume Lemaitre`_</span></a>.</li>
+<li><cite>k</cite> and <cite>m</cite> have been deprecated in <code class="xref py py-class docutils literal"><span class="pre">over_sampling.SMOTE</span></code>. Use <cite>k_neighbors</cite> and <cite>m_neighbors</cite> instead. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/182">#182</a> by <a href="#id93"><span class="problematic" id="id94">`Guillaume Lemaitre`_</span></a>.</li>
+<li><cite>n_neighbors</cite> accept <cite>KNeighborsMixin</cite> based object for <code class="xref py py-class docutils literal"><span class="pre">under_sampling.EditedNearestNeighbors</span></code>, <code class="xref py py-class docutils literal"><span class="pre">under_sampling.CondensedNeareastNeigbour</span></code>, <code class="xref py py-class docutils literal"><span class="pre">under_sampling.NeighbourhoodCleaningRule</span></code>, <code class="xref py py-class docutils literal"><span class="pre">under_sampling.RepeatedEditedNearestNeighbours</span></code>, and <code class="xref py py-class docutils literal"><span class="pre">under_sampling.AllKNN</span></code>. <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/issues/109">#109</a> by <a href="#id95"><span class="problematic" id="id96">`Guillaume Lemaitre`_</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="documentation-changes">
+<h3>Documentation changes<a class="headerlink" href="#documentation-changes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Replace some remaining <cite>UnbalancedDataset</cite> occurences. By <a href="#id97"><span class="problematic" id="id98">`Francois Magimel`_</span></a>.</li>
+<li>Added doctest in the documentation. By <a href="#id99"><span class="problematic" id="id100">`Guillaume Lemaitre`_</span></a>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

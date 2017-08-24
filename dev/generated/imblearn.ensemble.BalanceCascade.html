@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.ensemble.BalanceCascade &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>imblearn.ensemble.BalanceCascade &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,9 +39,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
         <link rel="up" title="imbalanced-learn API" href="../api.html"/>
-        <link rel="next" title="imblearn.ensemble.EasyEnsemble" href="imblearn.ensemble.EasyEnsemble.html"/>
+        <link rel="next" title="imblearn.ensemble.BalancedBaggingClassifier" href="imblearn.ensemble.BalancedBaggingClassifier.html"/>
         <link rel="prev" title="imblearn.combine.SMOTETomek" href="imblearn.combine.SMOTETomek.html"/> 
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -111,6 +111,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#examples-using-imblearn-ensemble-balancecascade">Examples using <code class="docutils literal"><span class="pre">imblearn.ensemble.BalanceCascade</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="imblearn.ensemble.BalancedBaggingClassifier.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.BalancedBaggingClassifier</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imblearn.ensemble.EasyEnsemble.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.EasyEnsemble</a></li>
 </ul>
 </li>
@@ -202,12 +203,12 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.ensemble" title="imblearn.ensemble"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.ensemble</span></code></a>.BalanceCascade<a class="headerlink" href="#imblearn-ensemble-balancecascade" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.ensemble.BalanceCascade">
-<em class="property">class </em><code class="descclassname">imblearn.ensemble.</code><code class="descname">BalanceCascade</code><span class="sig-paren">(</span><em>ratio=’auto’</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/ensemble/balance_cascade.py#L23"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.ensemble.</code><code class="descname">BalanceCascade</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/ensemble/balance_cascade.py#L23"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an ensemble of balanced sets by iteratively under-sampling the
 imbalanced dataset using an estimator.</p>
 <p>This method iteratively select subset and make an ensemble of the
 different sets. The selection is performed using a specific classifier.</p>
-<p>Read more in the <a class="reference internal" href="../ensemble.html#ensemble"><span class="std std-ref">User Guide</span></a>.</p>
+<p>Read more in the <a class="reference internal" href="../ensemble.html#ensemble-samplers"><span class="std std-ref">User Guide</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -284,18 +285,18 @@ to an estimator.</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="imblearn.ensemble.EasyEnsemble.html#imblearn.ensemble.EasyEnsemble" title="imblearn.ensemble.EasyEnsemble"><code class="xref py py-obj docutils literal"><span class="pre">EasyEnsemble</span></code></a></p>
+<p class="last"><a class="reference internal" href="imblearn.ensemble.BalancedBaggingClassifier.html#imblearn.ensemble.BalancedBaggingClassifier" title="imblearn.ensemble.BalancedBaggingClassifier"><code class="xref py py-obj docutils literal"><span class="pre">BalancedBaggingClassifier</span></code></a>, <a class="reference internal" href="imblearn.ensemble.EasyEnsemble.html#imblearn.ensemble.EasyEnsemble" title="imblearn.ensemble.EasyEnsemble"><code class="xref py py-obj docutils literal"><span class="pre">EasyEnsemble</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
-<p>The method is described in <a class="reference internal" href="#r25" id="id1">[R25]</a>.</p>
+<p>The method is described in <a class="reference internal" href="#r5757" id="id1">[R5757]</a>.</p>
 <p>Supports mutli-class resampling. A one-vs.-rest scheme is used as
-originally proposed in <a class="reference internal" href="#r25" id="id2">[R25]</a>.</p>
+originally proposed in <a class="reference internal" href="#r5757" id="id2">[R5757]</a>.</p>
 <p>See <a class="reference internal" href="../auto_examples/ensemble/plot_balance_cascade.html#sphx-glr-auto-examples-ensemble-plot-balance-cascade-py"><span class="std std-ref">Balance cascade</span></a>.</p>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r25" rules="none">
+<table class="docutils citation" frame="void" id="r5757" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[R25]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> X. Y. Liu, J. Wu and Z. H. Zhou, “Exploratory Undersampling for
+<tr><td class="label">[R5757]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> X. Y. Liu, J. Wu and Z. H. Zhou, “Exploratory Undersampling for
 Class-Imbalance Learning,” in IEEE Transactions on Systems, Man, and
 Cybernetics, Part B (Cybernetics), vol. 39, no. 2, pp. 539-550,
 April 2009.</td></tr>
@@ -318,22 +319,22 @@ April 2009.</td></tr>
 </div>
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio=’auto’</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/ensemble/balance_cascade.py#L131"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_max_subset=None</em>, <em>classifier=None</em>, <em>estimator=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/ensemble/balance_cascade.py#L131"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.fit"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/ensemble/balance_cascade.py#L147"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/ensemble/balance_cascade.html#BalanceCascade.fit"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/ensemble/balance_cascade.py#L147"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape (n_samples, n_features)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Matrix containing the data which have to be sampled.</p>
 </div></blockquote>
-<p><strong>y</strong> : ndarray, shape (n_samples, )</p>
+<p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Corresponding label for each sample in X.</p>
 </div></blockquote>
@@ -351,27 +352,27 @@ April 2009.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/base.py#L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape (n_samples, n_features)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Matrix containing the data which have to be sampled.</p>
 </div></blockquote>
-<p><strong>y</strong> : ndarray, shape (n_samples, )</p>
+<p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Corresponding label for each sample in X.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : ndarray, shape (n_samples_new, n_features)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : {array-like, sparse matrix}, shape (n_samples_new, n_features)</p>
 <blockquote>
 <div><p>The array containing the resampled data.</p>
 </div></blockquote>
-<p><strong>y_resampled</strong> : ndarray, shape (n_samples_new)</p>
+<p><strong>y_resampled</strong> : array-like, shape (n_samples_new,)</p>
 <blockquote class="last">
 <div><p>The corresponding label of <cite>X_resampled</cite></p>
 </div></blockquote>
@@ -383,7 +384,7 @@ April 2009.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -408,23 +409,23 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape (n_samples, n_features)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Matrix containing the data which have to be sampled.</p>
 </div></blockquote>
-<p><strong>y</strong> : ndarray, shape (n_samples, )</p>
+<p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Corresponding label for each sample in X.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : ndarray, shape (n_samples_new, n_features)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>X_resampled</strong> : {ndarray, sparse matrix}, shape (n_samples_new, n_features)</p>
 <blockquote>
 <div><p>The array containing the resampled data.</p>
 </div></blockquote>
@@ -440,7 +441,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.ensemble.BalanceCascade.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/a4af881/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.ensemble.BalanceCascade.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -477,7 +478,7 @@ component of a nested object.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="imblearn.ensemble.EasyEnsemble.html" class="btn btn-neutral float-right" title="imblearn.ensemble.EasyEnsemble" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="imblearn.ensemble.BalancedBaggingClassifier.html" class="btn btn-neutral float-right" title="imblearn.ensemble.BalancedBaggingClassifier" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="imblearn.combine.SMOTETomek.html" class="btn btn-neutral" title="imblearn.combine.SMOTETomek" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -511,7 +512,7 @@ component of a nested object.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

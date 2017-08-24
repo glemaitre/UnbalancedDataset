@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imbalanced-learn API &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>imbalanced-learn API &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,9 +39,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="index.html"/>
         <link rel="next" title="imblearn.under_sampling.ClusterCentroids" href="generated/imblearn.under_sampling.ClusterCentroids.html"/>
-        <link rel="prev" title="6. Dataset loading utilities" href="datasets/index.html"/> 
+        <link rel="prev" title="7. Utilities for Developers" href="developers_utils.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -135,6 +135,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-imblearn.ensemble"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>: Ensemble methods</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/imblearn.ensemble.BalanceCascade.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.BalanceCascade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/imblearn.ensemble.BalancedBaggingClassifier.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.BalancedBaggingClassifier</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/imblearn.ensemble.EasyEnsemble.html"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>.EasyEnsemble</a></li>
 </ul>
 </li>
@@ -362,7 +363,10 @@ under-sampled subsets combined inside an ensemble.</p>
 <tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.ensemble.BalanceCascade.html#imblearn.ensemble.BalanceCascade" title="imblearn.ensemble.BalanceCascade"><code class="xref py py-obj docutils literal"><span class="pre">ensemble.BalanceCascade</span></code></a>([ratio,&nbsp;…])</td>
 <td>Create an ensemble of balanced sets by iteratively under-sampling the imbalanced dataset using an estimator.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.ensemble.EasyEnsemble.html#imblearn.ensemble.EasyEnsemble" title="imblearn.ensemble.EasyEnsemble"><code class="xref py py-obj docutils literal"><span class="pre">ensemble.EasyEnsemble</span></code></a>([ratio,&nbsp;…])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/imblearn.ensemble.BalancedBaggingClassifier.html#imblearn.ensemble.BalancedBaggingClassifier" title="imblearn.ensemble.BalancedBaggingClassifier"><code class="xref py py-obj docutils literal"><span class="pre">ensemble.BalancedBaggingClassifier</span></code></a>([…])</td>
+<td>A Bagging classifier with additional balancing.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/imblearn.ensemble.EasyEnsemble.html#imblearn.ensemble.EasyEnsemble" title="imblearn.ensemble.EasyEnsemble"><code class="xref py py-obj docutils literal"><span class="pre">ensemble.EasyEnsemble</span></code></a>([ratio,&nbsp;…])</td>
 <td>Create an ensemble sets by iteratively applying random under-sampling.</td>
 </tr>
 </tbody>
@@ -484,7 +488,7 @@ imbalanced data.</p>
         <a href="generated/imblearn.under_sampling.ClusterCentroids.html" class="btn btn-neutral float-right" title="imblearn.under_sampling.ClusterCentroids" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="datasets/index.html" class="btn btn-neutral" title="6. Dataset loading utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="developers_utils.html" class="btn btn-neutral" title="7. Utilities for Developers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -515,7 +519,7 @@ imbalanced data.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

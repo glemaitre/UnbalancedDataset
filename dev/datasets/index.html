@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6. Dataset loading utilities &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>6. Dataset loading utilities &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,9 +39,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
         <link rel="up" title="User Guide" href="../user_guide.html"/>
-        <link rel="next" title="imbalanced-learn API" href="../api.html"/>
+        <link rel="next" title="7. Utilities for Developers" href="../developers_utils.html"/>
         <link rel="prev" title="5. Ensemble of samplers" href="../ensemble.html"/> 
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -102,7 +102,7 @@
 <p class="caption"><span class="caption-text">Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../user_guide.html">User Guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../problem_statement.html">1. Problem statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../over_sampling.html">2. Over-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../under_sampling.html">3. Under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../combine.html">4. Combination of over- and under-sampling</a></li>
@@ -112,6 +112,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#imbalanced-generator">6.2. Imbalanced generator</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../developers_utils.html">7. Utilities for Developers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">imbalanced-learn API</a></li>
@@ -421,8 +422,8 @@ binarized. The following data sets are available:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ecoli</span> <span class="o">=</span> <span class="n">fetch_datasets</span><span class="p">()[</span><span class="s1">&#39;ecoli&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ecoli</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(336, 7)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">((</span><span class="n">ecoli</span><span class="o">.</span><span class="n">target</span><span class="p">)))</span>
-<span class="go">Counter({-1: 301, 1: 35})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">ecoli</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+<span class="go">[(-1, 301), (1, 35)]</span>
 </pre></div>
 </div>
 </div>
@@ -438,16 +439,16 @@ samples in the class:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_imb</span><span class="p">,</span> <span class="n">y_imb</span> <span class="o">=</span> <span class="n">make_imbalance</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span>
-<span class="go">Counter({2: 40, 1: 30, 0: 20})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="go">[(0, 20), (1, 30), (2, 40)]</span>
 </pre></div>
 </div>
 <p>Note that all samples of a class are passed-through if the class is not mentioned
 in the dictionary:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_imb</span><span class="p">,</span> <span class="n">y_imb</span> <span class="o">=</span> <span class="n">make_imbalance</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span>
-<span class="go">Counter({1: 50, 2: 50, 0: 10})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="go">[(0, 10), (1, 50), (2, 50)]</span>
 </pre></div>
 </div>
 <p>Instead of a dictionary, a function can be defined and directly pass to
@@ -460,8 +461,8 @@ in the dictionary:</p>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">target_stats</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_imb</span><span class="p">,</span> <span class="n">y_imb</span> <span class="o">=</span> <span class="n">make_imbalance</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
 <span class="gp">... </span>                              <span class="n">ratio</span><span class="o">=</span><span class="n">ratio_multiplier</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span>
-<span class="go">Counter({2: 47, 1: 35, 0: 25})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_imb</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="go">[(0, 25), (1, 35), (2, 47)]</span>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="../auto_examples/datasets/plot_make_imbalance.html#sphx-glr-auto-examples-datasets-plot-make-imbalance-py"><span class="std std-ref">make_imbalance function</span></a> and
@@ -479,7 +480,7 @@ in the dictionary:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../api.html" class="btn btn-neutral float-right" title="imbalanced-learn API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../developers_utils.html" class="btn btn-neutral float-right" title="7. Utilities for Developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../ensemble.html" class="btn btn-neutral" title="5. Ensemble of samplers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -513,7 +514,7 @@ in the dictionary:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

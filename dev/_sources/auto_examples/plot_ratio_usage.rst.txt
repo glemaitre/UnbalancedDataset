@@ -145,7 +145,7 @@ multiplier to define the number of samples per class.
  Out::
 
     Information of the iris data set after making it imbalanced using a callable: 
-     ratio=<function ratio_multiplier at 0x2b0752d538c8> 
+     ratio=<function ratio_multiplier at 0x2b966524b9d8> 
      y: Counter({2: 47, 1: 35, 0: 25})
 
 
@@ -251,7 +251,7 @@ mentioned.
      y: Counter({2: 35, 1: 30, 0: 25})
 
 
-**Total running time of the script:** ( 0 minutes  0.921 seconds)
+**Total running time of the script:** ( 0 minutes  0.881 seconds)
 
 
 

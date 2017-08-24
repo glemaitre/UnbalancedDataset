@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.under_sampling.prototype_selection.condensed_nearest_neighbour &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>imblearn.under_sampling.prototype_selection.condensed_nearest_neighbour &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -190,8 +190,11 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="k">import</span> <span class="n">issparse</span>
+
 <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">KNeighborsClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_random_state</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_random_state</span><span class="p">,</span> <span class="n">safe_indexing</span>
 
 <span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
 <span class="kn">from</span> <span class="nn">...utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
@@ -335,18 +338,19 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Matrix containing the data which have to be sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Corresponding label for each sample in X.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_resampled : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_resampled : {ndarray, sparse matrix}, shape \</span>
+<span class="sd">(n_samples_new, n_features)</span>
 <span class="sd">            The array containing the resampled data.</span>
 
-<span class="sd">        y_resampled : ndarray, shape (n_samples_new)</span>
+<span class="sd">        y_resampled : ndarray, shape (n_samples_new,)</span>
 <span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        idx_under : ndarray, shape (n_samples, )</span>
@@ -359,29 +363,27 @@
         <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
         <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
         <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-
-        <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">target_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="c1"># Randomly get one sample from the majority class</span>
                 <span class="c1"># Generate the index to select</span>
-                <span class="n">idx_maj_sample</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
-                    <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">target_stats</span><span class="p">[</span><span class="n">target_class</span><span class="p">],</span>
-                    <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_seeds_S</span><span class="p">)</span>
-                <span class="n">maj_sample</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">][</span><span class="n">idx_maj_sample</span><span class="p">]</span>
+                <span class="n">idx_maj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)</span>
+                <span class="n">idx_maj_sample</span> <span class="o">=</span> <span class="n">idx_maj</span><span class="p">[</span><span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+                        <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">target_stats</span><span class="p">[</span><span class="n">target_class</span><span class="p">],</span>
+                        <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_seeds_S</span><span class="p">)]</span>
 
                 <span class="c1"># Create the set C - One majority samples and all minority</span>
-                <span class="n">C_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">],</span> <span class="n">maj_sample</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">C_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">],</span>
-                                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">target_class</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_seeds_S</span><span class="p">))</span>
+                <span class="n">C_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">),</span>
+                                      <span class="n">idx_maj_sample</span><span class="p">)</span>
+                <span class="n">C_x</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">C_indices</span><span class="p">)</span>
+                <span class="n">C_y</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">C_indices</span><span class="p">)</span>
 
                 <span class="c1"># Create the set S - all majority samples</span>
-                <span class="n">S_x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]</span>
-                <span class="n">S_y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]</span>
+                <span class="n">S_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)</span>
+                <span class="n">S_x</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">S_indices</span><span class="p">)</span>
+                <span class="n">S_y</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">S_indices</span><span class="p">)</span>
 
                 <span class="c1"># fit knn on C</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">C_x</span><span class="p">,</span> <span class="n">C_y</span><span class="p">)</span>
@@ -395,21 +397,21 @@
                         <span class="k">continue</span>
 
                     <span class="c1"># Classify on S</span>
-                    <span class="n">pred_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_sam</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">issparse</span><span class="p">(</span><span class="n">x_sam</span><span class="p">):</span>
+                        <span class="n">x_sam</span> <span class="o">=</span> <span class="n">x_sam</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">pred_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_sam</span><span class="p">)</span>
 
                     <span class="c1"># If the prediction do not agree with the true label</span>
                     <span class="c1"># append it in C_x</span>
                     <span class="k">if</span> <span class="n">y_sam</span> <span class="o">!=</span> <span class="n">pred_y</span><span class="p">:</span>
                         <span class="c1"># Keep the index for later</span>
-                        <span class="n">idx_maj_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_maj_sample</span><span class="p">,</span> <span class="n">idx_sam</span><span class="p">)</span>
+                        <span class="n">idx_maj_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_maj_sample</span><span class="p">,</span>
+                                                   <span class="n">idx_maj</span><span class="p">[</span><span class="n">idx_sam</span><span class="p">])</span>
 
                         <span class="c1"># Update C</span>
-                        <span class="n">C_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">],</span>
-                                        <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">][</span><span class="n">idx_maj_sample</span><span class="p">],</span>
-                                        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                        <span class="n">C_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">],</span>
-                                        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">target_class</span><span class="p">]</span> <span class="o">*</span>
-                                                 <span class="n">idx_maj_sample</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+                        <span class="n">C_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">C_indices</span><span class="p">,</span> <span class="n">idx_maj</span><span class="p">[</span><span class="n">idx_sam</span><span class="p">])</span>
+                        <span class="n">C_x</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">C_indices</span><span class="p">)</span>
+                        <span class="n">C_y</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">C_indices</span><span class="p">)</span>
 
                         <span class="c1"># fit a knn on C</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">C_x</span><span class="p">,</span> <span class="n">C_y</span><span class="p">)</span>
@@ -422,35 +424,17 @@
                             <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_maj_sample</span><span class="p">,</span>
                                       <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">pred_S_y</span> <span class="o">==</span> <span class="n">S_y</span><span class="p">)))</span>
 
-                <span class="c1"># Find the misclassified S_y</span>
-                <span class="n">sel_x</span> <span class="o">=</span> <span class="n">S_x</span><span class="p">[</span><span class="n">idx_maj_sample</span><span class="p">,</span> <span class="p">:]</span>
-                <span class="n">sel_y</span> <span class="o">=</span> <span class="n">S_y</span><span class="p">[</span><span class="n">idx_maj_sample</span><span class="p">]</span>
-
-                <span class="c1"># The indexes found are relative to the current class, we need</span>
-                <span class="c1"># to find the absolute value Build the array with the absolute</span>
-                <span class="c1"># position</span>
-                <span class="n">abs_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)</span>
-                <span class="n">idx_maj_sample</span> <span class="o">=</span> <span class="n">abs_pos</span><span class="p">[</span><span class="n">idx_maj_sample</span><span class="p">]</span>
-
-                <span class="c1"># If we need to offer support for the indices selected</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-                    <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">idx_maj_sample</span><span class="p">),</span>
-                                               <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">sel_x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">sel_y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">idx_maj_sample</span><span class="p">),</span>
+                                           <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-                    <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-                        <span class="p">(</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">idx_under</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">idx_under</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">target_class</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">idx_under</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">idx_under</span><span class="p">),</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">idx_under</span><span class="p">),</span>
+                    <span class="n">idx_under</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span></div>
+            <span class="k">return</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">idx_under</span><span class="p">),</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">idx_under</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -487,7 +471,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

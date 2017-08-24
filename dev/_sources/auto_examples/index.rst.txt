@@ -258,6 +258,26 @@ In fact, an ensemble of balanced sets is created and used to later train any cla
    :hidden:
 
    /auto_examples/ensemble/plot_balance_cascade
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the benefit of balancing the training set when using a bagging classifier. `...">
+
+.. only:: html
+
+    .. figure:: /auto_examples/ensemble/images/thumb/sphx_glr_plot_comparison_bagging_classifier_thumb.png
+
+        :ref:`sphx_glr_auto_examples_ensemble_plot_comparison_bagging_classifier.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/ensemble/plot_comparison_bagging_classifier
 .. raw:: html
 
     <div style='clear:both'></div>
@@ -601,26 +621,6 @@ The implemented methods can be categorized into 2 groups: (i) fixed under-sampli
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="An illustration of the cluster centroids method.">
-
-.. only:: html
-
-    .. figure:: /auto_examples/under-sampling/images/thumb/sphx_glr_plot_cluster_centroids_thumb.png
-
-        :ref:`sphx_glr_auto_examples_under-sampling_plot_cluster_centroids.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/under-sampling/plot_cluster_centroids
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="An illustration of the nearmiss 1 &amp; 2 &amp; 3 method.">
 
 .. only:: html
@@ -678,6 +678,26 @@ The implemented methods can be categorized into 2 groups: (i) fixed under-sampli
    :hidden:
 
    /auto_examples/under-sampling/plot_illustration_tomek_links
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="An illustration of the cluster centroids method.">
+
+.. only:: html
+
+    .. figure:: /auto_examples/under-sampling/images/thumb/sphx_glr_plot_cluster_centroids_thumb.png
+
+        :ref:`sphx_glr_auto_examples_under-sampling_plot_cluster_centroids.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/under-sampling/plot_cluster_centroids
 
 .. raw:: html
 

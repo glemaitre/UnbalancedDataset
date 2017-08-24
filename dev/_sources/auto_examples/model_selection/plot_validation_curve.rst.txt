@@ -89,7 +89,7 @@ different values of the SMOTE's k_neighbors parameter.
     plt.legend(loc="best")
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  5.454 seconds)
+**Total running time of the script:** ( 0 minutes  5.865 seconds)
 
 
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.under_sampling.prototype_selection.neighbourhood_cleaning_rule &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>imblearn.under_sampling.prototype_selection.neighbourhood_cleaning_rule &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -191,9 +191,11 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">mode</span>
 
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">safe_indexing</span>
+
 <span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
 <span class="kn">from</span> <span class="nn">.edited_nearest_neighbours</span> <span class="k">import</span> <span class="n">EditedNearestNeighbours</span>
-<span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
+<span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span><span class="p">,</span> <span class="n">check_ratio</span>
 
 <span class="n">SEL_KIND</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">)</span>
 
@@ -326,18 +328,19 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Matrix containing the data which have to be sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Corresponding label for each sample in X.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_resampled : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_resampled : {ndarray, sparse matrix}, shape \</span>
+<span class="sd">(n_samples_new, n_features)</span>
 <span class="sd">            The array containing the resampled data.</span>
 
-<span class="sd">        y_resampled : ndarray, shape (n_samples_new)</span>
+<span class="sd">        y_resampled : ndarray, shape (n_samples_new,)</span>
 <span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        idx_under : ndarray, shape (n_samples, )</span>
@@ -346,7 +349,6 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimator</span><span class="p">()</span>
-
         <span class="n">enn</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                       <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
                                       <span class="n">size_ngh</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span><span class="p">,</span>
@@ -367,8 +369,9 @@
                                     <span class="p">(</span><span class="n">n_samples</span> <span class="o">&gt;</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span>
                                      <span class="bp">self</span><span class="o">.</span><span class="n">threshold_cleaning</span><span class="p">))]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">X_class</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">]</span>
-        <span class="n">y_class</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">]</span>
+        <span class="n">class_minority_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_minority</span><span class="p">)</span>
+        <span class="n">X_class</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">class_minority_indices</span><span class="p">)</span>
+        <span class="n">y_class</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">class_minority_indices</span><span class="p">)</span>
         <span class="n">nnhood_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
             <span class="n">X_class</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
         <span class="n">nnhood_label</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">nnhood_idx</span><span class="p">]</span>
@@ -391,10 +394,12 @@
         <span class="n">index_target_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">selected_samples</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">],</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">index_target_class</span><span class="p">),</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">index_target_class</span><span class="p">),</span>
                     <span class="n">index_target_class</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index_target_class</span><span class="p">]</span></div>
+            <span class="k">return</span> <span class="p">(</span><span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">index_target_class</span><span class="p">),</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">index_target_class</span><span class="p">))</span></div>
 </pre></div>
 
            </div>
@@ -431,7 +436,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

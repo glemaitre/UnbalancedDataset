@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.over_sampling.smote &mdash; imbalanced-learn 0.3.0.dev0 documentation</title>
+  <title>imblearn.over_sampling.smote &mdash; imbalanced-learn 0.3.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0.dev0 documentation" href="../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0.dev0
+                0.3.0
               </div>
             
           
@@ -188,8 +188,11 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
+
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">SVC</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_random_state</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_random_state</span><span class="p">,</span> <span class="n">safe_indexing</span>
 
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">BaseOverSampler</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">raise_isinstance_error</span>
@@ -355,13 +358,13 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        samples : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        samples : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            The samples to check if either they are in danger or not.</span>
 
 <span class="sd">        target_class : int or str,</span>
 <span class="sd">            The target corresponding class being over-sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            The true label in order to check the neighbour labels.</span>
 
 <span class="sd">        kind : str, optional (default=&#39;danger&#39;)</span>
@@ -372,7 +375,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        output : ndarray, shape (n_samples, )</span>
+<span class="sd">        output : ndarray, shape (n_samples,)</span>
 <span class="sd">            A boolean array where True refer to samples in danger or noise.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -403,7 +406,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Points from which the points will be created.</span>
 
 <span class="sd">        y_type : str or int</span>
@@ -425,26 +428,42 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_new : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_new : {ndarray, sparse matrix}, shape (n_samples_new, n_features)</span>
 <span class="sd">            Synthetically generated samples.</span>
 
-<span class="sd">        y_new : ndarray, shape (n_samples_new, )</span>
+<span class="sd">        y_new : ndarray, shape (n_samples_new,)</span>
 <span class="sd">            Target values for synthetic samples.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
-        <span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+        <span class="n">samples_indices</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
             <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">nn_num</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
         <span class="n">steps</span> <span class="o">=</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">random_state</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
-        <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor_divide</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">nn_num</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">nn_num</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span>
-                                                         <span class="n">cols</span><span class="p">,</span> <span class="n">steps</span><span class="p">)):</span>
-            <span class="n">X_new</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">-</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">-</span> <span class="n">nn_data</span><span class="p">[</span><span class="n">nn_num</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]])</span>
-        <span class="n">y_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y_type</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_new</span><span class="p">))</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor_divide</span><span class="p">(</span><span class="n">samples_indices</span><span class="p">,</span> <span class="n">nn_num</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">samples_indices</span><span class="p">,</span> <span class="n">nn_num</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="n">X_new</span><span class="p">,</span> <span class="n">y_new</span>
+        <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="n">row_indices</span><span class="p">,</span> <span class="n">col_indices</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">steps</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">nnz</span><span class="p">:</span>
+                    <span class="n">sample</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">-</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">-</span>
+                                              <span class="n">nn_data</span><span class="p">[</span><span class="n">nn_num</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]])</span>
+                    <span class="n">row_indices</span> <span class="o">+=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+                    <span class="n">col_indices</span> <span class="o">+=</span> <span class="n">sample</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                    <span class="n">samples</span> <span class="o">+=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">steps</span><span class="p">)):</span>
+                <span class="n">X_new</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">-</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">-</span> <span class="n">nn_data</span><span class="p">[</span><span class="n">nn_num</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]])</span>
+
+        <span class="n">y_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y_type</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples_indices</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">samples</span><span class="p">,</span> <span class="p">(</span><span class="n">row_indices</span><span class="p">,</span> <span class="n">col_indices</span><span class="p">)),</span>
+                                      <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">samples_indices</span><span class="p">),</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]),</span>
+                    <span class="n">y_new</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">X_new</span><span class="p">,</span> <span class="n">y_new</span>
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the necessary objects for SMOTE.&quot;&quot;&quot;</span>
@@ -485,19 +504,20 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Matrix containing the data which have to be sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Corresponding label for each sample in X.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_resampled : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_resampled : {ndarray, sparse matrix}, shape \</span>
+<span class="sd">(n_samples_new, n_features)</span>
 <span class="sd">            The array containing the resampled data.</span>
 
-<span class="sd">        y_resampled : ndarray, shape (n_samples_new)</span>
-<span class="sd">            The corresponding label of `X_resampled`.</span>
+<span class="sd">        y_resampled : ndarray, shape (n_samples_new,)</span>
+<span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        References</span>
 <span class="sd">        ----------</span>
@@ -506,21 +526,26 @@
 <span class="sd">           intelligence research, 321-357, 2002.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">n_samples</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">X_class</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">]</span>
+            <span class="n">target_class_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">)</span>
+            <span class="n">X_class</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target_class_indices</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_class</span><span class="p">)</span>
             <span class="n">nns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
             <span class="n">X_new</span><span class="p">,</span> <span class="n">y_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span>
                                               <span class="n">nns</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 
-            <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
+                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new</span><span class="p">))</span>
+            <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span>
 
@@ -534,19 +559,20 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Matrix containing the data which have to be sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Corresponding label for each sample in X.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_resampled : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_resampled : {ndarray, sparse matrix}, shape \</span>
+<span class="sd">(n_samples_new, n_features)</span>
 <span class="sd">            The array containing the resampled data.</span>
 
-<span class="sd">        y_resampled : ndarray, shape (n_samples_new)</span>
-<span class="sd">            The corresponding label of `X_resampled`.</span>
+<span class="sd">        y_resampled : ndarray, shape (n_samples_new,)</span>
+<span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        References</span>
 <span class="sd">        ----------</span>
@@ -561,7 +587,8 @@
         <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">n_samples</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">X_class</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">]</span>
+            <span class="n">target_class_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">)</span>
+            <span class="n">X_class</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target_class_indices</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_m_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
             <span class="n">danger_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_danger_noise</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
@@ -571,16 +598,21 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_class</span><span class="p">)</span>
             <span class="n">nns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
-               <span class="n">X_class</span><span class="p">[</span><span class="n">danger_index</span><span class="p">],</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span> <span class="n">danger_index</span><span class="p">),</span>
+                <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
 
             <span class="c1"># divergence between borderline-1 and borderline-2</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;borderline1&#39;</span><span class="p">:</span>
                 <span class="c1"># Create synthetic samples for borderline points.</span>
-                <span class="n">X_new</span><span class="p">,</span> <span class="n">y_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span><span class="n">X_class</span><span class="p">[</span><span class="n">danger_index</span><span class="p">],</span>
+                <span class="n">X_new</span><span class="p">,</span> <span class="n">y_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span><span class="n">safe_indexing</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span>
+                                                                <span class="n">danger_index</span><span class="p">),</span>
                                                   <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span>
                                                   <span class="n">nns</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new</span><span class="p">))</span>
+                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new</span><span class="p">))</span>
 
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
@@ -588,22 +620,26 @@
 
                 <span class="c1"># only minority</span>
                 <span class="n">X_new_1</span><span class="p">,</span> <span class="n">y_new_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span>
-                    <span class="n">X_class</span><span class="p">[</span><span class="n">danger_index</span><span class="p">],</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span> <span class="n">nns</span><span class="p">,</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span> <span class="n">danger_index</span><span class="p">),</span> <span class="n">class_sample</span><span class="p">,</span>
+                    <span class="n">X_class</span><span class="p">,</span> <span class="n">nns</span><span class="p">,</span>
                     <span class="nb">int</span><span class="p">(</span><span class="n">fractions</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_samples</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 
                 <span class="c1"># we use a one-vs-rest policy to handle the multiclass in which</span>
                 <span class="c1"># new samples will be created considering not only the majority</span>
                 <span class="c1"># class but all over classes.</span>
                 <span class="n">X_new_2</span><span class="p">,</span> <span class="n">y_new_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span>
-                    <span class="n">X_class</span><span class="p">[</span><span class="n">danger_index</span><span class="p">],</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">!=</span> <span class="n">class_sample</span><span class="p">],</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X_class</span><span class="p">,</span> <span class="n">danger_index</span><span class="p">),</span> <span class="n">class_sample</span><span class="p">,</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">class_sample</span><span class="p">)),</span>
                     <span class="n">nns</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fractions</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_samples</span><span class="p">),</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
-                <span class="c1"># Concatenate the newly generated samples to the original</span>
-                <span class="c1"># data set</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_1</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">),</span>
-                                             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new_1</span><span class="p">,</span> <span class="n">y_new_2</span><span class="p">),</span>
-                                             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">):</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_resampled</span><span class="p">,</span>
+                                                 <span class="n">X_new_1</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span>
+                                             <span class="n">X_new_1</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">))</span>
+                <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span>
+                                         <span class="n">y_new_1</span><span class="p">,</span> <span class="n">y_new_2</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span>
 
@@ -615,19 +651,20 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Matrix containing the data which have to be sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Corresponding label for each sample in X.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_resampled : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_resampled : {ndarray, sparse matrix}, shape \</span>
+<span class="sd">(n_samples_new, n_features)</span>
 <span class="sd">            The array containing the resampled data.</span>
 
-<span class="sd">        y_resampled : ndarray, shape (n_samples_new)</span>
-<span class="sd">            The corresponding label of `X_resampled`.</span>
+<span class="sd">        y_resampled : ndarray, shape (n_samples_new,)</span>
+<span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        References</span>
 <span class="sd">        ----------</span>
@@ -643,17 +680,20 @@
         <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratio_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">n_samples</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">X_class</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">]</span>
+            <span class="n">target_class_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">)</span>
+            <span class="n">X_class</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target_class_indices</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">svm_estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
             <span class="n">support_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_estimator_</span><span class="o">.</span><span class="n">support_</span><span class="p">[</span>
                 <span class="n">y</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">svm_estimator_</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span> <span class="o">==</span> <span class="n">class_sample</span><span class="p">]</span>
-            <span class="n">support_vector</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">support_index</span><span class="p">]</span>
+            <span class="n">support_vector</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">support_index</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_m_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
             <span class="n">noise_bool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_danger_noise</span><span class="p">(</span><span class="n">support_vector</span><span class="p">,</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
                                                <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;noise&#39;</span><span class="p">)</span>
-            <span class="n">support_vector</span> <span class="o">=</span> <span class="n">support_vector</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">noise_bool</span><span class="p">)]</span>
+            <span class="n">support_vector</span> <span class="o">=</span> <span class="n">safe_indexing</span><span class="p">(</span>
+                <span class="n">support_vector</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">noise_bool</span><span class="p">)))</span>
             <span class="n">danger_bool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_danger_noise</span><span class="p">(</span><span class="n">support_vector</span><span class="p">,</span> <span class="n">class_sample</span><span class="p">,</span>
                                                 <span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
             <span class="n">safety_bool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">danger_bool</span><span class="p">)</span>
@@ -661,33 +701,48 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_class</span><span class="p">)</span>
             <span class="n">fractions</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">danger_bool</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">nns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">support_vector</span><span class="p">[</span><span class="n">danger_bool</span><span class="p">],</span>
+                <span class="n">nns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">safe_indexing</span><span class="p">(</span>
+                    <span class="n">support_vector</span><span class="p">,</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">danger_bool</span><span class="p">)),</span>
                                             <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
 
                 <span class="n">X_new_1</span><span class="p">,</span> <span class="n">y_new_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span>
-                    <span class="n">support_vector</span><span class="p">[</span><span class="n">danger_bool</span><span class="p">],</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">support_vector</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">danger_bool</span><span class="p">)),</span>
+                    <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span>
                     <span class="n">nns</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">fractions</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_samples</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">safety_bool</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">nns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">support_vector</span><span class="p">[</span><span class="n">safety_bool</span><span class="p">],</span>
-                                            <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">nns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nn_k_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">support_vector</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">safety_bool</span><span class="p">)),</span>
+                    <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
 
                 <span class="n">X_new_2</span><span class="p">,</span> <span class="n">y_new_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_samples</span><span class="p">(</span>
-                    <span class="n">support_vector</span><span class="p">[</span><span class="n">safety_bool</span><span class="p">],</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span>
+                    <span class="n">safe_indexing</span><span class="p">(</span><span class="n">support_vector</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">safety_bool</span><span class="p">)),</span>
+                    <span class="n">class_sample</span><span class="p">,</span> <span class="n">X_class</span><span class="p">,</span>
                     <span class="n">nns</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fractions</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_samples</span><span class="p">),</span>
                     <span class="n">step_size</span><span class="o">=-</span><span class="bp">self</span><span class="o">.</span><span class="n">out_step</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">danger_bool</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">safety_bool</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_1</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">),</span>
-                                             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">):</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_resampled</span><span class="p">,</span>
+                                                 <span class="n">X_new_1</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span>
+                                             <span class="n">X_new_1</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">))</span>
                 <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new_1</span><span class="p">,</span> <span class="n">y_new_2</span><span class="p">),</span>
                                              <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">danger_bool</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">):</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_resampled</span><span class="p">,</span>  <span class="n">X_new_2</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_2</span><span class="p">))</span>
                 <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new_2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">safety_bool</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">):</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">X_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">X_new_1</span><span class="p">))</span>
                 <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">y_new_1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span>
@@ -697,18 +752,19 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : ndarray, shape (n_samples, n_features)</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
 <span class="sd">            Matrix containing the data which have to be sampled.</span>
 
-<span class="sd">        y : ndarray, shape (n_samples, )</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Corresponding label for each sample in X.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_resampled : ndarray, shape (n_samples_new, n_features)</span>
+<span class="sd">        X_resampled : {ndarray, sparse matrix}, shape \</span>
+<span class="sd">(n_samples_new, n_features)</span>
 <span class="sd">            The array containing the resampled data.</span>
 
-<span class="sd">        y_resampled : ndarray, shape (n_samples_new)</span>
+<span class="sd">        y_resampled : ndarray, shape (n_samples_new,)</span>
 <span class="sd">            The corresponding label of `X_resampled`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -756,7 +812,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.3.0.dev0',
+            VERSION:'0.3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

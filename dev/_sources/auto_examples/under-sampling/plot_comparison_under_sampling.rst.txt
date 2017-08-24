@@ -367,7 +367,7 @@ removed.
 
 
 
-**Total running time of the script:** ( 0 minutes  10.193 seconds)
+**Total running time of the script:** ( 0 minutes  10.890 seconds)
 
 
 
