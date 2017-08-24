@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. Utilities for Developers &mdash; imbalanced-learn 0.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="about.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="index.html"/>
+        <link rel="up" title="User Guide" href="user_guide.html"/>
+        <link rel="next" title="imbalanced-learn API" href="api.html"/>
+        <link rel="prev" title="6. Dataset loading utilities" href="datasets/index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install and contribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="over_sampling.html">2. Over-sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="under_sampling.html">3. Under-sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="combine.html">4. Combination of over- and under-sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ensemble.html">5. Ensemble of samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/index.html">6. Dataset loading utilities</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. Utilities for Developers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#validation-tools">7.1. Validation Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deprecation">7.2. Deprecation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-utilities">7.3. Testing utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">imbalanced-learn API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="user_guide.html">User Guide</a> &raquo;</li>
+        
+      <li>7. Utilities for Developers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/developers_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="utilities-for-developers">
+<span id="developers-utils"></span><h1>7. Utilities for Developers<a class="headerlink" href="#utilities-for-developers" title="Permalink to this headline">¶</a></h1>
+<p>Imbalanced-learn contains a number of utilities to help with development. These are
+located in <a class="reference internal" href="api.html#module-imblearn.utils" title="imblearn.utils"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.utils</span></code></a>, and include tools in a number of categories.
+All the following functions and classes are in the module <a class="reference internal" href="api.html#module-imblearn.utils" title="imblearn.utils"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.utils</span></code></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">These utilities are meant to be used internally within the imbalanced-learn
+package. They are not guaranteed to be stable between versions of
+imbalance-learn. Backports, in particular, will be removed as the
+imbalance-learn dependencies evolve.</p>
+</div>
+<div class="section" id="validation-tools">
+<h2>7.1. Validation Tools<a class="headerlink" href="#validation-tools" title="Permalink to this headline">¶</a></h2>
+<p>These are tools used to check and validate input. When you write a function
+which accepts arrays, matrices, or sparse matrices as arguments, the following
+should be used when applicable.</p>
+<ul class="simple">
+<li><a class="reference internal" href="generated/imblearn.utils.check_neighbors_object.html#imblearn.utils.check_neighbors_object" title="imblearn.utils.check_neighbors_object"><code class="xref py py-func docutils literal"><span class="pre">check_neighbors_object</span></code></a>: Check the objects is consistent to be a NN.</li>
+<li><code class="xref py py-func docutils literal"><span class="pre">check_target_type</span></code>: Check the target types to be conform to the current samplers.</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio" title="imblearn.utils.check_ratio"><code class="xref py py-func docutils literal"><span class="pre">check_ratio</span></code></a>: Checks ratio for consistent type and return a dictionary</dt>
+<dd>containing each targeted class with its corresponding number of pixel.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="deprecation">
+<h2>7.2. Deprecation<a class="headerlink" href="#deprecation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Apart from <code class="xref py py-func docutils literal"><span class="pre">deprecate_parameter</span></code> the rest of this section is taken from
+scikit-learn. Please refer to their original documentation.</p>
+</div>
+<p>If any publicly accessible method, function, attribute or parameter
+is renamed, we still support the old one for two releases and issue
+a deprecation warning when it is called/passed/accessed.
+E.g., if the function <code class="docutils literal"><span class="pre">zero_one</span></code> is renamed to <code class="docutils literal"><span class="pre">zero_one_loss</span></code>,
+we add the decorator <code class="docutils literal"><span class="pre">deprecated</span></code> (from <code class="docutils literal"><span class="pre">sklearn.utils</span></code>)
+to <code class="docutils literal"><span class="pre">zero_one</span></code> and call <code class="docutils literal"><span class="pre">zero_one_loss</span></code> from that function:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">deprecated</span>
+
+<span class="k">def</span> <span class="nf">zero_one_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># actual implementation</span>
+    <span class="k">pass</span>
+
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Function &#39;zero_one&#39; was renamed to &#39;zero_one_loss&#39; &quot;</span>
+            <span class="s2">&quot;in version 0.13 and will be removed in release 0.15. &quot;</span>
+            <span class="s2">&quot;Default behavior is changed from &#39;normalize=False&#39; to &quot;</span>
+            <span class="s2">&quot;&#39;normalize=True&#39;&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">zero_one</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">zero_one_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If an attribute is to be deprecated,
+use the decorator <code class="docutils literal"><span class="pre">deprecated</span></code> on a property.
+E.g., renaming an attribute <code class="docutils literal"><span class="pre">labels_</span></code> to <code class="docutils literal"><span class="pre">classes_</span></code> can be done as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Attribute labels_ was deprecated in version 0.13 and &quot;</span>
+            <span class="s2">&quot;will be removed in 0.15. Use &#39;classes_&#39; instead&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">labels_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>
+</pre></div>
+</div>
+<p>If a parameter has to be deprecated, use <code class="docutils literal"><span class="pre">DeprecationWarning</span></code> appropriately.
+In the following example, k is deprecated and renamed to n_clusters:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="k">def</span> <span class="nf">example_function</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&#39;k&#39; was renamed to n_clusters in version 0.13 and &quot;</span>
+                      <span class="s2">&quot;will be removed in 0.15.&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
+        <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">k</span>
+</pre></div>
+</div>
+<p>As in these examples, the warning message should always give both the
+version in which the deprecation happened and the version in which the
+old behavior will be removed. If the deprecation happened in version
+0.x-dev, the message should say deprecation occurred in version 0.x and
+the removal will be in 0.(x+2). For example, if the deprecation happened
+in version 0.18-dev, the message should say it happened in version 0.18
+and the old behavior will be removed in version 0.20.</p>
+<p>In addition, a deprecation note should be added in the docstring, recalling the
+same information as the deprecation warning as explained above. Use the
+<code class="docutils literal"><span class="pre">..</span> <span class="pre">deprecated::</span></code> directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.. deprecated:: 0.13
+   ``k`` was renamed to ``n_clusters`` in version 0.13 and will be removed
+   in 0.15.
+</pre></div>
+</div>
+<p>On the top of all the functionality provided by scikit-learn. Imbalance-learn
+provides <code class="xref py py-func docutils literal"><span class="pre">deprecate_parameter</span></code>: which is used to deprecate a sampler’s
+parameter (attribute) by another one.</p>
+</div>
+<div class="section" id="testing-utilities">
+<h2>7.3. Testing utilities<a class="headerlink" href="#testing-utilities" title="Permalink to this headline">¶</a></h2>
+<p>Currently, imbalanced-learn provide a warning management utility. This feature
+is going to be merge in pytest and will be removed when the pytest release will
+have it.</p>
+<p>If using Python 2.7 or above, you may use this function as a
+context manager:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.utils.testing</span> <span class="k">import</span> <span class="n">warns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warns</span><span class="p">(</span><span class="ne">RuntimeWarning</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;my runtime warning&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warns</span><span class="p">(</span><span class="ne">RuntimeWarning</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">pass</span>
+<span class="gt">Traceback (most recent call last):</span>
+  <span class="c">...</span>
+<span class="gr">Failed</span>: <span class="n">DID NOT WARN. No warnings of type ...RuntimeWarning... was emitted...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warns</span><span class="p">(</span><span class="ne">RuntimeWarning</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="ne">UserWarning</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  <span class="c">...</span>
+<span class="gr">Failed</span>: <span class="n">DID NOT WARN. No warnings of type ...RuntimeWarning... was emitted...</span>
+</pre></div>
+</div>
+<p>In the context manager form you may use the keyword argument <code class="docutils literal"><span class="pre">match</span></code> to assert
+that the exception matches a text or regex:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.utils.testing</span> <span class="k">import</span> <span class="n">warns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warns</span><span class="p">(</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;must be 0 or None&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;value must be 0 or None&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warns</span><span class="p">(</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;must be \d+$&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;value must be 42&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warns</span><span class="p">(</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;must be \d+$&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;this is not here&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  <span class="c">...</span>
+<span class="gr">AssertionError</span>: <span class="n">&#39;must be \d+$&#39; pattern not found in [&#39;this is not here&#39;]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="imbalanced-learn API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datasets/index.html" class="btn btn-neutral" title="6. Dataset loading utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

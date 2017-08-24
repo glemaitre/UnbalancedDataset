@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imblearn.metrics.classification_report_imbalanced &mdash; imbalanced-learn 0.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../about.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
+        <link rel="up" title="imbalanced-learn API" href="../api.html"/>
+        <link rel="next" title="imblearn.metrics.sensitivity_specificity_support" href="imblearn.metrics.sensitivity_specificity_support.html"/>
+        <link rel="prev" title="imblearn.pipeline.make_pipeline" href="imblearn.pipeline.make_pipeline.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install and contribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">imbalanced-learn API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.under_sampling"><code class="docutils literal"><span class="pre">imblearn.under_sampling</span></code>: Under-sampling methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.over_sampling"><code class="docutils literal"><span class="pre">imblearn.over_sampling</span></code>: Over-sampling methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.combine"><code class="docutils literal"><span class="pre">imblearn.combine</span></code>: Combination of over- and under-sampling methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.ensemble"><code class="docutils literal"><span class="pre">imblearn.ensemble</span></code>: Ensemble methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.pipeline"><code class="docutils literal"><span class="pre">imblearn.pipeline</span></code>: Pipeline</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#module-imblearn.metrics"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>: Metrics</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.classification_report_imbalanced</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#examples-using-imblearn-metrics-classification-report-imbalanced">Examples using <code class="docutils literal"><span class="pre">imblearn.metrics.classification_report_imbalanced</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imblearn.metrics.sensitivity_specificity_support.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.sensitivity_specificity_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imblearn.metrics.sensitivity_score.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.sensitivity_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imblearn.metrics.specificity_score.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.specificity_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imblearn.metrics.geometric_mean_score.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.geometric_mean_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imblearn.metrics.make_index_balanced_accuracy.html"><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.make_index_balanced_accuracy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.datasets"><code class="docutils literal"><span class="pre">imblearn.datasets</span></code>: Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#module-imblearn.utils"><code class="docutils literal"><span class="pre">imblearn.utils</span></code>: Utilities</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">imbalanced-learn API</a> &raquo;</li>
+        
+      <li><code class="docutils literal"><span class="pre">imblearn.metrics</span></code>.classification_report_imbalanced</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/imblearn.metrics.classification_report_imbalanced.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="imblearn-metrics-classification-report-imbalanced">
+<h1><a class="reference internal" href="../api.html#module-imblearn.metrics" title="imblearn.metrics"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.metrics</span></code></a>.classification_report_imbalanced<a class="headerlink" href="#imblearn-metrics-classification-report-imbalanced" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="imblearn.metrics.classification_report_imbalanced">
+<code class="descclassname">imblearn.metrics.</code><code class="descname">classification_report_imbalanced</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>labels=None</em>, <em>target_names=None</em>, <em>sample_weight=None</em>, <em>digits=2</em>, <em>alpha=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/metrics/classification.html#classification_report_imbalanced"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/f96fcf8/imblearn/metrics/classification.py#L739"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.metrics.classification_report_imbalanced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a classification report based on metrics used with imbalanced
+dataset</p>
+<p>Specific metrics have been proposed to evaluate the classification
+performed on imbalanced dataset. This report compiles the
+state-of-the-art metrics: precision/recall/specificity, geometric
+mean, and index balanced accuracy of the
+geometric mean.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>y_true</strong> : ndarray, shape (n_samples, )</p>
+<blockquote>
+<div><p>Ground truth (correct) target values.</p>
+</div></blockquote>
+<p><strong>y_pred</strong> : ndarray, shape (n_samples, )</p>
+<blockquote>
+<div><p>Estimated targets as returned by a classifier.</p>
+</div></blockquote>
+<p><strong>labels</strong> : list, optional</p>
+<blockquote>
+<div><p>The set of labels to include when <code class="docutils literal"><span class="pre">average</span> <span class="pre">!=</span> <span class="pre">'binary'</span></code>, and their
+order if <code class="docutils literal"><span class="pre">average</span> <span class="pre">is</span> <span class="pre">None</span></code>. Labels present in the data can be
+excluded, for example to calculate a multiclass average ignoring a
+majority negative class, while labels not present in the data will
+result in 0 components in a macro average.</p>
+</div></blockquote>
+<p><strong>target_names</strong> : list of strings, optional</p>
+<blockquote>
+<div><p>Optional display names matching the labels (same order).</p>
+</div></blockquote>
+<p><strong>sample_weight</strong> : ndarray, shape (n_samples, )</p>
+<blockquote>
+<div><p>Sample weights.</p>
+</div></blockquote>
+<p><strong>digits</strong> : int, optional (default=2)</p>
+<blockquote>
+<div><p>Number of digits for formatting output floating point values</p>
+</div></blockquote>
+<p><strong>alpha</strong> : float, optional (default=0.1)</p>
+<blockquote>
+<div><p>Weighting factor.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>report</strong> : string</p>
+<blockquote class="last">
+<div><p>Text summary of the precision, recall, specificity, geometric mean,
+and index balanced accuracy.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.metrics</span> <span class="k">import</span> <span class="n">classification_report_imbalanced</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># doctest : +NORMALIZE_WHITESPACE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;class 0&#39;</span><span class="p">,</span> <span class="s1">&#39;class 1&#39;</span><span class="p">,</span>     <span class="s1">&#39;class 2&#39;</span><span class="p">]</span> <span class="c1"># doctest : +NORMALIZE_WHITESPACE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report_imbalanced</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>     <span class="n">target_names</span><span class="o">=</span><span class="n">target_names</span><span class="p">))</span>
+<span class="go">                   pre       rec       spe        f1       geo       iba       sup</span>
+
+<span class="go">    class 0       0.50      1.00      0.75      0.67      0.71      0.48         1</span>
+<span class="go">    class 1       0.00      0.00      0.75      0.00      0.00      0.00         1</span>
+<span class="go">    class 2       1.00      0.67      1.00      0.80      0.82      0.69         3</span>
+
+<span class="go">avg / total       0.70      0.60      0.90      0.61      0.63      0.51         5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="examples-using-imblearn-metrics-classification-report-imbalanced">
+<h2>Examples using <code class="docutils literal"><span class="pre">imblearn.metrics.classification_report_imbalanced</span></code><a class="headerlink" href="#examples-using-imblearn-metrics-classification-report-imbalanced" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="Some balancing methods allow for balancing dataset with multiples classes. We provide an exampl..."><div class="figure" id="id1">
+<img alt="../_images/sphx_glr_plot_multi_class_under_sampling_thumb.png" src="../_images/sphx_glr_plot_multi_class_under_sampling_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/applications/plot_multi_class_under_sampling.html#sphx-glr-auto-examples-applications-plot-multi-class-under-sampling-py"><span class="std std-ref">Multiclass classification with under-sampling</span></a></span></p>
+</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to balance the text data before to train a classifier."><div class="figure" id="id2">
+<img alt="../_images/sphx_glr_plot_topic_classication_thumb.png" src="../_images/sphx_glr_plot_topic_classication_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/applications/plot_topic_classication.html#sphx-glr-auto-examples-applications-plot-topic-classication-py"><span class="std std-ref">Example of topic classification in text documents</span></a></span></p>
+</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows the benefit of balancing the training set when using a bagging classifier. `..."><div class="figure" id="id3">
+<img alt="../_images/sphx_glr_plot_comparison_bagging_classifier_thumb.png" src="../_images/sphx_glr_plot_comparison_bagging_classifier_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/ensemble/plot_comparison_bagging_classifier.html#sphx-glr-auto-examples-ensemble-plot-comparison-bagging-classifier-py"><span class="std std-ref">Comparison of balanced and imbalanced bagging classifiers</span></a></span></p>
+</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Specific metrics have been developed to evaluate classifier which has been trained using imbala..."><div class="figure" id="id4">
+<img alt="../_images/sphx_glr_plot_classification_report_thumb.png" src="../_images/sphx_glr_plot_classification_report_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/evaluation/plot_classification_report.html#sphx-glr-auto-examples-evaluation-plot-classification-report-py"><span class="std std-ref">Evaluate classification by compiling a report</span></a></span></p>
+</div>
+</div><div style='clear:both'></div></div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="imblearn.metrics.sensitivity_specificity_support.html" class="btn btn-neutral float-right" title="imblearn.metrics.sensitivity_specificity_support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="imblearn.pipeline.make_pipeline.html" class="btn btn-neutral" title="imblearn.pipeline.make_pipeline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

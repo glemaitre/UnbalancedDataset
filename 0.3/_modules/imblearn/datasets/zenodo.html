@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imblearn.datasets.zenodo &mdash; imbalanced-learn 0.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/imbalanced-learn.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../../../about.html"/>
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> imbalanced-learn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install and contribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">imbalanced-learn API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial - Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">General examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#examples-based-on-real-world-datasets">Examples based on real world datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#dataset-examples">Dataset examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#evaluation-examples">Evaluation examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html#model-selection">Model Selection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Addtional Information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../whats_new.html">Release history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About us</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbalanced-learn</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>imblearn.datasets.zenodo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imblearn.datasets.zenodo</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Collection of imbalanced datasets.</span>
+
+<span class="sd">This collection of datasets has been proposed in [1]_. The</span>
+<span class="sd">characteristics of the available datasets are presented in the table</span>
+<span class="sd">below.</span>
+
+<span class="sd"> ID    Name           Repository &amp; Target           Ratio  #S       #F</span>
+<span class="sd"> 1     ecoli          UCI, target: imU              8.6:1  336      7</span>
+<span class="sd"> 2     optical_digits UCI, target: 8                9.1:1  5,620    64</span>
+<span class="sd"> 3     satimage       UCI, target: 4                9.3:1  6,435    36</span>
+<span class="sd"> 4     pen_digits     UCI, target: 5                9.4:1  10,992   16</span>
+<span class="sd"> 5     abalone        UCI, target: 7                9.7:1  4,177    10</span>
+<span class="sd"> 6     sick_euthyroid UCI, target: sick euthyroid   9.8:1  3,163    42</span>
+<span class="sd"> 7     spectrometer   UCI, target: &gt;=44             11:1   531      93</span>
+<span class="sd"> 8     car_eval_34    UCI, target: good, v good     12:1   1,728    21</span>
+<span class="sd"> 9     isolet         UCI, target: A, B             12:1   7,797    617</span>
+<span class="sd"> 10    us_crime       UCI, target: &gt;0.65            12:1   1,994    100</span>
+<span class="sd"> 11    yeast_ml8      LIBSVM, target: 8             13:1   2,417    103</span>
+<span class="sd"> 12    scene          LIBSVM, target: &gt;one label    13:1   2,407    294</span>
+<span class="sd"> 13    libras_move    UCI, target: 1                14:1   360      90</span>
+<span class="sd"> 14    thyroid_sick   UCI, target: sick             15:1   3,772    52</span>
+<span class="sd"> 15    coil_2000      KDD, CoIL, target: minority   16:1   9,822    85</span>
+<span class="sd"> 16    arrhythmia     UCI, target: 06               17:1   452      278</span>
+<span class="sd"> 17    solar_flare_m0 UCI, target: M-&gt;0             19:1   1,389    32</span>
+<span class="sd"> 18    oil            UCI, target: minority         22:1   937      49</span>
+<span class="sd"> 19    car_eval_4     UCI, target: vgood            26:1   1,728    21</span>
+<span class="sd"> 20    wine_quality   UCI, wine, target: &lt;=4        26:1   4,898    11</span>
+<span class="sd"> 21    letter_img     UCI, target: Z                26:1   20,000   16</span>
+<span class="sd"> 22    yeast_me2      UCI, target: ME2              28:1   1,484    8</span>
+<span class="sd"> 23    webpage        LIBSVM, w7a, target: minority 33:1   34,780   300</span>
+<span class="sd"> 24    ozone_level    UCI, ozone, data              34:1   2,536    72</span>
+<span class="sd"> 25    mammography    UCI, target: minority         42:1   11,183   6</span>
+<span class="sd"> 26    protein_homo   KDD CUP 2004, minority        111:1  145,751  74</span>
+<span class="sd"> 27    abalone_19     UCI, target: 19               130:1  4,177    10</span>
+
+<span class="sd">References</span>
+<span class="sd">----------</span>
+<span class="sd">.. [1] Ding, Zejin, &quot;Diversified Ensemble Classifiers for Highly</span>
+<span class="sd">   Imbalanced Data Learning and their Application in Bioinformatics.&quot;</span>
+<span class="sd">   Dissertation, Georgia State University, (2011).</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Author: Guillaume Lemaitre</span>
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">isfile</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib2</span> <span class="k">import</span> <span class="n">urlopen</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="k">import</span> <span class="n">urlopen</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">get_data_home</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets.base</span> <span class="k">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.fixes</span> <span class="k">import</span> <span class="n">makedirs</span>
+<span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="k">import</span> <span class="n">six</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_random_state</span>
+
+<span class="n">URL</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;https://zenodo.org/record/61452/files/&#39;</span>
+       <span class="s1">&#39;benchmark-imbalanced-learn.tar.gz&#39;</span><span class="p">)</span>
+<span class="n">PRE_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span>
+<span class="n">POST_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;data.npz&#39;</span>
+
+<span class="n">MAP_NAME_ID_KEYS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ecoli&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;optical_digits&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;satimage&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;pen_digits&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;abalone&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;sick_euthyroid&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;spectrometer&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;car_eval_34&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;isolet&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;us_crime&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;yeast_ml8&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;scene&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;libras_move&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;thyroid_sick&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;coil_2000&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;arrhythmia&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;solar_flare_m0&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;oil&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;car_eval_4&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;wine_quality&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;letter_img&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;yeast_me2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;webpage&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;ozone_level&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;mammography&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;protein_homo&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;abalone_19&#39;</span><span class="p">]</span>
+
+<span class="n">MAP_NAME_ID</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">MAP_ID_NAME</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">MAP_NAME_ID_KEYS</span><span class="p">):</span>
+    <span class="n">MAP_NAME_ID</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">MAP_ID_NAME</span><span class="p">[</span><span class="n">v</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="fetch_datasets"><a class="viewcode-back" href="../../../generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets">[docs]</a><span class="k">def</span> <span class="nf">fetch_datasets</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">filter_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">download_if_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                   <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load the benchmark datasets from Zenodo, downloading it if necessary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_home : string, optional (default=None)</span>
+<span class="sd">        Specify another download and cache folder for the datasets. By default</span>
+<span class="sd">        all scikit-learn data is stored in &#39;~/scikit_learn_data&#39; subfolders.</span>
+
+<span class="sd">    filter_data : tuple of str/int or None, optional (default=None)</span>
+<span class="sd">        A tuple containing the ID or the name of the datasets to be returned.</span>
+<span class="sd">        Refer to the above table to get the ID and name of the datasets.</span>
+
+<span class="sd">    download_if_missing : boolean, optional (default=True)</span>
+<span class="sd">        If False, raise a IOError if the data is not locally available</span>
+<span class="sd">        instead of trying to download the data from the source site.</span>
+
+<span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
+<span class="sd">        Random state for shuffling the dataset.</span>
+<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
+<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
+<span class="sd">        If None, the random number generator is the RandomState instance used</span>
+<span class="sd">        by `np.random`.</span>
+
+<span class="sd">    shuffle : bool, optional (default=False)</span>
+<span class="sd">        Whether to shuffle dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    datasets : OrderedDict of Bunch object,</span>
+<span class="sd">        The ordered is defined by ``filter_data``. Each Bunch object ---</span>
+<span class="sd">        refered as dataset --- have the following attributes:</span>
+
+<span class="sd">    dataset.data : ndarray, shape (n_samples, n_features)</span>
+
+<span class="sd">    dataset.target : ndarray, shape (n_samples, )</span>
+
+<span class="sd">    dataset.DESCR : string</span>
+<span class="sd">        Description of the each dataset.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This collection of datasets have been proposed in [1]_. The</span>
+<span class="sd">    characteristics of the available datasets are presented in the table</span>
+<span class="sd">    below.</span>
+
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |ID|Name          | Repository &amp; Target           | Ratio | #S      | #F  |</span>
+<span class="sd">    +==+==============+===============================+=======+=========+=====+</span>
+<span class="sd">    |1 |ecoli         | UCI, target: imU              | 8.6:1 | 336     | 7   |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |2 |optical_digits| UCI, target: 8                | 9.1:1 | 5,620   | 64  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |3 |satimage      | UCI, target: 4                | 9.3:1 | 6,435   | 36  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |4 |pen_digits    | UCI, target: 5                | 9.4:1 | 10,992  | 16  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |5 |abalone       | UCI, target: 7                | 9.7:1 | 4,177   | 10  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |6 |sick_euthyroid| UCI, target: sick euthyroid   | 9.8:1 | 3,163   | 42  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |7 |spectrometer  | UCI, target: &gt;=44             | 11:1  | 531     | 93  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |8 |car_eval_34   | UCI, target: good, v good     | 12:1  | 1,728   | 21  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |9 |isolet        | UCI, target: A, B             | 12:1  | 7,797   | 617 |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |10|us_crime      | UCI, target: &gt;0.65            | 12:1  | 1,994   | 100 |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |11|yeast_ml8     | LIBSVM, target: 8             | 13:1  | 2,417   | 103 |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |12|scene         | LIBSVM, target: &gt;one label    | 13:1  | 2,407   | 294 |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |13|libras_move   | UCI, target: 1                | 14:1  | 360     | 90  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |14|thyroid_sick  | UCI, target: sick             | 15:1  | 3,772   | 52  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |15|coil_2000     | KDD, CoIL, target: minority   | 16:1  | 9,822   | 85  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |16|arrhythmia    | UCI, target: 06               | 17:1  | 452     | 278 |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |17|solar_flare_m0| UCI, target: M-&gt;0             | 19:1  | 1,389   | 32  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |18|oil           | UCI, target: minority         | 22:1  | 937     | 49  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |19|car_eval_4    | UCI, target: vgood            | 26:1  | 1,728   | 21  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |20|wine_quality  | UCI, wine, target: &lt;=4        | 26:1  | 4,898   | 11  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |21|letter_img    | UCI, target: Z                | 26:1  | 20,000  | 16  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |22|yeast_me2     | UCI, target: ME2              | 28:1  | 1,484   | 8   |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |23|webpage       | LIBSVM, w7a, target: minority | 33:1  | 34,780  | 300 |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |24|ozone_level   | UCI, ozone, data              | 34:1  | 2,536   | 72  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |25|mammography   | UCI, target: minority         | 42:1  | 11,183  | 6   |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |26|protein_homo  | KDD CUP 2004, minority        | 11:1  | 145,751 | 74  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+<span class="sd">    |27|abalone_19    | UCI, target: 19               | 130:1 | 4,177   | 10  |</span>
+<span class="sd">    +--+--------------+-------------------------------+-------+---------+-----+</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] Ding, Zejin, &quot;Diversified Ensemble Classifiers for Highly</span>
+<span class="sd">       Imbalanced Data Learning and their Application in Bioinformatics.&quot;</span>
+<span class="sd">       Dissertation, Georgia State University, (2011).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">data_home</span> <span class="o">=</span> <span class="n">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="n">zenodo_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_home</span><span class="p">,</span> <span class="s2">&quot;zenodo&quot;</span><span class="p">)</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">filter_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">filter_data_</span> <span class="o">=</span> <span class="n">MAP_NAME_ID</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">list_data</span> <span class="o">=</span> <span class="n">MAP_NAME_ID</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">filter_data_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">filter_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">it</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">list_data</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is not a dataset available. &#39;</span>
+                                     <span class="s1">&#39;The available datasets are </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                         <span class="n">it</span><span class="p">,</span> <span class="n">list_data</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">filter_data_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">it</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">it</span> <span class="o">&gt;</span> <span class="mi">27</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The dataset with the ID=</span><span class="si">{}</span><span class="s1"> is not an &#39;</span>
+                                     <span class="s1">&#39;available dataset. The IDs are &#39;</span>
+                                     <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># The index start at one, then we need to remove one</span>
+                    <span class="c1"># to not have issue with the indexing.</span>
+                    <span class="n">filter_data_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MAP_ID_NAME</span><span class="p">[</span><span class="n">it</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The value in the tuple should be str or int.&#39;</span>
+                                 <span class="s1">&#39; Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">it</span><span class="p">)))</span>
+
+    <span class="c1"># go through the list and check if the data are available</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">filter_data_</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">PRE_FILENAME</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">MAP_NAME_ID</span><span class="p">[</span><span class="n">it</span><span class="p">])</span> <span class="o">+</span> <span class="n">POST_FILENAME</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">zenodo_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">available</span> <span class="o">=</span> <span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">download_if_missing</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">available</span><span class="p">:</span>
+            <span class="n">makedirs</span><span class="p">(</span><span class="n">zenodo_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Downloading </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">URL</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">zenodo_dir</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">download_if_missing</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Data not found and `download_if_missing` is False&quot;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+            <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+            <span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+        <span class="n">datasets</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">DESCR</span><span class="o">=</span><span class="n">it</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">datasets</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
