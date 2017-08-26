@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.over_sampling.SMOTE &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.over_sampling.SMOTE &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../index.html"/>
         <link rel="up" title="imbalanced-learn API" href="../api.html"/>
         <link rel="next" title="imblearn.combine.SMOTEENN" href="imblearn.combine.SMOTEENN.html"/>
         <link rel="prev" title="imblearn.over_sampling.RandomOverSampler" href="imblearn.over_sampling.RandomOverSampler.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -203,7 +203,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.over_sampling" title="imblearn.over_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.over_sampling</span></code></a>.SMOTE<a class="headerlink" href="#imblearn-over-sampling-smote" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.over_sampling.SMOTE">
-<em class="property">class </em><code class="descclassname">imblearn.over_sampling.</code><code class="descname">SMOTE</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k=None</em>, <em>k_neighbors=5</em>, <em>m=None</em>, <em>m_neighbors=10</em>, <em>out_step=0.5</em>, <em>kind='regular'</em>, <em>svm_estimator=None</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/smote.html#SMOTE"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/over_sampling/smote.py#L26"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.over_sampling.</code><code class="descname">SMOTE</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k_neighbors=5</em>, <em>m_neighbors=10</em>, <em>out_step=0.5</em>, <em>kind='regular'</em>, <em>svm_estimator=None</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/smote.html#SMOTE"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/over_sampling/smote.py#L24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to perform over-sampling using SMOTE.</p>
 <p>This object is an implementation of SMOTE - Synthetic Minority
 Over-sampling Technique, and the variants Borderline SMOTE 1, 2 and
@@ -239,30 +239,12 @@ generator; If <code class="docutils literal"><span class="pre">RandomState</span
 number generator; If <code class="docutils literal"><span class="pre">None</span></code>, the random number generator is the
 <code class="docutils literal"><span class="pre">RandomState</span></code> instance used by <code class="docutils literal"><span class="pre">np.random</span></code>.</p>
 </div></blockquote>
-<p><strong>k</strong> : int, optional (default=None)</p>
-<blockquote>
-<div><p>Number of nearest neighbours to used to construct synthetic samples.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">k</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Use <code class="docutils literal"><span class="pre">k_neighbors</span></code> instead.</p>
-</div>
-</div></blockquote>
 <p><strong>k_neighbors</strong> : int or object, optional (default=5)</p>
 <blockquote>
 <div><p>If <code class="docutils literal"><span class="pre">int</span></code>, number of nearest neighbours to used to construct synthetic
 samples.  If object, an estimator that inherits from
 <code class="xref py py-class docutils literal"><span class="pre">sklearn.neighbors.base.KNeighborsMixin</span></code> that will be used to
 find the k_neighbors.</p>
-</div></blockquote>
-<p><strong>m</strong> : int, optional (default=None)</p>
-<blockquote>
-<div><p>Number of nearest neighbours to use to determine if a minority sample
-is in danger. Used with <code class="docutils literal"><span class="pre">kind={'borderline1',</span> <span class="pre">'borderline2',</span>
-<span class="pre">'svm'}</span></code>.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">m</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Use <code class="docutils literal"><span class="pre">m_neighbors</span></code> instead.</p>
-</div>
 </div></blockquote>
 <p><strong>m_neighbors</strong> : int int or object, optional (default=10)</p>
 <blockquote>
@@ -354,12 +336,12 @@ Engineering and Soft Data Paradigms, 3(1), pp.4-21, 2001.</td></tr>
 </div>
 <dl class="method">
 <dt id="imblearn.over_sampling.SMOTE.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k=None</em>, <em>k_neighbors=5</em>, <em>m=None</em>, <em>m_neighbors=10</em>, <em>out_step=0.5</em>, <em>kind='regular'</em>, <em>svm_estimator=None</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/smote.html#SMOTE.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/over_sampling/smote.py#L155"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>k_neighbors=5</em>, <em>m_neighbors=10</em>, <em>out_step=0.5</em>, <em>kind='regular'</em>, <em>svm_estimator=None</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/over_sampling/smote.html#SMOTE.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/over_sampling/smote.py#L137"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.SMOTE.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -387,7 +369,7 @@ Engineering and Soft Data Paradigms, 3(1), pp.4-21, 2001.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.SMOTE.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -419,7 +401,7 @@ Engineering and Soft Data Paradigms, 3(1), pp.4-21, 2001.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.SMOTE.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -444,7 +426,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.SMOTE.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -476,7 +458,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.over_sampling.SMOTE.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.over_sampling.SMOTE.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -571,7 +553,7 @@ component of a nested object.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.utils.validation &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.utils.validation &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -184,14 +184,13 @@
 <span class="c1"># License: MIT</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
-<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Real</span><span class="p">,</span> <span class="n">Integral</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Integral</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.neighbors.base</span> <span class="k">import</span> <span class="n">KNeighborsMixin</span>
 <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">NearestNeighbors</span>
 <span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="k">import</span> <span class="n">six</span><span class="p">,</span> <span class="n">joblib</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">deprecated</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.multiclass</span> <span class="k">import</span> <span class="n">type_of_target</span>
 
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">raise_isinstance_error</span>
@@ -424,31 +423,6 @@
     <span class="k">return</span> <span class="n">ratio_</span>
 
 
-<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Use a float for &#39;ratio&#39; is deprecated from version 0.2.&quot;</span>
-            <span class="s2">&quot; The support will be removed in 0.4. Use a dict, str,&quot;</span>
-            <span class="s2">&quot; or a callable instead.&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_ratio_float</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;TODO: Deprecated in 0.2. Remove in 0.4.&quot;&quot;&quot;</span>
-    <span class="n">target_stats</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;over-sampling&#39;</span><span class="p">:</span>
-        <span class="n">n_sample_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="n">class_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_sample_majority</span> <span class="o">*</span> <span class="n">ratio</span> <span class="o">-</span> <span class="n">value</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                 <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">class_majority</span><span class="p">}</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;under-sampling&#39;</span> <span class="ow">or</span>
-          <span class="n">sampling_type</span> <span class="o">==</span> <span class="s1">&#39;clean-sampling&#39;</span><span class="p">):</span>
-        <span class="n">n_sample_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="n">class_minority</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-        <span class="n">ratio</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_sample_minority</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                 <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">class_minority</span><span class="p">}</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-
-    <span class="k">return</span> <span class="n">ratio</span>
-
-
 <div class="viewcode-block" id="check_ratio"><a class="viewcode-back" href="../../../generated/imblearn.utils.check_ratio.html#imblearn.utils.check_ratio">[docs]</a><span class="k">def</span> <span class="nf">check_ratio</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Ratio validation for samplers.</span>
 
@@ -512,11 +486,6 @@
         <span class="k">return</span> <span class="n">RATIO_KIND</span><span class="p">[</span><span class="n">ratio</span><span class="p">](</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_ratio_dict</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;When &#39;ratio&#39; is a float, it should in the range&quot;</span>
-                             <span class="s2">&quot; (0, 1]. Got </span><span class="si">{}</span><span class="s2"> instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ratio</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">_ratio_float</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">ratio</span><span class="p">):</span>
         <span class="n">ratio_</span> <span class="o">=</span> <span class="n">ratio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_ratio_dict</span><span class="p">(</span><span class="n">ratio_</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">)</span></div>
@@ -563,7 +532,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

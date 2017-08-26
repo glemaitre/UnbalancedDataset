@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. Combination of over- and under-sampling &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>4. Combination of over- and under-sampling &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="index.html"/>
         <link rel="up" title="User Guide" href="user_guide.html"/>
         <link rel="next" title="5. Ensemble of samplers" href="ensemble.html"/>
         <link rel="prev" title="3. Under-sampling" href="under_sampling.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -194,15 +194,15 @@
 <span id="combine"></span><h1>4. Combination of over- and under-sampling<a class="headerlink" href="#combination-of-over-and-under-sampling" title="Permalink to this headline">¶</a></h1>
 <p>We previously presented <a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">SMOTE</span></code></a> and showed that this method can generate
 noisy samples by interpolating new points between marginal outliers and
-inliers. This issue can be solved by cleaning the resulted space obtained
-after over-sampling.</p>
+inliers. This issue can be solved by cleaning the space resulting
+from over-sampling.</p>
 <p>In this regard, Tomek’s link and edited nearest-neighbours are the two cleaning
-methods which have been added pipeline after SMOTE over-sampling to obtain a
-cleaner space. Therefore, imbalanced-learn implemented two ready-to-use class
-which pipeline both over- and under-sampling methods: (i) <a class="reference internal" href="generated/imblearn.combine.SMOTETomek.html#imblearn.combine.SMOTETomek" title="imblearn.combine.SMOTETomek"><code class="xref py py-class docutils literal"><span class="pre">SMOTETomek</span></code></a>
+methods that have been added to the pipeline after applying SMOTE over-sampling
+to obtain a cleaner space. The two ready-to use classes imbalanced-learn implements
+for combining over- and undersampling methods are: (i) <a class="reference internal" href="generated/imblearn.combine.SMOTETomek.html#imblearn.combine.SMOTETomek" title="imblearn.combine.SMOTETomek"><code class="xref py py-class docutils literal"><span class="pre">SMOTETomek</span></code></a>
 and (ii) <a class="reference internal" href="generated/imblearn.combine.SMOTEENN.html#imblearn.combine.SMOTEENN" title="imblearn.combine.SMOTEENN"><code class="xref py py-class docutils literal"><span class="pre">SMOTEENN</span></code></a>.</p>
-<p>These two classes can be used as any other sampler with identical parameters
-than their former samplers:</p>
+<p>Those two classes can be used like any other sampler with parameters identical
+to their former samplers:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_classification</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
@@ -277,7 +277,7 @@ and
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

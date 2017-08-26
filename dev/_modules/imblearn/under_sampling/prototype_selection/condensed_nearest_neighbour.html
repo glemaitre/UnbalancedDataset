@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.under_sampling.prototype_selection.condensed_nearest_neighbour &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.under_sampling.prototype_selection.condensed_nearest_neighbour &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -197,7 +197,6 @@
 <span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_random_state</span><span class="p">,</span> <span class="n">safe_indexing</span>
 
 <span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
-<span class="kn">from</span> <span class="nn">...utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
 
 
 <div class="viewcode-block" id="CondensedNearestNeighbour"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.CondensedNearestNeighbour.html#imblearn.under_sampling.CondensedNearestNeighbour">[docs]</a><span class="k">class</span> <span class="nc">CondensedNearestNeighbour</span><span class="p">(</span><span class="n">BaseCleaningSampler</span><span class="p">):</span>
@@ -239,13 +238,6 @@
 <span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
 <span class="sd">        number generator; If ``None``, the random number generator is the</span>
 <span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
-
-<span class="sd">    size_ngh : int, optional (default=None)</span>
-<span class="sd">        Size of the neighbourhood to consider to compute the nearest-neighbors.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``size_ngh`` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Use ``n_neighbors`` instead.</span>
 
 <span class="sd">    n_neighbors : int or object, optional (default=\</span>
 <span class="sd">KNeighborsClassifier(n_neighbors=1))</span>
@@ -303,23 +295,18 @@
                  <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                  <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">size_ngh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_seeds_S</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CondensedNearestNeighbour</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span> <span class="o">=</span> <span class="n">size_ngh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_seeds_S</span> <span class="o">=</span> <span class="n">n_seeds_S</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Private function to create the NN estimator&quot;&quot;&quot;</span>
-        <span class="c1"># FIXME: Deprecated in 0.2. To be removed in 0.4</span>
-        <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;size_ngh&#39;</span><span class="p">,</span> <span class="s1">&#39;n_neighbors&#39;</span><span class="p">)</span>
-
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">estimator_</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span>
                 <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
@@ -471,7 +458,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

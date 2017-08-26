@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.over_sampling.smote &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.over_sampling.smote &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -197,8 +197,6 @@
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">BaseOverSampler</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">raise_isinstance_error</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
-<span class="kn">from</span> <span class="nn">..utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
-
 
 <span class="n">SMOTE_KIND</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;regular&#39;</span><span class="p">,</span> <span class="s1">&#39;borderline1&#39;</span><span class="p">,</span> <span class="s1">&#39;borderline2&#39;</span><span class="p">,</span> <span class="s1">&#39;svm&#39;</span><span class="p">)</span>
 
@@ -237,27 +235,11 @@
 <span class="sd">        number generator; If ``None``, the random number generator is the</span>
 <span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
-<span class="sd">    k : int, optional (default=None)</span>
-<span class="sd">        Number of nearest neighbours to used to construct synthetic samples.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``k`` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Use ``k_neighbors`` instead.</span>
-
 <span class="sd">    k_neighbors : int or object, optional (default=5)</span>
 <span class="sd">        If ``int``, number of nearest neighbours to used to construct synthetic</span>
 <span class="sd">        samples.  If object, an estimator that inherits from</span>
 <span class="sd">        :class:`sklearn.neighbors.base.KNeighborsMixin` that will be used to</span>
 <span class="sd">        find the k_neighbors.</span>
-
-<span class="sd">    m : int, optional (default=None)</span>
-<span class="sd">        Number of nearest neighbours to use to determine if a minority sample</span>
-<span class="sd">        is in danger. Used with ``kind={&#39;borderline1&#39;, &#39;borderline2&#39;,</span>
-<span class="sd">        &#39;svm&#39;}``.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``m`` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Use ``m_neighbors`` instead.</span>
 
 <span class="sd">    m_neighbors : int int or object, optional (default=10)</span>
 <span class="sd">        If int, number of nearest neighbours to use to determine if a minority</span>
@@ -335,9 +317,7 @@
 <div class="viewcode-block" id="SMOTE.__init__"><a class="viewcode-back" href="../../../generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">k_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                 <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">m_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                  <span class="n">out_step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                  <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;regular&#39;</span><span class="p">,</span>
@@ -345,9 +325,7 @@
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SMOTE</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">=</span> <span class="n">kind</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k_neighbors</span> <span class="o">=</span> <span class="n">k_neighbors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">m_neighbors</span> <span class="o">=</span> <span class="n">m_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_step</span> <span class="o">=</span> <span class="n">out_step</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">svm_estimator</span> <span class="o">=</span> <span class="n">svm_estimator</span>
@@ -467,10 +445,6 @@
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the necessary objects for SMOTE.&quot;&quot;&quot;</span>
-
-        <span class="c1"># FIXME Deprecated in 0.2, to be removed in 0.4</span>
-        <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;k_neighbors&#39;</span><span class="p">)</span>
-        <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;m_neighbors&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SMOTE_KIND</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown kind for SMOTE algorithm.&#39;</span>
@@ -812,7 +786,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

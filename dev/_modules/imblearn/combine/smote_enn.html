@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.combine.smote_enn &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.combine.smote_enn &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -187,7 +187,6 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_X_y</span>
 
@@ -234,82 +233,6 @@
 <span class="sd">        a :class:`imblearn.over_sampling.SMOTE` object with default parameters</span>
 <span class="sd">        will be given.</span>
 
-<span class="sd">    enn : object, optional (default=EditedNearestNeighbours())</span>
-<span class="sd">        The :class:`imblearn.under_sampling.EditedNearestNeighbours` object to</span>
-<span class="sd">        use. If not given, an</span>
-<span class="sd">        :class:`imblearn.under_sampling.EditedNearestNeighbours` object with</span>
-<span class="sd">        default parameters will be given.</span>
-
-<span class="sd">    k : int, optional (default=None)</span>
-<span class="sd">        Number of nearest neighbours to used to construct synthetic</span>
-<span class="sd">        samples.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           `k` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
-
-<span class="sd">    m : int, optional (default=None)</span>
-<span class="sd">        Number of nearest neighbours to use to determine if a minority</span>
-<span class="sd">        sample is in danger.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           `m` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
-
-<span class="sd">    out_step : float, optional (default=None)</span>
-<span class="sd">        Step size when extrapolating.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``out_step`` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
-
-<span class="sd">    kind_smote : str, optional (default=None)</span>
-<span class="sd">        The type of SMOTE algorithm to use one of the following</span>
-<span class="sd">        options: ``&#39;regular&#39;``, ``&#39;borderline1&#39;``, ``&#39;borderline2&#39;``,</span>
-<span class="sd">        ``&#39;svm&#39;``.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           `kind_smote` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Give directly a :class:`imblearn.over_sampling.SMOTE` object.</span>
-
-<span class="sd">    size_ngh : int, optional (default=None)</span>
-<span class="sd">        Size of the neighbourhood to consider to compute the average</span>
-<span class="sd">        distance to the minority point samples.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           size_ngh is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Use ``n_neighbors`` instead.</span>
-
-<span class="sd">    n_neighbors : int, optional (default=None)</span>
-<span class="sd">        Size of the neighbourhood to consider to compute the average</span>
-<span class="sd">        distance to the minority point samples.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           `n_neighbors` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Give directly a</span>
-<span class="sd">           :class:`imblearn.under_sampling.EditedNearestNeighbours` object.</span>
-
-<span class="sd">    kind_sel : str, optional (default=None)</span>
-<span class="sd">        Strategy to use in order to exclude samples.</span>
-
-<span class="sd">        - If ``&#39;all&#39;``, all neighbours will have to agree with the samples of</span>
-<span class="sd">          interest to not be excluded.</span>
-<span class="sd">        - If ``&#39;mode&#39;``, the majority vote of the neighbours will be used in</span>
-<span class="sd">          order to exclude a sample.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``kind_sel`` is deprecated from 0.2 and will be replaced in 0.4 Give</span>
-<span class="sd">           directly a :class:`imblearn.under_sampling.EditedNearestNeighbours`</span>
-<span class="sd">           object.</span>
-
-<span class="sd">    n_jobs : int, optional (default=None)</span>
-<span class="sd">        The number of threads to open if possible.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           `n_jobs` is deprecated from 0.2 and will be replaced in 0.4 Give</span>
-<span class="sd">           directly a :class:`imblearn.over_sampling.SMOTE` and</span>
-<span class="sd">           :class:`imblearn.under_sampling.EditedNearestNeighbours` object.</span>
-
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    The method is presented in [1]_.</span>
@@ -353,65 +276,17 @@
                  <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">smote</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">enn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">out_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">kind_smote</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">size_ngh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">n_neighbors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">kind_enn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">enn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SMOTEENN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">smote</span> <span class="o">=</span> <span class="n">smote</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enn</span> <span class="o">=</span> <span class="n">enn</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_step</span> <span class="o">=</span> <span class="n">out_step</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kind_smote</span> <span class="o">=</span> <span class="n">kind_smote</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span> <span class="o">=</span> <span class="n">size_ngh</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kind_enn</span> <span class="o">=</span> <span class="n">kind_enn</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Private function to validate SMOTE and ENN objects&quot;</span>
-
-        <span class="c1"># Check any parameters for SMOTE was provided</span>
-        <span class="c1"># Anounce deprecation</span>
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">out_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_smote</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="c1"># We need to list each parameter and decide if we affect a default</span>
-            <span class="c1"># value or not</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">out_step</span> <span class="o">=</span> <span class="mf">0.5</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_smote</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">kind_smote</span> <span class="o">=</span> <span class="s1">&#39;regular&#39;</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">smote_jobs</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">smote_jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Parameters initialization will be replaced in&#39;</span>
-                          <span class="s1">&#39; version 0.4. Use a SMOTE object instead.&#39;</span><span class="p">,</span>
-                          <span class="ne">DeprecationWarning</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">smote_</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span>
-                <span class="n">ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span>
-                <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
-                <span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>
-                <span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span>
-                <span class="n">out_step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">out_step</span><span class="p">,</span>
-                <span class="n">kind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kind_smote</span><span class="p">,</span>
-                <span class="n">n_jobs</span><span class="o">=</span><span class="n">smote_jobs</span><span class="p">)</span>
-        <span class="c1"># If an object was given, affect</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">smote</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">smote</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">smote</span><span class="p">,</span> <span class="n">SMOTE</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">smote_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">smote</span>
             <span class="k">else</span><span class="p">:</span>
@@ -422,30 +297,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">smote_</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span>
                 <span class="n">ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
 
-        <span class="c1"># Check any parameters for ENN was provided</span>
-        <span class="c1"># Anounce deprecation</span>
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">kind_enn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Parameters initialization will be replaced in&#39;</span>
-                          <span class="s1">&#39; version 0.4. Use a ENN object instead.&#39;</span><span class="p">,</span>
-                          <span class="ne">DeprecationWarning</span><span class="p">)</span>
-            <span class="c1"># We need to list each parameter and decide if we affect a default</span>
-            <span class="c1"># value or not</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="mi">3</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_enn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">kind_enn</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span>
-                <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
-                <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
-                <span class="n">size_ngh</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span><span class="p">,</span>
-                <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
-                <span class="n">kind_sel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kind_enn</span><span class="p">,</span>
-                <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
-        <span class="c1"># If an object was given, affect</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">enn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enn</span><span class="p">,</span> <span class="n">EditedNearestNeighbours</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enn</span>
             <span class="k">else</span><span class="p">:</span>
@@ -541,7 +393,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

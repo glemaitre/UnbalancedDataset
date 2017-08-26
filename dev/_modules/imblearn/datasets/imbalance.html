@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.datasets.imbalance &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.datasets.imbalance &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -187,9 +187,7 @@
 <span class="c1"># License: MIT</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
-<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Real</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">check_X_y</span>
 
@@ -199,7 +197,7 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="make_imbalance"><a class="viewcode-back" href="../../../generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance">[docs]</a><span class="k">def</span> <span class="nf">make_imbalance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">min_c_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="make_imbalance"><a class="viewcode-back" href="../../../generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance">[docs]</a><span class="k">def</span> <span class="nf">make_imbalance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turns a dataset into an imbalanced dataset at specific ratio.</span>
 
 <span class="sd">    A simple toy dataset to visualize clustering and classification</span>
@@ -224,15 +222,6 @@
 <span class="sd">        - If callable, function taking ``y`` and returns a ``dict``. The keys</span>
 <span class="sd">          correspond to the targeted classes. The values correspond to the</span>
 <span class="sd">          desired number of samples.</span>
-
-<span class="sd">    min_c_ : str or int, optional (default=None)</span>
-<span class="sd">        The identifier of the class to be the minority class.</span>
-<span class="sd">        If ``None``, ``min_c_`` is set to be the current minority class.</span>
-<span class="sd">        Only used when ``ratio`` is a float for back-compatibility.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``min_c_`` is deprecated in 0.2 and will be removed in 0.4. Use</span>
-<span class="sd">           ``ratio`` by passing a ``dict`` instead.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional (default=None)</span>
 <span class="sd">        If int, random_state is the seed used by the random number generator;</span>
@@ -279,26 +268,6 @@
     <span class="c1"># restrict ratio to be a dict or a callable</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="n">callable</span><span class="p">(</span><span class="n">ratio</span><span class="p">):</span>
         <span class="n">ratio_</span> <span class="o">=</span> <span class="n">check_ratio</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;under-sampling&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="c1"># FIXME: deprecated in 0.2 to be removed in 0.4</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">min_c_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">min_c_</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&#39;min_c_&#39; is deprecated in 0.2 and will be removed&quot;</span>
-                          <span class="s2">&quot; in 0.4. Use &#39;ratio&#39; as dictionary instead.&quot;</span><span class="p">,</span>
-                          <span class="ne">DeprecationWarning</span><span class="p">)</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&#39;ratio&#39; being a float is deprecated in 0.2 and will not&quot;</span>
-                      <span class="s2">&quot; be supported in 0.4. Use a dictionary instead.&quot;</span><span class="p">,</span>
-                      <span class="ne">DeprecationWarning</span><span class="p">)</span>
-        <span class="n">class_majority</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_stats</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">target_stats</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-        <span class="n">ratio_</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">class_sample</span><span class="p">,</span> <span class="n">n_sample</span> <span class="ow">in</span> <span class="n">target_stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">class_sample</span> <span class="o">==</span> <span class="n">min_c_</span><span class="p">:</span>
-                <span class="n">n_min_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">target_stats</span><span class="p">[</span><span class="n">class_majority</span><span class="p">]</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
-                <span class="n">ratio_</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_min_samples</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">ratio_</span><span class="p">[</span><span class="n">class_sample</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_sample</span>
-        <span class="n">ratio_</span> <span class="o">=</span> <span class="n">check_ratio</span><span class="p">(</span><span class="n">ratio_</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;under-sampling&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;ratio&#39; has to be a dictionary or a function&quot;</span>
                          <span class="s2">&quot; returning a dictionary. Got </span><span class="si">{}</span><span class="s2"> instead.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -348,7 +317,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

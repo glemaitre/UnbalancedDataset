@@ -99,7 +99,7 @@ An illustration of the nearmiss 1 & 2 & 3 method.
     plt.tight_layout(pad=3)
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.539 seconds)
+**Total running time of the script:** ( 0 minutes  0.532 seconds)
 
 
 

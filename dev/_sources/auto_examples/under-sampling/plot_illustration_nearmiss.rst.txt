@@ -228,7 +228,7 @@ average distance to the *k* nearest-neighbors are selected.
 
 
 
-**Total running time of the script:** ( 0 minutes  0.445 seconds)
+**Total running time of the script:** ( 0 minutes  0.440 seconds)
 
 
 

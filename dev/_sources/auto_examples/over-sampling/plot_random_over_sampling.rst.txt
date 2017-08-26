@@ -82,7 +82,7 @@ An illustration of the random over-sampling method.
     plt.tight_layout(pad=3)
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.300 seconds)
+**Total running time of the script:** ( 0 minutes  0.297 seconds)
 
 
 

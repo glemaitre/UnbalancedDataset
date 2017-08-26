@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.combine.SMOTETomek &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.combine.SMOTETomek &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../index.html"/>
         <link rel="up" title="imbalanced-learn API" href="../api.html"/>
         <link rel="next" title="imblearn.ensemble.BalanceCascade" href="imblearn.ensemble.BalanceCascade.html"/>
         <link rel="prev" title="imblearn.combine.SMOTEENN" href="imblearn.combine.SMOTEENN.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -202,7 +202,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.combine" title="imblearn.combine"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.combine</span></code></a>.SMOTETomek<a class="headerlink" href="#imblearn-combine-smotetomek" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.combine.SMOTETomek">
-<em class="property">class </em><code class="descclassname">imblearn.combine.</code><code class="descname">SMOTETomek</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>smote=None</em>, <em>tomek=None</em>, <em>k=None</em>, <em>m=None</em>, <em>out_step=None</em>, <em>kind_smote=None</em>, <em>n_jobs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/combine/smote_tomek.html#SMOTETomek"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/combine/smote_tomek.py#L21"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.combine.</code><code class="descname">SMOTETomek</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>smote=None</em>, <em>tomek=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/combine/smote_tomek.html#SMOTETomek"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/combine/smote_tomek.py#L21"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to perform over-sampling using SMOTE and cleaning using
 Tomek links.</p>
 <p>Combine over- and under-sampling using SMOTE and Tomek links.</p>
@@ -244,54 +244,10 @@ a <a class="reference internal" href="imblearn.over_sampling.SMOTE.html#imblearn
 will be given.</p>
 </div></blockquote>
 <p><strong>tomek</strong> : object, optional (default=Tomek())</p>
-<blockquote>
+<blockquote class="last">
 <div><p>The <code class="xref py py-class docutils literal"><span class="pre">imblearn.under_sampling.Tomek</span></code> object to use. If not given,
 a <code class="xref py py-class docutils literal"><span class="pre">imblearn.under_sampling.Tomek</span></code> object with default parameters
 will be given.</p>
-</div></blockquote>
-<p><strong>k</strong> : int, optional (default=None)</p>
-<blockquote>
-<div><p>Number of nearest neighbours to used to construct synthetic
-samples.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">k</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Give directly a <a class="reference internal" href="imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">imblearn.over_sampling.SMOTE</span></code></a> object.</p>
-</div>
-</div></blockquote>
-<p><strong>m</strong> : int, optional (default=None)</p>
-<blockquote>
-<div><p>Number of nearest neighbours to use to determine if a minority
-sample is in danger.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">m</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Give directly a <a class="reference internal" href="imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">imblearn.over_sampling.SMOTE</span></code></a> object.</p>
-</div>
-</div></blockquote>
-<p><strong>out_step</strong> : float, optional (default=None)</p>
-<blockquote>
-<div><p>Step size when extrapolating.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">out_step</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Give directly a <a class="reference internal" href="imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">imblearn.over_sampling.SMOTE</span></code></a> object.</p>
-</div>
-</div></blockquote>
-<p><strong>kind_smote</strong> : str, optional (default=None)</p>
-<blockquote>
-<div><p>The type of SMOTE algorithm to use one of the following
-options: <code class="docutils literal"><span class="pre">'regular'</span></code>, <code class="docutils literal"><span class="pre">'borderline1'</span></code>, <code class="docutils literal"><span class="pre">'borderline2'</span></code>,
-<code class="docutils literal"><span class="pre">'svm'</span></code>.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">kind_smote</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Give directly a <a class="reference internal" href="imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">imblearn.over_sampling.SMOTE</span></code></a> object.</p>
-</div>
-</div></blockquote>
-<p><strong>n_jobs</strong> : int, optional (default=None)</p>
-<blockquote class="last">
-<div><p>The number of threads to open if possible.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">n_jobs</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Give directly a <a class="reference internal" href="imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">imblearn.over_sampling.SMOTE</span></code></a> object.</p>
-</div>
 </div></blockquote>
 </td>
 </tr>
@@ -335,12 +291,12 @@ Automated Annotation of Keywords: a Case Study,” In WOB, 10-18, 2003.</td></tr
 </div>
 <dl class="method">
 <dt id="imblearn.combine.SMOTETomek.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>smote=None</em>, <em>tomek=None</em>, <em>k=None</em>, <em>m=None</em>, <em>out_step=None</em>, <em>kind_smote=None</em>, <em>n_jobs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/combine/smote_tomek.html#SMOTETomek.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/combine/smote_tomek.py#L142"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>random_state=None</em>, <em>smote=None</em>, <em>tomek=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/combine/smote_tomek.html#SMOTETomek.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/combine/smote_tomek.py#L103"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.combine.SMOTETomek.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/combine/smote_tomek.html#SMOTETomek.fit"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/combine/smote_tomek.py#L230"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/combine/smote_tomek.html#SMOTETomek.fit"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/combine/smote_tomek.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -368,7 +324,7 @@ Automated Annotation of Keywords: a Case Study,” In WOB, 10-18, 2003.</td></tr
 
 <dl class="method">
 <dt id="imblearn.combine.SMOTETomek.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -400,7 +356,7 @@ Automated Annotation of Keywords: a Case Study,” In WOB, 10-18, 2003.</td></tr
 
 <dl class="method">
 <dt id="imblearn.combine.SMOTETomek.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -425,7 +381,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.combine.SMOTETomek.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -457,7 +413,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.combine.SMOTETomek.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.combine.SMOTETomek.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -532,7 +488,7 @@ component of a nested object.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

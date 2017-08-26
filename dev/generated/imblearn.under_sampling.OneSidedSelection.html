@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.under_sampling.OneSidedSelection &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.under_sampling.OneSidedSelection &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../index.html"/>
         <link rel="up" title="imbalanced-learn API" href="../api.html"/>
         <link rel="next" title="imblearn.under_sampling.RandomUnderSampler" href="imblearn.under_sampling.RandomUnderSampler.html"/>
         <link rel="prev" title="imblearn.under_sampling.NeighbourhoodCleaningRule" href="imblearn.under_sampling.NeighbourhoodCleaningRule.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -211,7 +211,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.under_sampling" title="imblearn.under_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling</span></code></a>.OneSidedSelection<a class="headerlink" href="#imblearn-under-sampling-onesidedselection" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.under_sampling.OneSidedSelection">
-<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">OneSidedSelection</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=None</em>, <em>n_seeds_S=1</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/one_sided_selection.html#OneSidedSelection"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/under_sampling/prototype_selection/one_sided_selection.py#L20"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">OneSidedSelection</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_neighbors=None</em>, <em>n_seeds_S=1</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/one_sided_selection.html#OneSidedSelection"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/under_sampling/prototype_selection/one_sided_selection.py#L19"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to perform under-sampling based on one-sided selection method.</p>
 <p>Read more in the <a class="reference internal" href="../under_sampling.html#condensed-nearest-neighbors"><span class="std std-ref">User Guide</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -254,14 +254,6 @@ selected from the majority class.</p>
 generator; If <code class="docutils literal"><span class="pre">RandomState</span></code> instance, random_state is the random
 number generator; If <code class="docutils literal"><span class="pre">None</span></code>, the random number generator is the
 <code class="docutils literal"><span class="pre">RandomState</span></code> instance used by <code class="docutils literal"><span class="pre">np.random</span></code>.</p>
-</div></blockquote>
-<p><strong>size_ngh</strong> : int, optional (default=None)</p>
-<blockquote>
-<div><p>Size of the neighbourhood to consider to compute the nearest-neighbors.</p>
-<div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span><code class="docutils literal"><span class="pre">size_ngh</span></code> is deprecated from 0.2 and will be replaced in 0.4
-Use <code class="docutils literal"><span class="pre">n_neighbors</span></code> instead.</p>
-</div>
 </div></blockquote>
 <p><strong>n_neighbors</strong> : int or object, optional (default=KNeighborsClassifier(n_neighbors=1))</p>
 <blockquote>
@@ -314,12 +306,12 @@ sets: one-sided selection,” In ICML, vol. 97, pp. 179-186, 1997.</td></tr>
 </div>
 <dl class="method">
 <dt id="imblearn.under_sampling.OneSidedSelection.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>size_ngh=None</em>, <em>n_neighbors=None</em>, <em>n_seeds_S=1</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/one_sided_selection.html#OneSidedSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/under_sampling/prototype_selection/one_sided_selection.py#L114"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_neighbors=None</em>, <em>n_seeds_S=1</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/one_sided_selection.html#OneSidedSelection.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/under_sampling/prototype_selection/one_sided_selection.py#L106"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.OneSidedSelection.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -347,7 +339,7 @@ sets: one-sided selection,” In ICML, vol. 97, pp. 179-186, 1997.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.OneSidedSelection.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -379,7 +371,7 @@ sets: one-sided selection,” In ICML, vol. 97, pp. 179-186, 1997.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.OneSidedSelection.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -404,7 +396,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.OneSidedSelection.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -436,7 +428,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.OneSidedSelection.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c854f92/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.OneSidedSelection.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -511,7 +503,7 @@ component of a nested object.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

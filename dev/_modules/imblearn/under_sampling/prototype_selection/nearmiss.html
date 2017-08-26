@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imblearn.under_sampling.prototype_selection.nearmiss &mdash; imbalanced-learn 0.3.0 documentation</title>
+  <title>imblearn.under_sampling.prototype_selection.nearmiss &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="imbalanced-learn 0.3.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0.dev0
               </div>
             
           
@@ -195,7 +195,6 @@
 
 <span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseUnderSampler</span>
 <span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
-<span class="kn">from</span> <span class="nn">...utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
 
 
 <div class="viewcode-block" id="NearMiss"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss">[docs]</a><span class="k">class</span> <span class="nc">NearMiss</span><span class="p">(</span><span class="n">BaseUnderSampler</span><span class="p">):</span>
@@ -235,29 +234,12 @@
 <span class="sd">    version : int, optional (default=1)</span>
 <span class="sd">        Version of the NearMiss to use. Possible values are 1, 2 or 3.</span>
 
-<span class="sd">    size_ngh : int, optional (default=None)</span>
-<span class="sd">        Size of the neighbourhood to consider to compute the average</span>
-<span class="sd">        distance to the minority point samples.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``size_ngh`` is deprecated from 0.2 and will be replaced in 0.4</span>
-<span class="sd">           Use ``n_neighbors`` instead.</span>
-
 <span class="sd">    n_neighbors : int or object, optional (default=3)</span>
 <span class="sd">        If ``int``, size of the neighbourhood to consider to compute the</span>
 <span class="sd">        average distance to the minority point samples.  If object, an</span>
 <span class="sd">        estimator that inherits from</span>
 <span class="sd">        :class:`sklearn.neighbors.base.KNeighborsMixin` that will be used to</span>
 <span class="sd">        find the k_neighbors.</span>
-
-<span class="sd">    ver3_samp_ngh : int, optional (default=3)</span>
-<span class="sd">        NearMiss-3 algorithm start by a phase of re-sampling. This</span>
-<span class="sd">        parameter correspond to the number of neighbours selected</span>
-<span class="sd">        create the sub_set in which the selection will be performed.</span>
-
-<span class="sd">        .. deprecated:: 0.2</span>
-<span class="sd">           ``ver3_samp_ngh`` is deprecated from 0.2 and will be replaced</span>
-<span class="sd">           in 0.4. Use ``n_neighbors_ver3`` instead.</span>
 
 <span class="sd">    n_neighbors_ver3 : int or object, optional (default=3)</span>
 <span class="sd">        If ``int``, NearMiss-3 algorithm start by a phase of re-sampling. This</span>
@@ -311,17 +293,13 @@
                  <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                 <span class="n">size_ngh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                 <span class="n">ver3_samp_ngh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_neighbors_ver3</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NearMiss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size_ngh</span> <span class="o">=</span> <span class="n">size_ngh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ver3_samp_ngh</span> <span class="o">=</span> <span class="n">ver3_samp_ngh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors_ver3</span> <span class="o">=</span> <span class="n">n_neighbors_ver3</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
 
@@ -398,12 +376,6 @@
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Private function to create the NN estimator&quot;&quot;&quot;</span>
-        <span class="c1"># FIXME: Deprecated in 0.2. To be removed in 0.4.</span>
-        <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;size_ngh&#39;</span><span class="p">,</span> <span class="s1">&#39;n_neighbors&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.2&#39;</span><span class="p">,</span> <span class="s1">&#39;ver3_samp_ngh&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;n_neighbors_ver3&#39;</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">})</span>
 
@@ -534,7 +506,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.3.0',
+            VERSION:'0.4.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
