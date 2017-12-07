@@ -314,8 +314,7 @@
                                  <span class="s1">&#39;Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tomek</span><span class="p">)))</span>
         <span class="c1"># Otherwise create a default TomekLinks</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tomek_</span> <span class="o">=</span> <span class="n">TomekLinks</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
-                                     <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tomek_</span> <span class="o">=</span> <span class="n">TomekLinks</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SMOTETomek.fit"><a class="viewcode-back" href="../../../generated/imblearn.combine.SMOTETomek.html#imblearn.combine.SMOTETomek.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Find the classes statistics before to perform sampling.</span>
@@ -380,7 +379,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

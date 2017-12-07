@@ -211,7 +211,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.under_sampling" title="imblearn.under_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling</span></code></a>.EditedNearestNeighbours<a class="headerlink" href="#imblearn-under-sampling-editednearestneighbours" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours">
-<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">EditedNearestNeighbours</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#EditedNearestNeighbours"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L25"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">EditedNearestNeighbours</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L27"><span class="viewcode-link">[source]</span></a><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#EditedNearestNeighbours"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to perform under-sampling based on the edited nearest neighbour
 method.</p>
 <p>Read more in the <a class="reference internal" href="../under_sampling.html#edited-nearest-neighbors"><span class="std std-ref">User Guide</span></a>.</p>
@@ -255,6 +255,9 @@ selected from the majority class.</p>
 generator; If <code class="docutils literal"><span class="pre">RandomState</span></code> instance, random_state is the random
 number generator; If <code class="docutils literal"><span class="pre">None</span></code>, the random number generator is the
 <code class="docutils literal"><span class="pre">RandomState</span></code> instance used by <code class="docutils literal"><span class="pre">np.random</span></code>.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.4: </span><code class="docutils literal"><span class="pre">random_state</span></code> is deprecated in 0.4 and will be removed in 0.6.</p>
+</div>
 </div></blockquote>
 <p><strong>n_neighbors</strong> : int or object, optional (default=3)</p>
 <blockquote>
@@ -286,17 +289,17 @@ order to exclude a sample.</li>
 <p class="last"><a class="reference internal" href="imblearn.under_sampling.CondensedNearestNeighbour.html#imblearn.under_sampling.CondensedNearestNeighbour" title="imblearn.under_sampling.CondensedNearestNeighbour"><code class="xref py py-obj docutils literal"><span class="pre">CondensedNearestNeighbour</span></code></a>, <a class="reference internal" href="imblearn.under_sampling.RepeatedEditedNearestNeighbours.html#imblearn.under_sampling.RepeatedEditedNearestNeighbours" title="imblearn.under_sampling.RepeatedEditedNearestNeighbours"><code class="xref py py-obj docutils literal"><span class="pre">RepeatedEditedNearestNeighbours</span></code></a>, <a class="reference internal" href="imblearn.under_sampling.AllKNN.html#imblearn.under_sampling.AllKNN" title="imblearn.under_sampling.AllKNN"><code class="xref py py-obj docutils literal"><span class="pre">AllKNN</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
-<p>The method is based on <a class="reference internal" href="#r8787" id="id1">[R8787]</a>.</p>
+<p>The method is based on <a class="reference internal" href="#r9595" id="id1">[R9595]</a>.</p>
 <p>Supports mutli-class resampling. A one-vs.-rest scheme is used when
-sampling a class as proposed in <a class="reference internal" href="#r8787" id="id2">[R8787]</a>.</p>
+sampling a class as proposed in <a class="reference internal" href="#r9595" id="id2">[R9595]</a>.</p>
 <p>See
 <a class="reference internal" href="../auto_examples/pipeline/plot_pipeline_classification.html#sphx-glr-auto-examples-pipeline-plot-pipeline-classification-py"><span class="std std-ref">Pipeline Object</span></a> and
 <a class="reference internal" href="../auto_examples/under-sampling/plot_enn_renn_allknn.html#sphx-glr-auto-examples-under-sampling-plot-enn-renn-allknn-py"><span class="std std-ref">ENN, RENN, All-KNN</span></a>.</p>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r8787" rules="none">
+<table class="docutils citation" frame="void" id="r9595" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[R8787]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> D. Wilson, Asymptotic” Properties of Nearest Neighbor Rules Using
+<tr><td class="label">[R9595]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> D. Wilson, Asymptotic” Properties of Nearest Neighbor Rules Using
 Edited Data,” In IEEE Transactions on Systems, Man, and Cybernetrics,
 vol. 2 (3), pp. 408-421, 1972.</td></tr>
 </tbody>
@@ -310,7 +313,7 @@ vol. 2 (3), pp. 408-421, 1972.</td></tr>
 <span class="gp">... </span><span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original dataset shape </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
 <span class="go">Original dataset shape Counter({1: 900, 0: 100})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">enn</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enn</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_res</span><span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="n">enn</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resampled dataset shape </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_res</span><span class="p">)))</span>
 <span class="go">Resampled dataset shape Counter({1: 887, 0: 100})</span>
@@ -318,12 +321,12 @@ vol. 2 (3), pp. 408-421, 1972.</td></tr>
 </div>
 <dl class="method">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#EditedNearestNeighbours.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L122"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>n_neighbors=3</em>, <em>kind_sel='all'</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.py#L127"><span class="viewcode-link">[source]</span></a><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/edited_nearest_neighbours.html#EditedNearestNeighbours.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/base.py#L138"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -351,7 +354,7 @@ vol. 2 (3), pp. 408-421, 1972.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -383,7 +386,7 @@ vol. 2 (3), pp. 408-421, 1972.</td></tr>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L213"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -408,7 +411,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -440,7 +443,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.EditedNearestNeighbours.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L250"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.EditedNearestNeighbours.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -464,13 +467,13 @@ component of a nested object.</p>
 <img alt="../_images/sphx_glr_plot_pipeline_classification_thumb.png" src="../_images/sphx_glr_plot_pipeline_classification_thumb.png" />
 <p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/pipeline/plot_pipeline_classification.html#sphx-glr-auto-examples-pipeline-plot-pipeline-classification-py"><span class="std std-ref">Pipeline Object</span></a></span></p>
 </div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="The following example attends to make a qualitative comparison between the different under-samp..."><div class="figure" id="id5">
-<img alt="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" src="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/under-sampling/plot_comparison_under_sampling.html#sphx-glr-auto-examples-under-sampling-plot-comparison-under-sampling-py"><span class="std std-ref">Comparison of the different under-sampling algorithms</span></a></span></p>
-</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="An illustration of the ENN, RENN, and All-KNN method."><div class="figure" id="id6">
+</div><div class="sphx-glr-thumbcontainer" tooltip="An illustration of the ENN, RENN, and All-KNN method."><div class="figure" id="id5">
 <img alt="../_images/sphx_glr_plot_enn_renn_allknn_thumb.png" src="../_images/sphx_glr_plot_enn_renn_allknn_thumb.png" />
 <p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/under-sampling/plot_enn_renn_allknn.html#sphx-glr-auto-examples-under-sampling-plot-enn-renn-allknn-py"><span class="std std-ref">ENN, RENN, All-KNN</span></a></span></p>
+</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="The following example attends to make a qualitative comparison between the different under-samp..."><div class="figure" id="id6">
+<img alt="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" src="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/under-sampling/plot_comparison_under_sampling.html#sphx-glr-auto-examples-under-sampling-plot-comparison-under-sampling-py"><span class="std std-ref">Comparison of the different under-sampling algorithms</span></a></span></p>
 </div>
 </div><div style='clear:both'></div></div>
 </div>
@@ -497,7 +500,7 @@ component of a nested object.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

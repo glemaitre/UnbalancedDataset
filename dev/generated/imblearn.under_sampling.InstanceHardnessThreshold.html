@@ -211,7 +211,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.under_sampling" title="imblearn.under_sampling"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.under_sampling</span></code></a>.InstanceHardnessThreshold<a class="headerlink" href="#imblearn-under-sampling-instancehardnessthreshold" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold">
-<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">InstanceHardnessThreshold</code><span class="sig-paren">(</span><em>estimator=None</em>, <em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>cv=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.html#InstanceHardnessThreshold"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.py#L23"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">imblearn.under_sampling.</code><code class="descname">InstanceHardnessThreshold</code><span class="sig-paren">(</span><em>estimator=None</em>, <em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>cv=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.py#L23"><span class="viewcode-link">[source]</span></a><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.html#InstanceHardnessThreshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to perform under-sampling based on the instance hardness
 threshold.</p>
 <p>Read more in the <a class="reference internal" href="../under_sampling.html#instance-hardness-threshold"><span class="std std-ref">User Guide</span></a>.</p>
@@ -226,7 +226,7 @@ default a <code class="xref py py-class docutils literal"><span class="pre">skle
 If <code class="docutils literal"><span class="pre">str</span></code>, the choices using a string are the following: <code class="docutils literal"><span class="pre">'knn'</span></code>,
 <code class="docutils literal"><span class="pre">'decision-tree'</span></code>, <code class="docutils literal"><span class="pre">'random-forest'</span></code>, <code class="docutils literal"><span class="pre">'adaboost'</span></code>,
 <code class="docutils literal"><span class="pre">'gradient-boosting'</span></code> and <code class="docutils literal"><span class="pre">'linear-svm'</span></code>.  If object, an estimator
-inherited from <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code> and having an
+inherited from <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.ClassifierMixin.html#sklearn.base.ClassifierMixin" title="(in scikit-learn v0.19.1)"><code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></a> and having an
 attribute <code class="xref py py-func docutils literal"><span class="pre">predict_proba</span></code>.</p>
 </div></blockquote>
 <p><strong>ratio</strong> : str, dict, or callable, optional (default=’auto’)</p>
@@ -279,16 +279,16 @@ number generator; If <code class="docutils literal"><span class="pre">None</span
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>The method is based on <a class="reference internal" href="#r8989" id="id1">[R8989]</a>.</p>
+<p>The method is based on <a class="reference internal" href="#r9797" id="id1">[R9797]</a>.</p>
 <p>Supports mutli-class resampling. A one-vs.-rest scheme is used when
-sampling a class as proposed in <a class="reference internal" href="#r8989" id="id2">[R8989]</a>.</p>
+sampling a class as proposed in <a class="reference internal" href="#r9797" id="id2">[R9797]</a>.</p>
 <p>See
 <a class="reference internal" href="../auto_examples/under-sampling/plot_instance_hardness_threshold.html#sphx-glr-auto-examples-under-sampling-plot-instance-hardness-threshold-py"><span class="std std-ref">Instance Hardness Threshold</span></a>.</p>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r8989" rules="none">
+<table class="docutils citation" frame="void" id="r9797" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[R8989]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> D. Smith, Michael R., Tony Martinez, and Christophe Giraud-Carrier.
+<tr><td class="label">[R9797]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>)</em> D. Smith, Michael R., Tony Martinez, and Christophe Giraud-Carrier.
 “An instance level analysis of data complexity.” Machine learning
 95.2 (2014): 225-256.</td></tr>
 </tbody>
@@ -310,12 +310,12 @@ sampling a class as proposed in <a class="reference internal" href="#r8989" id="
 </div>
 <dl class="method">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>estimator=None</em>, <em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>cv=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.html#InstanceHardnessThreshold.__init__"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.py#L112"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>estimator=None</em>, <em>ratio='auto'</em>, <em>return_indices=False</em>, <em>random_state=None</em>, <em>cv=5</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.py#L112"><span class="viewcode-link">[source]</span></a><a class="reference internal" href="../_modules/imblearn/under_sampling/prototype_selection/instance_hardness_threshold.html#InstanceHardnessThreshold.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/base.py#L138"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the classes statistics before to perform sampling.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -343,7 +343,7 @@ sampling a class as proposed in <a class="reference internal" href="#r8989" id="
 
 <dl class="method">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold.fit_sample">
-<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.fit_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/base.py#L66"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.fit_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the statistics and resample the data directly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -375,7 +375,7 @@ sampling a class as proposed in <a class="reference internal" href="#r8989" id="
 
 <dl class="method">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L212"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.get_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L213"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for this estimator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -400,7 +400,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/base.py#L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample the dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -432,7 +432,7 @@ contained subobjects that are estimators.</p>
 
 <dl class="method">
 <dt id="imblearn.under_sampling.InstanceHardnessThreshold.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L249"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.set_params" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/../../miniconda/envs/testenv/lib/python3.6/site-packages/sklearn/base.py#L250"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.under_sampling.InstanceHardnessThreshold.set_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
@@ -452,13 +452,13 @@ component of a nested object.</p>
 
 <div class="section" id="examples-using-imblearn-under-sampling-instancehardnessthreshold">
 <h2>Examples using <code class="docutils literal"><span class="pre">imblearn.under_sampling.InstanceHardnessThreshold</span></code><a class="headerlink" href="#examples-using-imblearn-under-sampling-instancehardnessthreshold" title="Permalink to this headline">¶</a></h2>
-<div class="sphx-glr-thumbcontainer" tooltip="The following example attends to make a qualitative comparison between the different under-samp..."><div class="figure" id="id4">
-<img alt="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" src="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" />
-<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/under-sampling/plot_comparison_under_sampling.html#sphx-glr-auto-examples-under-sampling-plot-comparison-under-sampling-py"><span class="std std-ref">Comparison of the different under-sampling algorithms</span></a></span></p>
-</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="An illustration of the instance hardness threshold method."><div class="figure" id="id5">
+<div class="sphx-glr-thumbcontainer" tooltip="An illustration of the instance hardness threshold method."><div class="figure" id="id4">
 <img alt="../_images/sphx_glr_plot_instance_hardness_threshold_thumb.png" src="../_images/sphx_glr_plot_instance_hardness_threshold_thumb.png" />
 <p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/under-sampling/plot_instance_hardness_threshold.html#sphx-glr-auto-examples-under-sampling-plot-instance-hardness-threshold-py"><span class="std std-ref">Instance Hardness Threshold</span></a></span></p>
+</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="The following example attends to make a qualitative comparison between the different under-samp..."><div class="figure" id="id5">
+<img alt="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" src="../_images/sphx_glr_plot_comparison_under_sampling_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/under-sampling/plot_comparison_under_sampling.html#sphx-glr-auto-examples-under-sampling-plot-comparison-under-sampling-py"><span class="std std-ref">Comparison of the different under-sampling algorithms</span></a></span></p>
 </div>
 </div><div style='clear:both'></div></div>
 </div>
@@ -485,7 +485,7 @@ component of a nested object.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

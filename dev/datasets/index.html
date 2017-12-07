@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6. Dataset loading utilities &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
+  <title>7. Dataset loading utilities &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -41,8 +41,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../index.html"/>
         <link rel="up" title="User Guide" href="../user_guide.html"/>
-        <link rel="next" title="7. Utilities for Developers" href="../developers_utils.html"/>
-        <link rel="prev" title="5. Ensemble of samplers" href="../ensemble.html"/> 
+        <link rel="next" title="8. Utilities for Developers" href="../developers_utils.html"/>
+        <link rel="prev" title="6. Metrics" href="../metrics.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -107,12 +107,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../under_sampling.html">3. Under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../combine.html">4. Combination of over- and under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ensemble.html">5. Ensemble of samplers</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Dataset loading utilities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#imbalanced-datasets-for-benchmark">6.1. Imbalanced datasets for benchmark</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#imbalanced-generator">6.2. Imbalanced generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html">6. Metrics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. Dataset loading utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbalanced-datasets-for-benchmark">7.1. Imbalanced datasets for benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbalanced-generator">7.2. Imbalanced generator</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../developers_utils.html">7. Utilities for Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developers_utils.html">8. Utilities for Developers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">imbalanced-learn API</a></li>
@@ -175,7 +176,7 @@
         
           <li><a href="../user_guide.html">User Guide</a> &raquo;</li>
         
-      <li>6. Dataset loading utilities</li>
+      <li>7. Dataset loading utilities</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,13 +196,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="dataset-loading-utilities">
-<span id="datasets"></span><h1>6. Dataset loading utilities<a class="headerlink" href="#dataset-loading-utilities" title="Permalink to this headline">¶</a></h1>
+<span id="datasets"></span><h1>7. Dataset loading utilities<a class="headerlink" href="#dataset-loading-utilities" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="docutils literal"><span class="pre">imblearn.datasets</span></code> package is complementing the <code class="docutils literal"><span class="pre">sklearn.datasets</span></code>
 package. The package provides both: (i) a set of imbalanced datasets to perform
 systematic benchmark and (ii) a utility to create an imbalanced dataset from an
 original balanced dataset.</p>
 <div class="section" id="imbalanced-datasets-for-benchmark">
-<span id="zenodo"></span><h2>6.1. Imbalanced datasets for benchmark<a class="headerlink" href="#imbalanced-datasets-for-benchmark" title="Permalink to this headline">¶</a></h2>
+<span id="zenodo"></span><h2>7.1. Imbalanced datasets for benchmark<a class="headerlink" href="#imbalanced-datasets-for-benchmark" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="../generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets" title="imblearn.datasets.fetch_datasets"><code class="xref py py-func docutils literal"><span class="pre">fetch_datasets</span></code></a> allows to fetch 27 datasets which are imbalanced and
 binarized. The following data sets are available:</p>
 <blockquote>
@@ -428,7 +429,7 @@ binarized. The following data sets are available:</p>
 </div>
 </div>
 <div class="section" id="imbalanced-generator">
-<span id="make-imbalanced"></span><h2>6.2. Imbalanced generator<a class="headerlink" href="#imbalanced-generator" title="Permalink to this headline">¶</a></h2>
+<span id="make-imbalanced"></span><h2>7.2. Imbalanced generator<a class="headerlink" href="#imbalanced-generator" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="../generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="imblearn.datasets.make_imbalance"><code class="xref py py-func docutils literal"><span class="pre">make_imbalance</span></code></a> turns an original dataset into an imbalanced
 dataset. This behaviour is driven by the parameter <code class="docutils literal"><span class="pre">ratio</span></code> which behave
 similarly to other resampling algorithm. <code class="docutils literal"><span class="pre">ratio</span></code> can be given as a dictionary
@@ -480,10 +481,10 @@ in the dictionary:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../developers_utils.html" class="btn btn-neutral float-right" title="7. Utilities for Developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../developers_utils.html" class="btn btn-neutral float-right" title="8. Utilities for Developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../ensemble.html" class="btn btn-neutral" title="5. Ensemble of samplers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../metrics.html" class="btn btn-neutral" title="6. Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -492,7 +493,7 @@ in the dictionary:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

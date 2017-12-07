@@ -198,6 +198,8 @@
 
 <span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseCleaningSampler</span>
 <span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
+<span class="kn">from</span> <span class="nn">...utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
+
 
 <span class="n">SEL_KIND</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">)</span>
 
@@ -241,6 +243,9 @@
 <span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
 <span class="sd">        number generator; If ``None``, the random number generator is the</span>
 <span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
+
+<span class="sd">        .. deprecated:: 0.4</span>
+<span class="sd">           ``random_state`` is deprecated in 0.4 and will be removed in 0.6.</span>
 
 <span class="sd">    n_neighbors : int or object, optional (default=3)</span>
 <span class="sd">        If ``int``, size of the neighbourhood to consider to compute the</span>
@@ -292,7 +297,7 @@
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Original dataset shape {}&#39;.format(Counter(y)))</span>
 <span class="sd">    Original dataset shape Counter({1: 900, 0: 100})</span>
-<span class="sd">    &gt;&gt;&gt; enn = EditedNearestNeighbours(random_state=42)</span>
+<span class="sd">    &gt;&gt;&gt; enn = EditedNearestNeighbours()</span>
 <span class="sd">    &gt;&gt;&gt; X_res, y_res = enn.fit_sample(X, y)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Resampled dataset shape {}&#39;.format(Counter(y_res)))</span>
 <span class="sd">    Resampled dataset shape Counter({1: 887, 0: 100})</span>
@@ -306,9 +311,8 @@
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">kind_sel</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">EditedNearestNeighbours</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span>
-            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EditedNearestNeighbours</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">=</span> <span class="n">kind_sel</span>
@@ -316,6 +320,11 @@
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Validate the estimator created in the ENN.&quot;&quot;&quot;</span>
+
+        <span class="c1"># check for deprecated random_state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
                                           <span class="n">additional_neighbor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">})</span>
@@ -423,6 +432,9 @@
 <span class="sd">        number generator; If ``None``, the random number generator is the</span>
 <span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
+<span class="sd">        .. deprecated:: 0.4</span>
+<span class="sd">           ``random_state`` is deprecated in 0.4 and will be removed in 0.6.</span>
+
 <span class="sd">    n_neighbors : int or object, optional (default=3)</span>
 <span class="sd">        If ``int``, size of the neighbourhood to consider to compute the</span>
 <span class="sd">        nearest neighbors. If object, an estimator that inherits from</span>
@@ -477,7 +489,7 @@
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Original dataset shape {}&#39;.format(Counter(y)))</span>
 <span class="sd">    Original dataset shape Counter({1: 900, 0: 100})</span>
-<span class="sd">    &gt;&gt;&gt; renn = RepeatedEditedNearestNeighbours(random_state=42)</span>
+<span class="sd">    &gt;&gt;&gt; renn = RepeatedEditedNearestNeighbours()</span>
 <span class="sd">    &gt;&gt;&gt; X_res, y_res = renn.fit_sample(X, y)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Resampled dataset shape {}&#39;.format(Counter(y_res)))</span>
 <span class="sd">    Resampled dataset shape Counter({1: 887, 0: 100})</span>
@@ -492,8 +504,8 @@
                  <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
                  <span class="n">kind_sel</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">RepeatedEditedNearestNeighbours</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RepeatedEditedNearestNeighbours</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">=</span> <span class="n">kind_sel</span>
@@ -502,6 +514,11 @@
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Private function to create the NN estimator&quot;&quot;&quot;</span>
+
+        <span class="c1"># check for deprecated random_state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;max_iter must be greater than 1.&#39;</span>
                              <span class="s1">&#39; Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">)))</span>
@@ -511,7 +528,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span>
                                             <span class="n">return_indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">,</span>
-                                            <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
                                             <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="p">,</span>
                                             <span class="n">kind_sel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span><span class="p">,</span>
                                             <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
@@ -639,6 +655,9 @@
 <span class="sd">        number generator; If ``None``, the random number generator is the</span>
 <span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
 
+<span class="sd">        .. deprecated:: 0.4</span>
+<span class="sd">           ``random_state`` is deprecated in 0.4 and will be removed in 0.6.</span>
+
 <span class="sd">    n_neighbors : int or object, optional (default=3)</span>
 <span class="sd">        If ``int``, size of the neighbourhood to consider to compute the</span>
 <span class="sd">        nearest neighbors. If object, an estimator that inherits from</span>
@@ -694,7 +713,7 @@
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Original dataset shape {}&#39;.format(Counter(y)))</span>
 <span class="sd">    Original dataset shape Counter({1: 900, 0: 100})</span>
-<span class="sd">    &gt;&gt;&gt; allknn = AllKNN(random_state=42)</span>
+<span class="sd">    &gt;&gt;&gt; allknn = AllKNN()</span>
 <span class="sd">    &gt;&gt;&gt; X_res, y_res = allknn.fit_sample(X, y)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Resampled dataset shape {}&#39;.format(Counter(y_res)))</span>
 <span class="sd">    Resampled dataset shape Counter({1: 887, 0: 100})</span>
@@ -709,7 +728,8 @@
                  <span class="n">kind_sel</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
                  <span class="n">allow_minority</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">AllKNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AllKNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="o">=</span> <span class="n">kind_sel</span>
@@ -718,6 +738,11 @@
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create objects required by AllKNN&quot;&quot;&quot;</span>
+
+        <span class="c1"># check for deprecated random_state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SEL_KIND</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
@@ -726,7 +751,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">enn_</span> <span class="o">=</span> <span class="n">EditedNearestNeighbours</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ratio</span><span class="p">,</span>
                                             <span class="n">return_indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span><span class="p">,</span>
-                                            <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
                                             <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="p">,</span>
                                             <span class="n">kind_sel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kind_sel</span><span class="p">,</span>
                                             <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
@@ -819,7 +843,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

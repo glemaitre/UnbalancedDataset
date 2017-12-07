@@ -195,6 +195,7 @@
 
 <span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseUnderSampler</span>
 <span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">check_neighbors_object</span>
+<span class="kn">from</span> <span class="nn">...utils.deprecation</span> <span class="k">import</span> <span class="n">deprecate_parameter</span>
 
 
 <div class="viewcode-block" id="NearMiss"><a class="viewcode-back" href="../../../../generated/imblearn.under_sampling.NearMiss.html#imblearn.under_sampling.NearMiss">[docs]</a><span class="k">class</span> <span class="nc">NearMiss</span><span class="p">(</span><span class="n">BaseUnderSampler</span><span class="p">):</span>
@@ -230,6 +231,9 @@
 <span class="sd">        generator; If ``RandomState`` instance, random_state is the random</span>
 <span class="sd">        number generator; If ``None``, the random number generator is the</span>
 <span class="sd">        ``RandomState`` instance used by ``np.random``.</span>
+
+<span class="sd">        .. deprecated:: 0.4</span>
+<span class="sd">           ``random_state`` is deprecated in 0.4 and will be removed in 0.6.</span>
 
 <span class="sd">    version : int, optional (default=1)</span>
 <span class="sd">        Version of the NearMiss to use. Possible values are 1, 2 or 3.</span>
@@ -281,7 +285,7 @@
 <span class="sd">    ... n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Original dataset shape {}&#39;.format(Counter(y)))</span>
 <span class="sd">    Original dataset shape Counter({1: 900, 0: 100})</span>
-<span class="sd">    &gt;&gt;&gt; nm = NearMiss(random_state=42)</span>
+<span class="sd">    &gt;&gt;&gt; nm = NearMiss()</span>
 <span class="sd">    &gt;&gt;&gt; X_res, y_res = nm.fit_sample(X, y)</span>
 <span class="sd">    &gt;&gt;&gt; print(&#39;Resampled dataset shape {}&#39;.format(Counter(y_res)))</span>
 <span class="sd">    Resampled dataset shape Counter({0: 100, 1: 100})</span>
@@ -296,7 +300,8 @@
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">n_neighbors_ver3</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">NearMiss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NearMiss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_indices</span> <span class="o">=</span> <span class="n">return_indices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
@@ -376,6 +381,11 @@
 
     <span class="k">def</span> <span class="nf">_validate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Private function to create the NN estimator&quot;&quot;&quot;</span>
+
+        <span class="c1"># check for deprecated random_state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">deprecate_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span> <span class="o">=</span> <span class="n">check_neighbors_object</span><span class="p">(</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">})</span>
 
@@ -484,7 +494,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

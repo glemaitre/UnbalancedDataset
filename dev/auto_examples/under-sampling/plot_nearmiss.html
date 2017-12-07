@@ -41,7 +41,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="../../index.html"/>
         <link rel="up" title="General examples" href="../index.html"/>
-        <link rel="next" title="Instance Hardness Threshold" href="plot_instance_hardness_threshold.html"/>
+        <link rel="next" title="Illustration of the definition of a Tomek link" href="plot_illustration_tomek_links.html"/>
         <link rel="prev" title="Condensed nearest-neighbour" href="plot_condensed_nearest_neighbour.html"/> 
 
   
@@ -121,8 +121,8 @@
 <li class="toctree-l3"><a class="reference internal" href="plot_neighbourhood_cleaning_rule.html">Neighbourhood Cleaning Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_condensed_nearest_neighbour.html">Condensed nearest-neighbour</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Nearmiss 1 &amp; 2 &amp; 3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="plot_instance_hardness_threshold.html">Instance Hardness Threshold</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_illustration_tomek_links.html">Illustration of the definition of a Tomek link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_instance_hardness_threshold.html">Instance Hardness Threshold</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_cluster_centroids.html">Cluster centroids</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_enn_renn_allknn.html">ENN, RENN, All-KNN</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_illustration_nearmiss.html">Illustration of the sample selection for the different NearMiss algorithms</a></li>
@@ -259,11 +259,11 @@
     <span class="n">X_resampled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_res</span><span class="p">)</span>
     <span class="n">y_resampled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_res</span><span class="p">)</span>
     <span class="n">X_res_vis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_res</span><span class="p">))</span>
-    <span class="n">idx_samples_removed</span> <span class="o">=</span> <a href="http://docs.scipy.org/doc/numpy-1.11.0/reference/generated/numpy.setdiff1d.html#numpy.setdiff1d" title="View documentation for numpy.setdiff1d"><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span></a><span class="p">(</span><a href="http://docs.scipy.org/doc/numpy-1.11.0/reference/generated/numpy.arange.html#numpy.arange" title="View documentation for numpy.arange"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="n">X_vis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="n">idx_samples_removed</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.setdiff1d.html#numpy.setdiff1d" title="View documentation for numpy.setdiff1d"><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span></a><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html#numpy.arange" title="View documentation for numpy.arange"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="n">X_vis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
                                        <span class="n">idx_res</span><span class="p">)</span>
 
 <span class="c1"># Two subplots, unpack the axes array immediately</span>
-<span class="n">f</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">ax_res</span> <span class="o">=</span> <span class="p">[</span><span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">]</span>
 
 <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">plot_resampling</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">X_vis</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;Original set&#39;</span><span class="p">)</span>
@@ -276,20 +276,20 @@
     <span class="n">plot_resampling</span><span class="p">(</span><span class="n">ax_res</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X_res_vis</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_resampled</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                     <span class="s1">&#39;Nearmiss {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
-<a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.figlegend" title="View documentation for matplotlib.pyplot.figlegend"><span class="n">plt</span><span class="o">.</span><span class="n">figlegend</span></a><span class="p">((</span><span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Class #0&#39;</span><span class="p">,</span> <span class="s1">&#39;Class #1&#39;</span><span class="p">,</span> <span class="s1">&#39;Removed samples&#39;</span><span class="p">),</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figlegend.html#matplotlib.pyplot.figlegend" title="View documentation for matplotlib.pyplot.figlegend"><span class="n">plt</span><span class="o">.</span><span class="n">figlegend</span></a><span class="p">((</span><span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Class #0&#39;</span><span class="p">,</span> <span class="s1">&#39;Class #1&#39;</span><span class="p">,</span> <span class="s1">&#39;Removed samples&#39;</span><span class="p">),</span>
               <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">labelspacing</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
-<a href="http://matplotlib.org/api/tight_layout_api.html#matplotlib.tight_layout" title="View documentation for matplotlib.pyplot.tight_layout"><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.show" title="View documentation for matplotlib.pyplot.show"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.tight_layout.html#matplotlib.pyplot.tight_layout" title="View documentation for matplotlib.pyplot.tight_layout"><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="View documentation for matplotlib.pyplot.show"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  0.532 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  0.342 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_nearmiss.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_nearmiss.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_nearmiss.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_nearmiss.ipynb</span></code></a></div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
 
 
@@ -302,7 +302,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="plot_instance_hardness_threshold.html" class="btn btn-neutral float-right" title="Instance Hardness Threshold" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="plot_illustration_tomek_links.html" class="btn btn-neutral float-right" title="Illustration of the definition of a Tomek link" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="plot_condensed_nearest_neighbour.html" class="btn btn-neutral" title="Condensed nearest-neighbour" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -314,7 +314,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

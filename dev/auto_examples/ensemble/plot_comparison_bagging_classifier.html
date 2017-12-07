@@ -113,7 +113,10 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#example-using-ensemble-class-methods">Example using ensemble class methods</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="plot_easy_ensemble.html">Easy ensemble</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plot_balance_cascade.html">Balance cascade</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Comparison of balanced and imbalanced bagging classifiers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Comparison of balanced and imbalanced bagging classifiers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#turning-the-balanced-bagging-classifier-into-a-balanced-random-forest">Turning the balanced bagging classifier into a balanced random forest</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -200,46 +203,6 @@ using directly the imbalanced data.</p>
 classification performance. In addition, it avoids the ensemble to focus on the
 majority class which would be a known drawback of the decision tree
 classifiers.</p>
-<ul class="sphx-glr-horizontal">
-<li><a class="first reference internal image-reference" href="../../_images/sphx_glr_plot_comparison_bagging_classifier_001.png"><img alt="../../_images/sphx_glr_plot_comparison_bagging_classifier_001.png" src="../../_images/sphx_glr_plot_comparison_bagging_classifier_001.png" style="width: 300.79999999999995px; height: 225.6px;" /></a>
-</li>
-<li><a class="first reference internal image-reference" href="../../_images/sphx_glr_plot_comparison_bagging_classifier_002.png"><img alt="../../_images/sphx_glr_plot_comparison_bagging_classifier_002.png" src="../../_images/sphx_glr_plot_comparison_bagging_classifier_002.png" style="width: 300.79999999999995px; height: 225.6px;" /></a>
-</li>
-</ul>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Class</span> <span class="n">distribution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">training</span> <span class="nb">set</span><span class="p">:</span> <span class="n">Counter</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">17</span><span class="p">})</span>
-<span class="n">Class</span> <span class="n">distribution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">test</span> <span class="nb">set</span><span class="p">:</span> <span class="n">Counter</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>
-<span class="n">Classification</span> <span class="n">results</span> <span class="n">using</span> <span class="n">a</span> <span class="n">bagging</span> <span class="n">classifier</span> <span class="n">on</span> <span class="n">imbalanced</span> <span class="n">data</span>
-                   <span class="n">pre</span>       <span class="n">rec</span>       <span class="n">spe</span>        <span class="n">f1</span>       <span class="n">geo</span>       <span class="n">iba</span>       <span class="n">sup</span>
-
-          <span class="mi">0</span>       <span class="mf">0.00</span>      <span class="mf">0.00</span>      <span class="mf">1.00</span>      <span class="mf">0.00</span>      <span class="mf">0.00</span>      <span class="mf">0.00</span>         <span class="mi">8</span>
-          <span class="mi">1</span>       <span class="mf">0.28</span>      <span class="mf">1.00</span>      <span class="mf">0.18</span>      <span class="mf">0.44</span>      <span class="mf">0.53</span>      <span class="mf">0.26</span>         <span class="mi">7</span>
-          <span class="mi">2</span>       <span class="mf">1.00</span>      <span class="mf">0.29</span>      <span class="mf">1.00</span>      <span class="mf">0.44</span>      <span class="mf">0.77</span>      <span class="mf">0.62</span>        <span class="mi">14</span>
-
-<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.55</span>      <span class="mf">0.38</span>      <span class="mf">0.80</span>      <span class="mf">0.32</span>      <span class="mf">0.50</span>      <span class="mf">0.36</span>        <span class="mi">29</span>
-
-<span class="n">Confusion</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">without</span> <span class="n">normalization</span>
-<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">8</span>  <span class="mi">0</span><span class="p">]</span>
- <span class="p">[</span> <span class="mi">0</span>  <span class="mi">7</span>  <span class="mi">0</span><span class="p">]</span>
- <span class="p">[</span> <span class="mi">0</span> <span class="mi">10</span>  <span class="mi">4</span><span class="p">]]</span>
-<span class="n">Classification</span> <span class="n">results</span> <span class="n">using</span> <span class="n">a</span> <span class="n">bagging</span> <span class="n">classifier</span> <span class="n">on</span> <span class="n">balanced</span> <span class="n">data</span>
-                   <span class="n">pre</span>       <span class="n">rec</span>       <span class="n">spe</span>        <span class="n">f1</span>       <span class="n">geo</span>       <span class="n">iba</span>       <span class="n">sup</span>
-
-          <span class="mi">0</span>       <span class="mf">1.00</span>      <span class="mf">1.00</span>      <span class="mf">1.00</span>      <span class="mf">1.00</span>      <span class="mf">1.00</span>      <span class="mf">1.00</span>         <span class="mi">8</span>
-          <span class="mi">1</span>       <span class="mf">0.86</span>      <span class="mf">0.86</span>      <span class="mf">0.95</span>      <span class="mf">0.86</span>      <span class="mf">0.90</span>      <span class="mf">0.81</span>         <span class="mi">7</span>
-          <span class="mi">2</span>       <span class="mf">0.93</span>      <span class="mf">0.93</span>      <span class="mf">0.93</span>      <span class="mf">0.93</span>      <span class="mf">0.93</span>      <span class="mf">0.87</span>        <span class="mi">14</span>
-
-<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.93</span>      <span class="mf">0.93</span>      <span class="mf">0.96</span>      <span class="mf">0.93</span>      <span class="mf">0.94</span>      <span class="mf">0.89</span>        <span class="mi">29</span>
-
-<span class="n">Confusion</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">without</span> <span class="n">normalization</span>
-<span class="p">[[</span> <span class="mi">8</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
- <span class="p">[</span> <span class="mi">0</span>  <span class="mi">6</span>  <span class="mi">1</span><span class="p">]</span>
- <span class="p">[</span> <span class="mi">0</span>  <span class="mi">1</span> <span class="mi">13</span><span class="p">]]</span>
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Authors: Guillaume Lemaitre &lt;g.lemaitre58@gmail.com&gt;</span>
 <span class="c1"># License: MIT</span>
 
@@ -249,12 +212,12 @@ classifiers.</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html#sklearn.datasets.load_iris" title="View documentation for sklearn.datasets.load_iris"><span class="n">load_iris</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split" title="View documentation for sklearn.model_selection.train_test_split"><span class="n">train_test_split</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html#sklearn.ensemble.BaggingClassifier" title="View documentation for sklearn.ensemble.BaggingClassifier"><span class="n">BaggingClassifier</span></a>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier" title="View documentation for sklearn.tree.DecisionTreeClassifier"><span class="n">DecisionTreeClassifier</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix" title="View documentation for sklearn.metrics.confusion_matrix"><span class="n">confusion_matrix</span></a>
 
-<span class="kn">from</span> <span class="nn">imblearn.datasets</span> <span class="kn">import</span> <a href="../../generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="View documentation for imblearn.datasets.make_imbalance"><span class="n">make_imbalance</span></a>
+<span class="kn">from</span> <span class="nn">imblearn.datasets</span> <span class="kn">import</span> <a href="../../generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets" title="View documentation for imblearn.datasets.fetch_datasets"><span class="n">fetch_datasets</span></a>
 <span class="kn">from</span> <span class="nn">imblearn.ensemble</span> <span class="kn">import</span> <a href="../../generated/imblearn.ensemble.BalancedBaggingClassifier.html#imblearn.ensemble.BalancedBaggingClassifier" title="View documentation for imblearn.ensemble.BalancedBaggingClassifier"><span class="n">BalancedBaggingClassifier</span></a>
 
 <span class="kn">from</span> <span class="nn">imblearn.metrics</span> <span class="kn">import</span> <a href="../../generated/imblearn.metrics.classification_report_imbalanced.html#imblearn.metrics.classification_report_imbalanced" title="View documentation for imblearn.metrics.classification_report_imbalanced"><span class="n">classification_report_imbalanced</span></a>
@@ -269,35 +232,34 @@ classifiers.</p>
 <span class="sd">    Normalization can be applied by setting `normalize=True`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">cm</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <a href="http://docs.scipy.org/doc/numpy-1.11.0/reference/arrays.indexing.html#numpy.newaxis" title="View documentation for numpy.newaxis"><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span></a><span class="p">]</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">cm</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <a href="https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html#numpy.newaxis" title="View documentation for numpy.newaxis"><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span></a><span class="p">]</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Normalized confusion matrix&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Confusion matrix, without normalization&#39;</span><span class="p">)</span>
 
     <span class="k">print</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
 
-    <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.imshow" title="View documentation for matplotlib.pyplot.imshow"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span></a><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
-    <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.title" title="View documentation for matplotlib.pyplot.title"><span class="n">plt</span><span class="o">.</span><span class="n">title</span></a><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <a href="http://matplotlib.org/api/colorbar_api.html#matplotlib.colorbar" title="View documentation for matplotlib.pyplot.colorbar"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">()</span>
-    <span class="n">tick_marks</span> <span class="o">=</span> <a href="http://docs.scipy.org/doc/numpy-1.11.0/reference/generated/numpy.arange.html#numpy.arange" title="View documentation for numpy.arange"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">))</span>
-    <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.xticks" title="View documentation for matplotlib.pyplot.xticks"><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span></a><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-    <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.yticks" title="View documentation for matplotlib.pyplot.yticks"><span class="n">plt</span><span class="o">.</span><span class="n">yticks</span></a><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow" title="View documentation for matplotlib.pyplot.imshow"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span></a><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.title.html#matplotlib.pyplot.title" title="View documentation for matplotlib.pyplot.title"><span class="n">plt</span><span class="o">.</span><span class="n">title</span></a><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.colorbar.html#matplotlib.pyplot.colorbar" title="View documentation for matplotlib.pyplot.colorbar"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">()</span>
+    <span class="n">tick_marks</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html#numpy.arange" title="View documentation for numpy.arange"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">))</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib.pyplot.xticks" title="View documentation for matplotlib.pyplot.xticks"><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span></a><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.yticks.html#matplotlib.pyplot.yticks" title="View documentation for matplotlib.pyplot.yticks"><span class="n">plt</span><span class="o">.</span><span class="n">yticks</span></a><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span>
 
     <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;.2f&#39;</span> <span class="k">if</span> <span class="n">normalize</span> <span class="k">else</span> <span class="s1">&#39;d&#39;</span>
     <span class="n">thresh</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
-        <a href="http://matplotlib.org/api/text_api.html#matplotlib.text" title="View documentation for matplotlib.pyplot.text"><span class="n">plt</span><span class="o">.</span><span class="n">text</span></a><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">format</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">fmt</span><span class="p">),</span>
+        <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.text.html#matplotlib.pyplot.text" title="View documentation for matplotlib.pyplot.text"><span class="n">plt</span><span class="o">.</span><span class="n">text</span></a><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">format</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">fmt</span><span class="p">),</span>
                  <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
                  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span> <span class="k">if</span> <span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">thresh</span> <span class="k">else</span> <span class="s2">&quot;black&quot;</span><span class="p">)</span>
 
-    <a href="http://matplotlib.org/api/tight_layout_api.html#matplotlib.tight_layout" title="View documentation for matplotlib.pyplot.tight_layout"><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
-    <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.ylabel" title="View documentation for matplotlib.pyplot.ylabel"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span></a><span class="p">(</span><span class="s1">&#39;True label&#39;</span><span class="p">)</span>
-    <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.xlabel" title="View documentation for matplotlib.pyplot.xlabel"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.tight_layout.html#matplotlib.pyplot.tight_layout" title="View documentation for matplotlib.pyplot.tight_layout"><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.ylabel.html#matplotlib.pyplot.ylabel" title="View documentation for matplotlib.pyplot.ylabel"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span></a><span class="p">(</span><span class="s1">&#39;True label&#39;</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.xlabel.html#matplotlib.pyplot.xlabel" title="View documentation for matplotlib.pyplot.xlabel"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
 
 
-<span class="n">iris</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html#sklearn.datasets.load_iris" title="View documentation for sklearn.datasets.load_iris"><span class="n">load_iris</span></a><span class="p">()</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <a href="../../generated/imblearn.datasets.make_imbalance.html#imblearn.datasets.make_imbalance" title="View documentation for imblearn.datasets.make_imbalance"><span class="n">make_imbalance</span></a><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span>
-                      <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ozone</span> <span class="o">=</span> <a href="../../generated/imblearn.datasets.fetch_datasets.html#imblearn.datasets.fetch_datasets" title="View documentation for imblearn.datasets.fetch_datasets"><span class="n">fetch_datasets</span></a><span class="p">()[</span><span class="s1">&#39;ozone_level&#39;</span><span class="p">]</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ozone</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ozone</span><span class="o">.</span><span class="n">target</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split" title="View documentation for sklearn.model_selection.train_test_split"><span class="n">train_test_split</span></a><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">bagging</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html#sklearn.ensemble.BaggingClassifier" title="View documentation for sklearn.ensemble.BaggingClassifier"><span class="n">BaggingClassifier</span></a><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -314,29 +276,99 @@ classifiers.</p>
 <span class="n">y_pred_bagging</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><a href="../../generated/imblearn.metrics.classification_report_imbalanced.html#imblearn.metrics.classification_report_imbalanced" title="View documentation for imblearn.metrics.classification_report_imbalanced"><span class="n">classification_report_imbalanced</span></a><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_bagging</span><span class="p">))</span>
 <span class="n">cm_bagging</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix" title="View documentation for sklearn.metrics.confusion_matrix"><span class="n">confusion_matrix</span></a><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_bagging</span><span class="p">)</span>
-<a href="http://matplotlib.org/api/figure_api.html#matplotlib.figure" title="View documentation for matplotlib.pyplot.figure"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">()</span>
-<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cm_bagging</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="View documentation for matplotlib.pyplot.figure"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">()</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cm_bagging</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.unique.html#numpy.unique" title="View documentation for numpy.unique"><span class="n">np</span><span class="o">.</span><span class="n">unique</span></a><span class="p">(</span><span class="n">ozone</span><span class="o">.</span><span class="n">target</span><span class="p">),</span>
                       <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Confusion matrix using BaggingClassifier&#39;</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Classification results using a bagging classifier on balanced data&#39;</span><span class="p">)</span>
 <span class="n">y_pred_balanced_bagging</span> <span class="o">=</span> <span class="n">balanced_bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><a href="../../generated/imblearn.metrics.classification_report_imbalanced.html#imblearn.metrics.classification_report_imbalanced" title="View documentation for imblearn.metrics.classification_report_imbalanced"><span class="n">classification_report_imbalanced</span></a><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_balanced_bagging</span><span class="p">))</span>
 <span class="n">cm_balanced_bagging</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix" title="View documentation for sklearn.metrics.confusion_matrix"><span class="n">confusion_matrix</span></a><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_balanced_bagging</span><span class="p">)</span>
-<a href="http://matplotlib.org/api/figure_api.html#matplotlib.figure" title="View documentation for matplotlib.pyplot.figure"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">()</span>
-<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cm_balanced_bagging</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="View documentation for matplotlib.pyplot.figure"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">()</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cm_balanced_bagging</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.unique.html#numpy.unique" title="View documentation for numpy.unique"><span class="n">np</span><span class="o">.</span><span class="n">unique</span></a><span class="p">(</span><span class="n">ozone</span><span class="o">.</span><span class="n">target</span><span class="p">),</span>
                       <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Confusion matrix using BalancedBaggingClassifier&#39;</span><span class="p">)</span>
-
-<a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.show" title="View documentation for matplotlib.pyplot.show"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  0.440 seconds)</p>
+<ul class="sphx-glr-horizontal">
+<li><a class="first reference internal image-reference" href="../../_images/sphx_glr_plot_comparison_bagging_classifier_001.png"><img alt="../../_images/sphx_glr_plot_comparison_bagging_classifier_001.png" src="../../_images/sphx_glr_plot_comparison_bagging_classifier_001.png" style="width: 300.79999999999995px; height: 225.6px;" /></a>
+</li>
+<li><a class="first reference internal image-reference" href="../../_images/sphx_glr_plot_comparison_bagging_classifier_002.png"><img alt="../../_images/sphx_glr_plot_comparison_bagging_classifier_002.png" src="../../_images/sphx_glr_plot_comparison_bagging_classifier_002.png" style="width: 300.79999999999995px; height: 225.6px;" /></a>
+</li>
+</ul>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Class</span> <span class="n">distribution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">training</span> <span class="nb">set</span><span class="p">:</span> <span class="n">Counter</span><span class="p">({</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1848</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">54</span><span class="p">})</span>
+<span class="n">Class</span> <span class="n">distribution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">test</span> <span class="nb">set</span><span class="p">:</span> <span class="n">Counter</span><span class="p">({</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="mi">615</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">19</span><span class="p">})</span>
+<span class="n">Classification</span> <span class="n">results</span> <span class="n">using</span> <span class="n">a</span> <span class="n">bagging</span> <span class="n">classifier</span> <span class="n">on</span> <span class="n">imbalanced</span> <span class="n">data</span>
+                   <span class="n">pre</span>       <span class="n">rec</span>       <span class="n">spe</span>        <span class="n">f1</span>       <span class="n">geo</span>       <span class="n">iba</span>       <span class="n">sup</span>
+
+         <span class="o">-</span><span class="mi">1</span>       <span class="mf">0.97</span>      <span class="mf">1.00</span>      <span class="mf">0.00</span>      <span class="mf">0.98</span>      <span class="mf">0.00</span>      <span class="mf">0.00</span>       <span class="mi">615</span>
+          <span class="mi">1</span>       <span class="mf">0.00</span>      <span class="mf">0.00</span>      <span class="mf">1.00</span>      <span class="mf">0.00</span>      <span class="mf">0.00</span>      <span class="mf">0.00</span>        <span class="mi">19</span>
+
+<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.94</span>      <span class="mf">0.97</span>      <span class="mf">0.03</span>      <span class="mf">0.95</span>      <span class="mf">0.00</span>      <span class="mf">0.00</span>       <span class="mi">634</span>
+
+<span class="n">Confusion</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">without</span> <span class="n">normalization</span>
+<span class="p">[[</span><span class="mi">613</span>   <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">19</span>   <span class="mi">0</span><span class="p">]]</span>
+<span class="n">Classification</span> <span class="n">results</span> <span class="n">using</span> <span class="n">a</span> <span class="n">bagging</span> <span class="n">classifier</span> <span class="n">on</span> <span class="n">balanced</span> <span class="n">data</span>
+                   <span class="n">pre</span>       <span class="n">rec</span>       <span class="n">spe</span>        <span class="n">f1</span>       <span class="n">geo</span>       <span class="n">iba</span>       <span class="n">sup</span>
+
+         <span class="o">-</span><span class="mi">1</span>       <span class="mf">0.99</span>      <span class="mf">0.86</span>      <span class="mf">0.68</span>      <span class="mf">0.92</span>      <span class="mf">0.36</span>      <span class="mf">0.14</span>       <span class="mi">615</span>
+          <span class="mi">1</span>       <span class="mf">0.13</span>      <span class="mf">0.68</span>      <span class="mf">0.86</span>      <span class="mf">0.22</span>      <span class="mf">0.36</span>      <span class="mf">0.12</span>        <span class="mi">19</span>
+
+<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.96</span>      <span class="mf">0.86</span>      <span class="mf">0.69</span>      <span class="mf">0.90</span>      <span class="mf">0.36</span>      <span class="mf">0.14</span>       <span class="mi">634</span>
+
+<span class="n">Confusion</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">without</span> <span class="n">normalization</span>
+<span class="p">[[</span><span class="mi">530</span>  <span class="mi">85</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mi">6</span>  <span class="mi">13</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="section" id="turning-the-balanced-bagging-classifier-into-a-balanced-random-forest">
+<h2>Turning the balanced bagging classifier into a balanced random forest<a class="headerlink" href="#turning-the-balanced-bagging-classifier-into-a-balanced-random-forest" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>It is possible to turn the <code class="docutils literal"><span class="pre">BalancedBaggingClassifier</span></code> into a balanced
+random forest by using a <code class="docutils literal"><span class="pre">DecisionTreeClassifier</span></code> with
+<code class="docutils literal"><span class="pre">max_features='auto'</span></code>. We illustrate such changes below.</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">balanced_random_forest</span> <span class="o">=</span> <a href="../../generated/imblearn.ensemble.BalancedBaggingClassifier.html#imblearn.ensemble.BalancedBaggingClassifier" title="View documentation for imblearn.ensemble.BalancedBaggingClassifier"><span class="n">BalancedBaggingClassifier</span></a><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier" title="View documentation for sklearn.tree.DecisionTreeClassifier"><span class="n">DecisionTreeClassifier</span></a><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">),</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">balanced_random_forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Classification results using a balanced random forest classifier on&#39;</span>
+      <span class="s1">&#39; imbalanced data&#39;</span><span class="p">)</span>
+<span class="n">y_pred_balanced_rf</span> <span class="o">=</span> <span class="n">balanced_random_forest</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><a href="../../generated/imblearn.metrics.classification_report_imbalanced.html#imblearn.metrics.classification_report_imbalanced" title="View documentation for imblearn.metrics.classification_report_imbalanced"><span class="n">classification_report_imbalanced</span></a><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_balanced_rf</span><span class="p">))</span>
+<span class="n">cm_bagging</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix" title="View documentation for sklearn.metrics.confusion_matrix"><span class="n">confusion_matrix</span></a><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_balanced_rf</span><span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="View documentation for matplotlib.pyplot.figure"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">()</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cm_bagging</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.unique.html#numpy.unique" title="View documentation for numpy.unique"><span class="n">np</span><span class="o">.</span><span class="n">unique</span></a><span class="p">(</span><span class="n">ozone</span><span class="o">.</span><span class="n">target</span><span class="p">),</span>
+                      <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Confusion matrix using balanced random forest&#39;</span><span class="p">)</span>
+
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="View documentation for matplotlib.pyplot.show"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_comparison_bagging_classifier_003.png" class="align-center" src="../../_images/sphx_glr_plot_comparison_bagging_classifier_003.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Classification</span> <span class="n">results</span> <span class="n">using</span> <span class="n">a</span> <span class="n">balanced</span> <span class="n">random</span> <span class="n">forest</span> <span class="n">classifier</span> <span class="n">on</span> <span class="n">imbalanced</span> <span class="n">data</span>
+                   <span class="n">pre</span>       <span class="n">rec</span>       <span class="n">spe</span>        <span class="n">f1</span>       <span class="n">geo</span>       <span class="n">iba</span>       <span class="n">sup</span>
+
+         <span class="o">-</span><span class="mi">1</span>       <span class="mf">0.99</span>      <span class="mf">0.90</span>      <span class="mf">0.58</span>      <span class="mf">0.94</span>      <span class="mf">0.39</span>      <span class="mf">0.16</span>       <span class="mi">615</span>
+          <span class="mi">1</span>       <span class="mf">0.15</span>      <span class="mf">0.58</span>      <span class="mf">0.90</span>      <span class="mf">0.24</span>      <span class="mf">0.39</span>      <span class="mf">0.14</span>        <span class="mi">19</span>
+
+<span class="n">avg</span> <span class="o">/</span> <span class="n">total</span>       <span class="mf">0.96</span>      <span class="mf">0.89</span>      <span class="mf">0.59</span>      <span class="mf">0.92</span>      <span class="mf">0.39</span>      <span class="mf">0.16</span>       <span class="mi">634</span>
+
+<span class="n">Confusion</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">without</span> <span class="n">normalization</span>
+<span class="p">[[</span><span class="mi">554</span>  <span class="mi">61</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mi">8</span>  <span class="mi">11</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  16.820 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_comparison_bagging_classifier.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_comparison_bagging_classifier.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_comparison_bagging_classifier.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_comparison_bagging_classifier.ipynb</span></code></a></div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
 </div>
 
 
@@ -361,7 +393,7 @@ classifiers.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

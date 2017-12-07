@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Introduction &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
+  <title>6. Metrics &mdash; imbalanced-learn 0.4.0.dev0 documentation</title>
   
 
   
@@ -41,8 +41,8 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="index.html"/>
         <link rel="up" title="User Guide" href="user_guide.html"/>
-        <link rel="next" title="2. Over-sampling" href="over_sampling.html"/>
-        <link rel="prev" title="User Guide" href="user_guide.html"/> 
+        <link rel="next" title="7. Dataset loading utilities" href="datasets/index.html"/>
+        <link rel="prev" title="5. Ensemble of samplers" href="ensemble.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -102,16 +102,16 @@
 <p class="caption"><span class="caption-text">Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User Guide</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1. Introduction</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#api-s-of-imbalanced-learn-samplers">1.1. API’s of imbalanced-learn samplers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#problem-statement-regarding-imbalanced-data-sets">1.2. Problem statement regarding imbalanced data sets</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="over_sampling.html">2. Over-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="under_sampling.html">3. Under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="combine.html">4. Combination of over- and under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ensemble.html">5. Ensemble of samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html">6. Metrics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sensitivity-and-specificity-metrics">6.1. Sensitivity and specificity metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-metrics-specific-to-imbalanced-datasets">6.2. Additional metrics specific to imbalanced datasets</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/index.html">7. Dataset loading utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="developers_utils.html">8. Utilities for Developers</a></li>
 </ul>
@@ -176,13 +176,13 @@
         
           <li><a href="user_guide.html">User Guide</a> &raquo;</li>
         
-      <li>1. Introduction</li>
+      <li>6. Metrics</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/metrics.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -195,62 +195,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="introduction">
-<span id="id1"></span><h1>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="api-s-of-imbalanced-learn-samplers">
-<span id="api-imblearn"></span><h2>1.1. API’s of imbalanced-learn samplers<a class="headerlink" href="#api-s-of-imbalanced-learn-samplers" title="Permalink to this headline">¶</a></h2>
-<p>The available samplers follows the scikit-learn API using the base estimator
-and adding a sampling functionality through the <code class="docutils literal"><span class="pre">sample</span></code> method:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">Estimator</span><span class="p">:</span>
-</pre></div>
+  <div class="section" id="metrics">
+<span id="id1"></span><h1>6. Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
+<p>Currently, scikit-learn only offers the
+<code class="docutils literal"><span class="pre">sklearn.metrics.balanced_accuracy_score</span></code> (in 0.20) as metric to deal with
+imbalanced datasets. The module <a class="reference internal" href="api.html#module-imblearn.metrics" title="imblearn.metrics"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.metrics</span></code></a> offers a couple of
+other metrics which are used in the literature to evaluate the quality of
+classifiers.</p>
+<div class="section" id="sensitivity-and-specificity-metrics">
+<span id="sensitivity-specificity"></span><h2>6.1. Sensitivity and specificity metrics<a class="headerlink" href="#sensitivity-and-specificity-metrics" title="Permalink to this headline">¶</a></h2>
+<p>Sensitivity and specificity are metrics which are well known in medical
+imaging. Sensitivity (also called true positive rate or recall) is the
+proportion of the positive samples which is well classified while specificity
+(also called true negative rate) is the proportion of the negative samples
+which are well classified. Therefore, depending of the field of application,
+either the sensitivity/specificity or the precision/recall pair of metrics are
+used.</p>
+<p>Currently, only the <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html">precision and recall metrics</a>
+are implemented in scikit-learn. <a class="reference internal" href="generated/imblearn.metrics.sensitivity_specificity_support.html#imblearn.metrics.sensitivity_specificity_support" title="imblearn.metrics.sensitivity_specificity_support"><code class="xref py py-func docutils literal"><span class="pre">sensitivity_specificity_support</span></code></a>,
+<a class="reference internal" href="generated/imblearn.metrics.sensitivity_score.html#imblearn.metrics.sensitivity_score" title="imblearn.metrics.sensitivity_score"><code class="xref py py-func docutils literal"><span class="pre">sensitivity_score</span></code></a>, and <a class="reference internal" href="generated/imblearn.metrics.specificity_score.html#imblearn.metrics.specificity_score" title="imblearn.metrics.specificity_score"><code class="xref py py-func docutils literal"><span class="pre">specificity_score</span></code></a> add the possibility to
+use those metrics.</p>
 </div>
-<blockquote>
-<div><p>The base object, implements a <code class="docutils literal"><span class="pre">fit</span></code> method to learn from data, either:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Sampler:</th><td class="field-body"><p class="first">To resample a data sets, each sampler implements:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data_resampled</span><span class="p">,</span> <span class="n">targets_resampled</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Fitting and sampling can also be done in one step:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">data_resampled</span><span class="p">,</span> <span class="n">targets_resampled</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-</pre></div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Imbalanced-learn samplers accept the same inputs that in scikit-learn:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">data</span></code>: array-like (2-D list, pandas.Dataframe, numpy.array) or sparse
-matrices;</li>
-<li><code class="docutils literal"><span class="pre">targets</span></code>: array-like (1-D list, pandas.Series, numpy.array).</li>
-</ul>
-<div class="topic">
-<p class="topic-title first">Sparse input</p>
-<p>For sparse input the data is <strong>converted to the Compressed Sparse Rows
-representation</strong> (see <code class="docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) before being fed to the
-sampler. To avoid unnecessary memory copies, it is recommended to choose the
-CSR representation upstream.</p>
-</div>
-</div>
-<div class="section" id="problem-statement-regarding-imbalanced-data-sets">
-<span id="problem-statement"></span><h2>1.2. Problem statement regarding imbalanced data sets<a class="headerlink" href="#problem-statement-regarding-imbalanced-data-sets" title="Permalink to this headline">¶</a></h2>
-<p>The learning phase and the subsequent prediction of machine learning algorithms
-can be affected by the problem of imbalanced data set. The balancing issue
-corresponds to the difference of the number of samples in the different
-classes. We illustrate the effect of training a linear SVM classifier with
-different level of class balancing.</p>
-<a class="reference external image-reference" href="./auto_examples/over-sampling/plot_comparison_over_sampling.html"><img alt="_images/sphx_glr_plot_comparison_over_sampling_0011.png" class="align-center" src="_images/sphx_glr_plot_comparison_over_sampling_0011.png" style="width: 900.0px; height: 720.0px;" /></a>
-<p>As expected, the decision function of the linear SVM is highly impacted. With a
-greater imbalanced ratio, the decision function favor the class with the larger
-number of samples, usually referred as the majority class.</p>
+<div class="section" id="additional-metrics-specific-to-imbalanced-datasets">
+<span id="imbalanced-metrics"></span><h2>6.2. Additional metrics specific to imbalanced datasets<a class="headerlink" href="#additional-metrics-specific-to-imbalanced-datasets" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="generated/imblearn.metrics.geometric_mean_score.html#imblearn.metrics.geometric_mean_score" title="imblearn.metrics.geometric_mean_score"><code class="xref py py-func docutils literal"><span class="pre">geometric_mean_score</span></code></a> is the root of the product of class-wise
+sensitivity. This measure tries to maximize the accuracy on each of the classes
+while keeping these accuracies balanced.</p>
+<p>The <a class="reference internal" href="generated/imblearn.metrics.make_index_balanced_accuracy.html#imblearn.metrics.make_index_balanced_accuracy" title="imblearn.metrics.make_index_balanced_accuracy"><code class="xref py py-func docutils literal"><span class="pre">make_index_balanced_accuracy</span></code></a> can wrap any metric and give more
+importance to a specific class using the parameter <code class="docutils literal"><span class="pre">alpha</span></code>.</p>
 </div>
 </div>
 
@@ -264,10 +236,10 @@ number of samples, usually referred as the majority class.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="over_sampling.html" class="btn btn-neutral float-right" title="2. Over-sampling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="datasets/index.html" class="btn btn-neutral float-right" title="7. Dataset loading utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="user_guide.html" class="btn btn-neutral" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ensemble.html" class="btn btn-neutral" title="5. Ensemble of samplers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

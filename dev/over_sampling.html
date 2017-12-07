@@ -121,8 +121,9 @@
 <li class="toctree-l2"><a class="reference internal" href="under_sampling.html">3. Under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="combine.html">4. Combination of over- and under-sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ensemble.html">5. Ensemble of samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/index.html">6. Dataset loading utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="developers_utils.html">7. Utilities for Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">6. Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/index.html">7. Dataset loading utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developers_utils.html">8. Utilities for Developers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">imbalanced-learn API</a></li>
@@ -271,7 +272,7 @@ methods.</p>
 <div class="section" id="ill-posed-examples">
 <h3>2.1.3. Ill-posed examples<a class="headerlink" href="#ill-posed-examples" title="Permalink to this headline">¶</a></h3>
 <p>While the <a class="reference internal" href="generated/imblearn.over_sampling.RandomOverSampler.html#imblearn.over_sampling.RandomOverSampler" title="imblearn.over_sampling.RandomOverSampler"><code class="xref py py-class docutils literal"><span class="pre">RandomOverSampler</span></code></a> is over-sampling by duplicating some of
-the original samples of the minority class, :<cite>SMOTE</cite> and <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">ADASYN</span></code></a>
+the original samples of the minority class, <a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">SMOTE</span></code></a> and <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">ADASYN</span></code></a>
 generate new samples in by interpolation. However, the samples used to
 interpolate/generate new synthetic samples differ. In fact, <a class="reference internal" href="generated/imblearn.over_sampling.ADASYN.html#imblearn.over_sampling.ADASYN" title="imblearn.over_sampling.ADASYN"><code class="xref py py-class docutils literal"><span class="pre">ADASYN</span></code></a>
 focuses on generating samples next to the original samples which are wrongly
@@ -335,7 +336,7 @@ are from a different class than the one of <span class="math">x_i</span>), (ii) 
 <span class="math">x_i</span>, or (iii) safe (i.e. all nearest neighbors are from the same class
 than <span class="math">x_i</span>). <strong>Borderline-1</strong> and <strong>Borderline-2</strong> SMOTE will use the
 samples <em>in danger</em> to generate new samples. In <strong>Borderline-1</strong> SMOTE,
-<span class="math">x_{zi}</span> will belong to a class different from the one of the sample
+<span class="math">x_{zi}</span> will belong to the same class than the one of the sample
 <span class="math">x_i</span>. On the contrary, <strong>Borderline-2</strong> SMOTE will consider
 <span class="math">x_{zi}</span> which can be from any class.</p>
 <p><strong>SVM</strong> SMOTE — cf. to <code class="docutils literal"><span class="pre">kind='svm'</span></code> when instantiating a <a class="reference internal" href="generated/imblearn.over_sampling.SMOTE.html#imblearn.over_sampling.SMOTE" title="imblearn.over_sampling.SMOTE"><code class="xref py py-class docutils literal"><span class="pre">SMOTE</span></code></a>
@@ -387,7 +388,7 @@ data set which are grouped in a single class.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

@@ -203,7 +203,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.utils" title="imblearn.utils"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.utils</span></code></a>.hash_X_y<a class="headerlink" href="#imblearn-utils-hash-x-y" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="imblearn.utils.hash_X_y">
-<code class="descclassname">imblearn.utils.</code><code class="descname">hash_X_y</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>n_samples=1000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/utils/validation.html#hash_X_y"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/utils/validation.py#L80"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.utils.hash_X_y" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">imblearn.utils.</code><code class="descname">hash_X_y</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>n_samples=10</em>, <em>n_features=5</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/utils/validation.py#L82"><span class="viewcode-link">[source]</span></a><a class="reference internal" href="../_modules/imblearn/utils/validation.html#hash_X_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.utils.hash_X_y" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute hash of the input arrays.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -214,6 +214,17 @@
 <div><p>The <code class="docutils literal"><span class="pre">X</span></code> array.</p>
 </div></blockquote>
 <p><strong>y</strong> : ndarray, shape (n_samples)</p>
+<blockquote>
+<div><p>The <code class="docutils literal"><span class="pre">y</span></code> array.</p>
+</div></blockquote>
+<p><strong>n_samples</strong> : int, optional</p>
+<blockquote>
+<div><p>The number of samples to use to compute the hash. Default is 100.</p>
+</div></blockquote>
+<p><strong>n_features</strong> : int, optional</p>
+<blockquote>
+<div><p>The number of features to use to compute the hash. Default is 10.</p>
+</div></blockquote>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">X_hash: str</p>
@@ -261,7 +272,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

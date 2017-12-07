@@ -206,7 +206,7 @@
 <h1><a class="reference internal" href="../api.html#module-imblearn.metrics" title="imblearn.metrics"><code class="xref py py-mod docutils literal"><span class="pre">imblearn.metrics</span></code></a>.make_index_balanced_accuracy<a class="headerlink" href="#imblearn-metrics-make-index-balanced-accuracy" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="imblearn.metrics.make_index_balanced_accuracy">
-<code class="descclassname">imblearn.metrics.</code><code class="descname">make_index_balanced_accuracy</code><span class="sig-paren">(</span><em>alpha=0.1</em>, <em>squared=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imblearn/metrics/classification.html#make_index_balanced_accuracy"><span class="viewcode-link">[source]</span></a><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/7572ba1/imblearn/metrics/classification.py#L641"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.metrics.make_index_balanced_accuracy" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">imblearn.metrics.</code><code class="descname">make_index_balanced_accuracy</code><span class="sig-paren">(</span><em>alpha=0.1</em>, <em>squared=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn/blob/c25edb6/imblearn/metrics/classification.py#L649"><span class="viewcode-link">[source]</span></a><a class="reference internal" href="../_modules/imblearn/metrics/classification.html#make_index_balanced_accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imblearn.metrics.make_index_balanced_accuracy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Balance any scoring function using the index balanced accuracy</p>
 <p>This factory function wraps scoring function to express it as the
 index balanced accuracy (IBA). You need to use this function to
@@ -214,6 +214,7 @@ decorate any scoring function.</p>
 <p>Only metrics requiring <code class="docutils literal"><span class="pre">y_pred</span></code> can be corrected with the index
 balanced accuracy. <code class="docutils literal"><span class="pre">y_score</span></code> cannot be used since the dominance
 cannot be computed.</p>
+<p>Read more in the <a class="reference internal" href="../metrics.html#imbalanced-metrics"><span class="std std-ref">User Guide</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -240,6 +241,16 @@ the index balanced accuracy.</p>
 </table>
 <p class="rubric">Notes</p>
 <p>See <a class="reference internal" href="../auto_examples/evaluation/plot_metrics.html#sphx-glr-auto-examples-evaluation-plot-metrics-py"><span class="std std-ref">Metrics specific to imbalanced learning</span></a>.</p>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="r7979" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[R7979]</a></td><td>García, Vicente, Javier Salvador Sánchez, and Ramón Alberto
+Mollineda. “On the effectiveness of preprocessing methods when dealing
+with different levels of class imbalance.” Knowledge-Based Systems 25.1
+(2012): 13-21.</td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.metrics</span> <span class="k">import</span> <span class="n">geometric_mean_score</span> <span class="k">as</span> <span class="n">gmean</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imblearn.metrics</span> <span class="k">import</span> <span class="n">make_index_balanced_accuracy</span> <span class="k">as</span> <span class="n">iba</span>
@@ -254,7 +265,7 @@ the index balanced accuracy.</p>
 
 <div class="section" id="examples-using-imblearn-metrics-make-index-balanced-accuracy">
 <h2>Examples using <code class="docutils literal"><span class="pre">imblearn.metrics.make_index_balanced_accuracy</span></code><a class="headerlink" href="#examples-using-imblearn-metrics-make-index-balanced-accuracy" title="Permalink to this headline">¶</a></h2>
-<div class="sphx-glr-thumbcontainer" tooltip="Specific metrics have been developed to evaluate classifier which has been trained using imbala..."><div class="figure" id="id1">
+<div class="sphx-glr-thumbcontainer" tooltip="Specific metrics have been developed to evaluate classifier which has been trained using imbala..."><div class="figure" id="id2">
 <img alt="../_images/sphx_glr_plot_metrics_thumb.png" src="../_images/sphx_glr_plot_metrics_thumb.png" />
 <p class="caption"><span class="caption-text"><a class="reference internal" href="../auto_examples/evaluation/plot_metrics.html#sphx-glr-auto-examples-evaluation-plot-metrics-py"><span class="std std-ref">Metrics specific to imbalanced learning</span></a></span></p>
 </div>
@@ -283,7 +294,7 @@ the index balanced accuracy.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

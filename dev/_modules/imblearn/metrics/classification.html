@@ -240,6 +240,8 @@
 <span class="sd">    returns the average sensitivity and specificity if ``average``</span>
 <span class="sd">    is one of ``&#39;weighted&#39;``.</span>
 
+<span class="sd">    Read more in the :ref:`User Guide &lt;sensitivity_specificity&gt;`.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    y_true : ndarray, shape (n_samples, )</span>
@@ -457,6 +459,8 @@
 
 <span class="sd">    The best value is 1 and the worst value is 0.</span>
 
+<span class="sd">    Read more in the :ref:`User Guide &lt;sensitivity_specificity&gt;`.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    y_true : ndarray, shape (n_samples, )</span>
@@ -555,6 +559,8 @@
 <span class="sd">    samples.</span>
 
 <span class="sd">    The best value is 1 and the worst value is 0.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;sensitivity_specificity&gt;`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -665,6 +671,8 @@
 <span class="sd">    alleviate this property, for highly multi-class the sensitivity of</span>
 <span class="sd">    unrecognized classes can be &quot;corrected&quot; to be a user specified value</span>
 <span class="sd">    (instead of zero). This option works only if ``average == &#39;multiclass&#39;``.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;imbalanced_metrics&gt;`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -829,6 +837,8 @@
 <span class="sd">    balanced accuracy. ``y_score`` cannot be used since the dominance</span>
 <span class="sd">    cannot be computed.</span>
 
+<span class="sd">    Read more in the :ref:`User Guide &lt;imbalanced_metrics&gt;`.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    alpha : float, optional (default=0.1)</span>
@@ -847,6 +857,13 @@
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    See :ref:`sphx_glr_auto_examples_evaluation_plot_metrics.py`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] García, Vicente, Javier Salvador Sánchez, and Ramón Alberto</span>
+<span class="sd">       Mollineda. &quot;On the effectiveness of preprocessing methods when dealing</span>
+<span class="sd">       with different levels of class imbalance.&quot; Knowledge-Based Systems 25.1</span>
+<span class="sd">       (2012): 13-21.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -1082,7 +1099,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

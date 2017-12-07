@@ -182,6 +182,8 @@
 
 <span class="c1"># Authors: Guillaume Lemaitre &lt;g.lemaitre58@gmail.com&gt;</span>
 <span class="c1"># License: MIT</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Integral</span>
@@ -257,7 +259,7 @@
     <span class="k">return</span> <span class="n">y</span>
 
 
-<div class="viewcode-block" id="hash_X_y"><a class="viewcode-back" href="../../../generated/imblearn.utils.hash_X_y.html#imblearn.utils.hash_X_y">[docs]</a><span class="k">def</span> <span class="nf">hash_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<div class="viewcode-block" id="hash_X_y"><a class="viewcode-back" href="../../../generated/imblearn.utils.hash_X_y.html#imblearn.utils.hash_X_y">[docs]</a><span class="k">def</span> <span class="nf">hash_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute hash of the input arrays.</span>
 
 <span class="sd">    Parameters</span>
@@ -266,20 +268,25 @@
 <span class="sd">        The ``X`` array.</span>
 
 <span class="sd">    y : ndarray, shape (n_samples)</span>
+<span class="sd">        The ``y`` array.</span>
+
+<span class="sd">    n_samples : int, optional</span>
+<span class="sd">        The number of samples to use to compute the hash. Default is 100.</span>
+
+<span class="sd">    n_features : int, optional</span>
+<span class="sd">        The number of features to use to compute the hash. Default is 10.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    X_hash: str</span>
 <span class="sd">        Hash identifier of the ``X`` matrix.</span>
-
 <span class="sd">    y_hash: str</span>
 <span class="sd">        Hash identifier of the ``y`` matrix.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">raw_idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
-    <span class="n">col_idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
+    <span class="n">row_idx</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">n_samples</span><span class="p">))</span>
+    <span class="n">col_idx</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">n_features</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">joblib</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">raw_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]),</span> <span class="n">joblib</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">raw_idx</span><span class="p">])</span></div>
+    <span class="k">return</span> <span class="n">joblib</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]),</span> <span class="n">joblib</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">row_idx</span><span class="p">])</span></div>
 
 
 <span class="k">def</span> <span class="nf">_ratio_all</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">):</span>
@@ -510,7 +517,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

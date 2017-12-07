@@ -41,7 +41,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="imbalanced-learn 0.4.0.dev0 documentation" href="index.html"/>
         <link rel="up" title="User Guide" href="user_guide.html"/>
-        <link rel="next" title="6. Dataset loading utilities" href="datasets/index.html"/>
+        <link rel="next" title="6. Metrics" href="metrics.html"/>
         <link rel="prev" title="4. Combination of over- and under-sampling" href="combine.html"/> 
 
   
@@ -111,8 +111,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#chaining-ensemble-of-samplers-and-estimators">5.2. Chaining ensemble of samplers and estimators</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/index.html">6. Dataset loading utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="developers_utils.html">7. Utilities for Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">6. Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/index.html">7. Dataset loading utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developers_utils.html">8. Utilities for Developers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">imbalanced-learn API</a></li>
@@ -263,9 +264,9 @@ classifier will favor the majority classes:</p>
 <span class="go">BaggingClassifier(...)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="go">array([[   0,    0,   12],</span>
-<span class="go">       [   0,    0,   59],</span>
-<span class="go">       [   0,    0, 1179]])</span>
+<span class="go">array([[   9,    1,    2],</span>
+<span class="go">       [   0,   54,    5],</span>
+<span class="go">       [   1,    6, 1172]])</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="generated/imblearn.ensemble.BalancedBaggingClassifier.html#imblearn.ensemble.BalancedBaggingClassifier" title="imblearn.ensemble.BalancedBaggingClassifier"><code class="xref py py-class docutils literal"><span class="pre">BalancedBaggingClassifier</span></code></a> allows to resample each subset of data
@@ -280,13 +281,29 @@ takes the same parameters than the scikit-learn
 <span class="gp">... </span>                                <span class="n">ratio</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
 <span class="gp">... </span>                                <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="gp">... </span>                                <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bbc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bbc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> 
 <span class="go">BalancedBaggingClassifier(...)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">bbc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="go">array([[  12,    0,    0],</span>
+<span class="go">array([[   9,    1,    2],</span>
 <span class="go">       [   0,   55,    4],</span>
-<span class="go">       [  68,   53, 1058]])</span>
+<span class="go">       [  42,   46, 1091]])</span>
+</pre></div>
+</div>
+<p>It also possible to turn a balanced bagging classifier into a balanced random
+forest using a decision tree classifier and setting the parameter
+<code class="docutils literal"><span class="pre">max_features='auto'</span></code>. It allows to randomly select a subset of features for
+each tree:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">brf</span> <span class="o">=</span> <span class="n">BalancedBaggingClassifier</span><span class="p">(</span>
+<span class="gp">... </span>         <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">),</span>
+<span class="gp">... </span>         <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> 
+<span class="go">BalancedBaggingClassifier(...)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">brf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">array([[   9,    1,    2],</span>
+<span class="go">       [   0,   54,    5],</span>
+<span class="go">       [  31,   34, 1114]])</span>
 </pre></div>
 </div>
 <p>See
@@ -304,7 +321,7 @@ takes the same parameters than the scikit-learn
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="datasets/index.html" class="btn btn-neutral float-right" title="6. Dataset loading utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metrics.html" class="btn btn-neutral float-right" title="6. Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="combine.html" class="btn btn-neutral" title="4. Combination of over- and under-sampling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -316,7 +333,7 @@ takes the same parameters than the scikit-learn
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

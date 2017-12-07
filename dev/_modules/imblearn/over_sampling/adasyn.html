@@ -284,7 +284,8 @@
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ADASYN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ADASYN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span></div>
 
@@ -364,7 +365,8 @@
                     <span class="n">steps</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">nn_zs</span><span class="p">))</span>
                     <span class="k">if</span> <span class="n">x_i</span><span class="o">.</span><span class="n">nnz</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">nn_z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">nn_zs</span><span class="p">):</span>
-                            <span class="n">sample</span> <span class="o">=</span> <span class="n">x_i</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">x_i_nn</span><span class="p">[</span><span class="n">nn_z</span><span class="p">],</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">x_i</span><span class="p">)</span>
+                            <span class="n">sample</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_i</span> <span class="o">+</span>
+                                      <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_class</span><span class="p">[</span><span class="n">x_i_nn</span><span class="p">[</span><span class="n">nn_z</span><span class="p">],</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">x_i</span><span class="p">))</span>
                             <span class="n">row_indices</span> <span class="o">+=</span> <span class="p">([</span><span class="n">n_samples_generated</span><span class="p">]</span> <span class="o">*</span>
                                             <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">indices</span><span class="p">))</span>
                             <span class="n">col_indices</span> <span class="o">+=</span> <span class="n">sample</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -384,7 +386,8 @@
                     <span class="n">nn_zs</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
                         <span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nn_</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_sample_i</span><span class="p">)</span>
                     <span class="n">steps</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">nn_zs</span><span class="p">))</span>
-                    <span class="n">x_class_gen</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x_i</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">x_i_nn</span><span class="p">[</span><span class="n">nn_z</span><span class="p">],</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">x_i</span><span class="p">)</span>
+                    <span class="n">x_class_gen</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x_i</span> <span class="o">+</span>
+                                        <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_class</span><span class="p">[</span><span class="n">x_i_nn</span><span class="p">[</span><span class="n">nn_z</span><span class="p">],</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">x_i</span><span class="p">)</span>
                                         <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">nn_z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">nn_zs</span><span class="p">)])</span>
 
                 <span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">x_class_gen</span><span class="p">)</span>
@@ -411,7 +414,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>

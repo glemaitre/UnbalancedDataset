@@ -188,34 +188,15 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">import</span> <span class="nn">sklearn</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">clone</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">BaggingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="k">import</span> <span class="n">DecisionTreeClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble.bagging</span> <span class="k">import</span> <span class="n">_generate_bagging_indices</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="k">import</span> <span class="n">indices_to_mask</span>
 
 <span class="kn">from</span> <span class="nn">..pipeline</span> <span class="k">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span> <span class="nn">..under_sampling</span> <span class="k">import</span> <span class="n">RandomUnderSampler</span>
 
 <span class="n">old_generate</span> <span class="o">=</span> <span class="n">_generate_bagging_indices</span>
-
-
-<span class="k">def</span> <span class="nf">_masked_bagging_indices</span><span class="p">(</span><span class="n">random_state</span><span class="p">,</span> <span class="n">bootstrap_features</span><span class="p">,</span>
-                            <span class="n">bootstrap_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span>
-                            <span class="n">max_features</span><span class="p">,</span> <span class="n">max_samples</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Monkey-patch to always get a mask instead of indices&quot;&quot;&quot;</span>
-    <span class="n">feature_indices</span><span class="p">,</span> <span class="n">sample_indices</span> <span class="o">=</span> <span class="n">old_generate</span><span class="p">(</span><span class="n">random_state</span><span class="p">,</span>
-                                                   <span class="n">bootstrap_features</span><span class="p">,</span>
-                                                   <span class="n">bootstrap_samples</span><span class="p">,</span>
-                                                   <span class="n">n_features</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span>
-                                                   <span class="n">max_features</span><span class="p">,</span> <span class="n">max_samples</span><span class="p">)</span>
-    <span class="n">sample_indices</span> <span class="o">=</span> <span class="n">indices_to_mask</span><span class="p">(</span><span class="n">sample_indices</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">feature_indices</span><span class="p">,</span> <span class="n">sample_indices</span>
-
-
-<span class="n">sklearn</span><span class="o">.</span><span class="n">ensemble</span><span class="o">.</span><span class="n">bagging</span><span class="o">.</span><span class="n">_generate_bagging_indices</span> <span class="o">=</span> <span class="n">_masked_bagging_indices</span>
 
 
 <div class="viewcode-block" id="BalancedBaggingClassifier"><a class="viewcode-back" href="../../../generated/imblearn.ensemble.BalancedBaggingClassifier.html#imblearn.ensemble.BalancedBaggingClassifier">[docs]</a><span class="k">class</span> <span class="nc">BalancedBaggingClassifier</span><span class="p">(</span><span class="n">BaggingClassifier</span><span class="p">):</span>
@@ -333,6 +314,9 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
+<span class="sd">    This is possible to turn this classifier into a balanced random forest [5]_</span>
+<span class="sd">    by passing a :class:`sklearn.tree.DecisionTreeClassifier` with</span>
+<span class="sd">    `max_features=&#39;auto&#39;` as a base estimator.</span>
 
 <span class="sd">    See</span>
 <span class="sd">    :ref:`sphx_glr_auto_examples_ensemble_plot_comparison_bagging_classifier.py`.</span>
@@ -352,6 +336,9 @@
 <span class="sd">           1998.</span>
 <span class="sd">    .. [4] G. Louppe and P. Geurts, &quot;Ensembles on Random Patches&quot;, Machine</span>
 <span class="sd">           Learning and Knowledge Discovery in Databases, 346-361, 2012.</span>
+<span class="sd">    .. [5] Chen, Chao, Andy Liaw, and Leo Breiman. &quot;Using random forest to</span>
+<span class="sd">           learn imbalanced data.&quot; University of California, Berkeley 110,</span>
+<span class="sd">           2004.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -463,7 +450,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
+        &copy; Copyright 2016 - 2017, G. Lemaitre, F. Nogueira, D. Oliveira, C. Aridas.
 
     </p>
   </div>
