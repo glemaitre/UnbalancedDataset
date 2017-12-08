@@ -81,7 +81,7 @@ An illustration of the random under-sampling method.
     plt.tight_layout()
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.119 seconds)
+**Total running time of the script:** ( 0 minutes  0.118 seconds)
 
 
 

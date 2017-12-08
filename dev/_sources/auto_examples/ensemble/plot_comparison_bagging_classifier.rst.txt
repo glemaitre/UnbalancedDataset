@@ -205,7 +205,7 @@ Turning the balanced bagging classifier into a balanced random forest
      [  8  11]]
 
 
-**Total running time of the script:** ( 0 minutes  16.743 seconds)
+**Total running time of the script:** ( 0 minutes  17.442 seconds)
 
 
 
