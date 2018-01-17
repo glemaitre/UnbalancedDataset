@@ -360,13 +360,15 @@ the support vectors found using an SVM algorithm to create new samples.
 
 
 
-**Total running time of the script:** ( 0 minutes  29.761 seconds)
+**Total running time of the script:** ( 0 minutes  31.383 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

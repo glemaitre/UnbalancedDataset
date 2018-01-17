@@ -128,13 +128,15 @@ by using an over-sampler.
 
     plt.show()
 
-**Total running time of the script:** ( 1 minutes  55.263 seconds)
+**Total running time of the script:** ( 1 minutes  58.960 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

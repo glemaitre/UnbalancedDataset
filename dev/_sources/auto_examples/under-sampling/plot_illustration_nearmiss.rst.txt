@@ -228,13 +228,15 @@ average distance to the *k* nearest-neighbors are selected.
 
 
 
-**Total running time of the script:** ( 0 minutes  0.275 seconds)
+**Total running time of the script:** ( 0 minutes  0.266 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

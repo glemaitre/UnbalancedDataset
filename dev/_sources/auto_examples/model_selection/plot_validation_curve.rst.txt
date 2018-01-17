@@ -89,13 +89,15 @@ different values of the SMOTE's k_neighbors parameter.
     plt.legend(loc="best")
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  5.564 seconds)
+**Total running time of the script:** ( 0 minutes  5.705 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

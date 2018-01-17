@@ -132,13 +132,15 @@ An illustration of the ENN, RENN, and All-KNN method.
     plt.tight_layout(pad=3)
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.341 seconds)
+**Total running time of the script:** ( 0 minutes  0.343 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

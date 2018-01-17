@@ -81,13 +81,15 @@ An illustration of the balance cascade ensemble method.
     plt.tight_layout()
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.212 seconds)
+**Total running time of the script:** ( 0 minutes  0.216 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

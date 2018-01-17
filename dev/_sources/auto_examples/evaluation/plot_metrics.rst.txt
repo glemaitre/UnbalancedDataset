@@ -120,13 +120,15 @@ imbalanced learning problems.
     The IBA using alpha = 0.5 and the geometric mean: 0.8579638752052544
 
 
-**Total running time of the script:** ( 0 minutes  0.424 seconds)
+**Total running time of the script:** ( 0 minutes  0.428 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

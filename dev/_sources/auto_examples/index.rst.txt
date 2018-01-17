@@ -767,6 +767,7 @@ The implemented methods can be categorized into 2 groups: (i) fixed under-sampli
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-gallery
 
 
   .. container:: sphx-glr-download

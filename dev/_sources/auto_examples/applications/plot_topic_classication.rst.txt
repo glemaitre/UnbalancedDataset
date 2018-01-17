@@ -174,21 +174,23 @@ slightly better.
 
     pre       rec       spe        f1       geo       iba       sup
 
-              0       0.73      0.89      0.90      0.80      0.84      0.68       319
+              0       0.70      0.91      0.88      0.79      0.83      0.66       319
               1       0.97      0.86      0.99      0.91      0.96      0.92       389
-              2       0.95      0.90      0.98      0.92      0.95      0.91       394
-              3       0.77      0.76      0.95      0.76      0.85      0.71       251
+              2       0.95      0.89      0.98      0.92      0.95      0.91       394
+              3       0.81      0.73      0.96      0.77      0.87      0.75       251
 
     avg / total       0.87      0.86      0.96      0.86      0.91      0.82      1353
 
 
-**Total running time of the script:** ( 0 minutes  15.260 seconds)
+**Total running time of the script:** ( 0 minutes  15.348 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download

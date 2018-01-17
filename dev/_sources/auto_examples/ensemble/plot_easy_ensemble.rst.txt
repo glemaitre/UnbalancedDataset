@@ -81,13 +81,15 @@ An illustration of the easy ensemble method.
     plt.tight_layout()
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  0.208 seconds)
+**Total running time of the script:** ( 0 minutes  0.210 seconds)
 
 
 
 .. only :: html
 
  .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
 
 
   .. container:: sphx-glr-download
