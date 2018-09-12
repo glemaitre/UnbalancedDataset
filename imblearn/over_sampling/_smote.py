@@ -815,6 +815,9 @@ SMOTE # doctest: +NORMALIZE_WHITESPACE
         return X_resampled, y_resampled
 
 
+@Substitution(
+    sampling_strategy=BaseOverSampler._sampling_strategy_docstring,
+    random_state=_random_state_docstring)
 class SMOTENC(SMOTE):
     """Class to perform over-sampling using SMOTE-NC.
 
@@ -833,26 +836,19 @@ class SMOTENC(SMOTE):
 
     {random_state}
 
-    {k_neighbors}
+    k_neighbors : int or object, optional (default=5)
+        If ``int``, number of nearest neighbours to used to construct synthetic
+        samples.  If object, an estimator that inherits from
+        :class:`sklearn.neighbors.base.KNeighborsMixin` that will be used to
+        find the k_neighbors.
 
-    {m_neighbors}
+    n_jobs : int, optional (default=1)
+        The number of threads to open if possible.
 
-    {out_step}
-
-    {kind}
-
-    {svm_estimator}
-
-    {n_jobs}
-
-    {ratio}
-
-    categorical_feature_indices : array-like, shape (n_categorical_features,)
-        Indices to categorical feature ranges.
-        Value of
-        :attr:`sklearn.preprocessing.OneHotEncoder.feature_indices_`
-        can be plugged directly.
-        See :class:`sklearn.preprocessing.OneHotEncoder` for details.
+    categorical_feature_indices : 'auto' or array-like, shape (n_cat_features,)
+        If ``'auto'``, the column with binary values will be considered as
+        categorical features. Otherwise, an array containing the indices of the
+        categorical features need to be given.
 
     Attributes
     ----------
@@ -873,10 +869,6 @@ class SMOTENC(SMOTE):
 
     Supports mutli-class resampling. A one-vs.-rest scheme is used as
     originally proposed in [1]_.
-
-    See
-    :ref:`sphx_glr_auto_examples_over-sampling_plot_comparison_over_sampling.py`,
-    and :ref:`sphx_glr_auto_examples_over-sampling_plot_smote.py`.
 
     See also
     --------
@@ -926,22 +918,12 @@ SMOTENC # doctest: +NORMALIZE_WHITESPACE
                  sampling_strategy='auto',
                  random_state=None,
                  k_neighbors=5,
-                 m_neighbors='deprecated',
-                 out_step='deprecated',
-                 kind='deprecated',
-                 svm_estimator='deprecated',
                  n_jobs=1,
-                 ratio=None,
-                 categorical_feature_indices=None):
+                 categorical_feature_indices=''):
         super(SMOTENC, self).__init__(sampling_strategy=sampling_strategy,
                                       random_state=random_state,
                                       k_neighbors=k_neighbors,
-                                      m_neighbors=m_neighbors,
-                                      out_step=out_step,
-                                      kind=kind,
-                                      svm_estimator=svm_estimator,
-                                      n_jobs=n_jobs,
-                                      ratio=ratio)
+                                      n_jobs=n_jobs)
         self.categorical_feature_indices = categorical_feature_indices
 
     def _fit_resample(self, X, y):
