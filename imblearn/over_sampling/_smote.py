@@ -845,10 +845,11 @@ class SMOTENC(SMOTE):
     n_jobs : int, optional (default=1)
         The number of threads to open if possible.
 
-    categorical_feature_indices : 'auto' or array-like, shape (n_cat_features,)
+    categorical_feature_indices : 'auto', array-like, shape (n_cat_features,) \
+or slice
         If ``'auto'``, the column with binary values will be considered as
-        categorical features. Otherwise, an array containing the indices of the
-        categorical features need to be given.
+        categorical features. Otherwise, an array containing the indices or
+        slice of the indices of the categorical features need to be given.
 
     Attributes
     ----------
@@ -927,6 +928,15 @@ SMOTENC # doctest: +NORMALIZE_WHITESPACE
         self.categorical_feature_indices = categorical_feature_indices
 
     def _fit_resample(self, X, y):
+        if self.categorical_feature_indices == 'auto':
+            self.categorical_feature_indices_ = [i for i in range(n_features)
+                                                if len(_encode(X[:, i]) < 2]
+        else:
+            categorical_feature_indices = check_array(...)
+            if categorical_feature_indices not in np.arange(n_features):
+                raise ValueError(...)
+            self.categorical_feature_indices_ = categorical_feature_indices
+
         if self.categorical_feature_indices is None:
             warnings.warn('No "categorical_feature_indices" were specified when '
                           'this instance was created. Will fall back '
