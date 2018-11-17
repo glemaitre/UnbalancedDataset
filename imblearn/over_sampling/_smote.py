@@ -106,7 +106,7 @@ class BaseSMOTE(BaseOverSampler):
         random_state = check_random_state(self.random_state)
         samples_indices = random_state.randint(
             low=0, high=len(nn_num.flatten()), size=n_samples)
-        steps = step_size * random_state.uniform(size=n_samples)
+        steps = step_size * random_state.uniform(size=(n_samples, X.shape[1]))
         rows = np.floor_divide(samples_indices, nn_num.shape[1])
         cols = np.mod(samples_indices, nn_num.shape[1])
 
@@ -164,7 +164,7 @@ class BaseSMOTE(BaseOverSampler):
             Index pointing at which nearest neighbor of base feature vector
             will be used when creating new sample.
 
-        step : float
+        step : ndarray, shape (n_features)
             Step size for new sample.
 
         Returns
